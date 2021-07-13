@@ -6,6 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./user-panel-main.component.scss'],
 })
 export class UserPanelMainComponent implements OnInit {
+  @Input() name = '';
   constructor() {}
 
   ngOnInit(): void {}

@@ -1,0 +1,14 @@
+.cards--container {
+  display: grid;
+  max-width: 1200px;
+  padding: 5px;
+  grid-column-gap: 97px;
+  grid-row-gap: 47px;
+  grid-template-columns: repeat(auto-fit, minmax(525px, 525px));
+  margin: 0 auto;
+  margin-top: 67px;
+}
+.flex--center {
+  display: flex;
+  justify-content: center;
+}
