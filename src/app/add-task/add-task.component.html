@@ -1,0 +1,9 @@
+<app-modal-text-insertion
+  name="Choose task's name"
+  label="Task name"
+  placeholder="Type in new task name"
+  button="Next"
+  (cancel)="onCancelClick()"
+  (value)="onNameAdded($event)"
+  *ngIf="modals.name"
+></app-modal-text-insertion>

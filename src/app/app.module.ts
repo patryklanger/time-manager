@@ -14,6 +14,9 @@ import { ModalTextInsertionComponent } from './modal-text-insertion/modal-text-i
 import { AddBucketComponent } from './add-bucket/add-bucket.component';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { TasksPanelComponent } from './tasks-panel/tasks-panel.component';
+import { AddTaskComponent } from './add-task/add-task.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomModalComponent } from './custom-modal/custom-modal.component';
 
 @NgModule({
   declarations: [
@@ -28,8 +31,10 @@ import { TasksPanelComponent } from './tasks-panel/tasks-panel.component';
     AddBucketComponent,
     TaskCardComponent,
     TasksPanelComponent,
+    AddTaskComponent,
+    CustomModalComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, BrowserAnimationsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

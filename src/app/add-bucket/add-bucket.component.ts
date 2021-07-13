@@ -26,7 +26,7 @@ export class AddBucketComponent implements OnInit {
     this.modals.description = true;
   }
   onDescriptionAdded(description: string) {
-    this.newBucket.name = description;
+    this.newBucket.description = description;
     this.modals.description = false;
     this.modals.maxTask = true;
   }
@@ -36,6 +36,7 @@ export class AddBucketComponent implements OnInit {
     this.modals.team = true;
   }
   onMembersAdded(members: string) {
+    this.newBucket.team.push(members);
     this.onSuccessfullyAdded();
   }
   onCancelClick() {
@@ -46,6 +47,7 @@ export class AddBucketComponent implements OnInit {
     this.closeEmitter.emit(false);
   }
   onSuccessfullyAdded() {
+    console.log(this.newBucket);
     this.modals.name = true;
     this.modals.description = false;
     this.modals.maxTask = false;
