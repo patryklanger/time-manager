@@ -15,6 +15,9 @@ export class HeaderComponent implements OnInit {
   onBucketsClick = () => {
     this.router.navigateByUrl('/buckets');
   };
+  onTasksClick = () => {
+    this.router.navigateByUrl('/tasks');
+  };
 
   ngOnInit(): void {}
 }

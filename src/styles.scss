@@ -17,6 +17,7 @@ body {
   border: 0;
   min-width: 209px;
   text-align: center;
+  cursor: pointer;
 }
 .button:focus {
   outline: none;
@@ -26,6 +27,13 @@ body {
 }
 .button--green {
   background: #678c5e;
+  color: #fff;
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 300;
+}
+.button--red {
+  background: #aa6767;
   color: #fff;
   font-size: 18px;
   line-height: 27px;

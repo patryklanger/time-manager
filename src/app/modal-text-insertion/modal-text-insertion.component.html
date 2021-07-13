@@ -1,1 +1,34 @@
-<p>modal-text-insertion works!</p>
+<div class="blur--effect"></div>
+<div class="flex--center">
+  <div class="modal--window">
+    <h1>{{ name }}</h1>
+    <p>{{ label }}</p>
+    <input
+      type="{{ type }}"
+      placeholder="{{ placeholder }}"
+      [(ngModel)]="textValue"
+      *ngIf="!textArea"
+      required
+    />
+    <textarea
+      placeholder="{{ placeholder }}"
+      [(ngModel)]="textValue"
+      *ngIf="textArea"
+      required
+    ></textarea>
+    <div class="flex--center--button">
+      <div class="flex--button">
+        <button
+          class="button button--green"
+          (click)="continueClicked()"
+          type="submit"
+        >
+          {{ button }}
+        </button>
+        <button class="button button--red" (click)="onCancelClicked()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

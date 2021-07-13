@@ -50,5 +50,11 @@
   </app-bucket-card>
 </div>
 <div class="flex--center">
-  <button class="button button--green">Add new bucket</button>
+  <button class="button button--green" (click)="addBucket()">
+    Add new bucket
+  </button>
 </div>
+<app-add-bucket
+  *ngIf="addBucketShow"
+  (closeEmitter)="addBucketClosed($event)"
+></app-add-bucket>

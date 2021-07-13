@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { UserPanelMainComponent } from './user-panel-main/user-panel-main.component';
 import { BucketsPanelComponent } from './buckets-panel/buckets-panel.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { TasksPanelComponent } from './tasks-panel/tasks-panel.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user-panel', pathMatch: 'full' },
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'admin-panel',
     component: AdminPanelComponent,
+  },
+  {
+    path: 'tasks',
+    component: TasksPanelComponent,
   },
 ];
 @NgModule({

@@ -1,0 +1,28 @@
+<div class="card">
+  <p class="bucket">{{ bucket }}</p>
+  <p class="taskName">{{ taskName }}</p>
+  <div class="card--inner">
+    <div class="priority"></div>
+    <div class="inner--element">
+      <p class="label deadline--label">Deadline:</p>
+      <p class="value deadline--value">{{ deadline }}</p>
+    </div>
+    <div class="inner--element">
+      <p class="label state--label">Task state:</p>
+      <p class="value state--value">{{ state }}</p>
+    </div>
+    <div class="inner--element">
+      <p class="label timeleft--label">Time left:</p>
+      <p class="value timeleft--value">{{ timeleft }}</p>
+    </div>
+    <div class="inner--element">
+      <p class="label editors--label">Editors:</p>
+      <p class="value editors--value">{{ editors }}</p>
+    </div>
+    <div class="inner--element">
+      <p class="label author--label">Author:</p>
+      <p class="value author--value">{{ author }}</p>
+    </div>
+  </div>
+  <p class="taskAmount">max tasks amount: {{ maxTasksAmount }}</p>
+</div>
