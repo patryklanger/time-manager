@@ -7,3 +7,23 @@
   (value)="onNameAdded($event)"
   *ngIf="modals.name"
 ></app-modal-text-insertion>
+<app-modal-text-insertion
+  name="Choose task's description"
+  label="Task description"
+  placeholder="Type in new task description"
+  button="Next"
+  (cancel)="onCancelClick()"
+  (value)="onDescriptionAdded($event)"
+  *ngIf="modals.description"
+  [textArea]="true"
+></app-modal-text-insertion>
+<app-modal-text-insertion
+  type="number"
+  name="Choose estimated duration"
+  label="Task's estimated duration"
+  placeholder="Type in new task estimated duration counted in hours"
+  button="Next"
+  (cancel)="onCancelClick()"
+  (value)="onEstDurAdded($event)"
+  *ngIf="modals.estDuration"
+></app-modal-text-insertion>

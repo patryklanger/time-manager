@@ -224,5 +224,12 @@
   ></app-task-card>
 </div>
 <div class="flex--center">
-  <button class="button button--green">Add new task</button>
+  <button class="button button--green" (click)="onShowAdding()">
+    Add new task
+  </button>
 </div>
+
+<app-add-task
+  *ngIf="addTaskShow"
+  (closeEmitter)="onCloseAdding()"
+></app-add-task>
