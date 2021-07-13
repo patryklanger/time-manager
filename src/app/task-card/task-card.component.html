@@ -2,7 +2,7 @@
   <p class="bucket">{{ bucket }}</p>
   <p class="taskName">{{ taskName }}</p>
   <div class="card--inner">
-    <div class="priority"></div>
+    <div class="priority" [style.background]="color"></div>
     <div class="inner--element">
       <p class="label deadline--label">Deadline:</p>
       <p class="value deadline--value">{{ deadline }}</p>
@@ -22,6 +22,11 @@
     <div class="inner--element">
       <p class="label author--label">Author:</p>
       <p class="value author--value">{{ author }}</p>
+    </div>
+    <div class="inner--element buttons--element">
+      <img src="../../assets/_play_button.png" />
+      <img src="../../assets/_stop_button.png" />
+      <img src="../../assets/_more_button.png" />
     </div>
   </div>
   <p class="taskAmount">max tasks amount: {{ maxTasksAmount }}</p>

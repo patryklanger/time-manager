@@ -14,7 +14,20 @@ export class TaskCardComponent implements OnInit {
   @Input() editors = '';
   @Input() author = '';
   @Input() maxTasksAmount = '';
+  @Input() priority = '';
+  priorityColor = {
+    low: '#1F9C00',
+    medium: '#BABD10',
+    high: '#B52920',
+  };
+  color = '';
   constructor() {}
-
-  ngOnInit(): void {}
+  getColor() {
+    if (this.priority == 'low') this.color = this.priorityColor.low;
+    else if (this.priority == 'medium') this.color = this.priorityColor.medium;
+    else this.color = this.priorityColor.high;
+  }
+  ngOnInit(): void {
+    this.getColor();
+  }
 }
