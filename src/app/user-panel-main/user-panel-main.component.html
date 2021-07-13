@@ -1,6 +1,31 @@
 <h1 style="text-align: center; margin-top: 105px">Welcome {{ name }}!</h1>
 <div class="flex--center">
   <div class="cards--container">
-    <ng-content></ng-content>
+    <app-panel-card
+      name="Buckets"
+      description="Here you can find all buckets"
+      imgSource="../../assets/_bucket_card_img.png"
+    ></app-panel-card
+    ><app-panel-card
+      name="Your buckets"
+      description="Here you can find all buckets created by you"
+      imgSource="../../assets/_mybuckets_card_img.png"
+    ></app-panel-card
+    ><app-panel-card
+      name="Tasks"
+      description="Here you can find all tasks you are assigned to"
+      imgSource="../../assets/_tasks_card_img.png"
+    ></app-panel-card
+    ><app-panel-card
+      name="Your tasks"
+      description="Here you can find all tasks managed by you"
+      imgSource="../../assets/_mytasks_card_img.png"
+    ></app-panel-card
+    ><app-panel-card
+      name="Admininstator panel"
+      description="Here you can find all of administrator settings"
+      imgSource="../../assets/_administrator_card_img.png"
+      (click)="adminPanelClick()"
+    ></app-panel-card>
   </div>
 </div>

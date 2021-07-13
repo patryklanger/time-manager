@@ -1,0 +1,19 @@
+.buckets--container {
+  width: 100vw;
+  display: grid;
+  grid-row-gap: 41px;
+  grid-column-gap: 93px;
+  grid-template-columns: repeat(auto-fit, 375px);
+  margin: 0 auto;
+  padding: 50px;
+  justify-content: center;
+}
+.flex--center {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+.button {
+  margin-top: 69px;
+  margin-bottom: 28px;
+}

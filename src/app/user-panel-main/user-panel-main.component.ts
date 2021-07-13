@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-panel-main',
@@ -7,7 +8,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class UserPanelMainComponent implements OnInit {
   @Input() name = '';
-  constructor() {}
-
+  constructor(private router: Router) {}
+  adminPanelClick = () => {
+    this.router.navigateByUrl('/admin-panel');
+  };
   ngOnInit(): void {}
 }

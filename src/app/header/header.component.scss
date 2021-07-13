@@ -1,51 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;900&display=swap');
-  .header {
-      position: relative;
-      background:transparent;
-      width: 100vw;
-      height: 130px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-        font-weight: 400;
-  }
-  .header::after {
-      position: absolute;
-      content: '';
-      width: 110%;
-      height: 110%;
-      top: 0;
-      left: 0;
-      transform: translate(-5%, -5%);
-      background: #616161;
-      z-index: -1;
-      filter: blur(4px);
-  }
-  .logo {
-      height: 120px;
-      display: block;
-      margin-left: 6.04vw;
-  }
-  .links {
-      display: flex;
-      flex-direction: row;
-      justify-self: flex-end;
-      align-items: center;
-      margin-right: 5.56vw;
-  }
-  .link--element {
-      display: flex;
-      height: fit-content;
-      align-items: center;
-      margin-left: 90px;
-      cursor: pointer;
-
-  }
-  .link--element:first-of-type {
-      margin-left: 0;
-  }
-  .link-img {
-      width: 26px;
-      margin-right: 7px;
-      object-fit: scale-down;
-  }
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;900&display=swap");
+.header {
+  position: relative;
+  background: transparent;
+  width: 100vw;
+  height: 130px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-weight: 400;
+}
+.header::after {
+  position: absolute;
+  content: "";
+  width: 110%;
+  height: 110%;
+  top: 0;
+  left: 0;
+  transform: translate(-5%, -5%);
+  background: #616161;
+  z-index: -1;
+  filter: blur(4px);
+}
+.logo {
+  height: 120px;
+  display: block;
+  margin-left: 6.04vw;
+  cursor: pointer;
+}
+.links {
+  display: flex;
+  flex-direction: row;
+  justify-self: flex-end;
+  align-items: center;
+  margin-right: 5.56vw;
+}
+.link--element {
+  display: flex;
+  height: fit-content;
+  align-items: center;
+  margin-left: 90px;
+  cursor: pointer;
+}
+.link--element:first-of-type {
+  margin-left: 0;
+}
+.link-img {
+  width: 26px;
+  margin-right: 7px;
+  object-fit: scale-down;
+}
