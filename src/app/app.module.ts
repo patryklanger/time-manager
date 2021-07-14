@@ -17,6 +17,10 @@ import { TasksPanelComponent } from './tasks-panel/tasks-panel.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomModalComponent } from './custom-modal/custom-modal.component';
+import { MyBucketsComponent } from './my-buckets/my-buckets.component';
+import { AllBucketsForUserComponent } from './all-buckets-for-user/all-buckets-for-user.component';
+import { TasksOfBucketComponent } from './tasks-of-bucket/tasks-of-bucket.component';
+import { EditBucketComponent } from './edit-bucket/edit-bucket.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +37,10 @@ import { CustomModalComponent } from './custom-modal/custom-modal.component';
     TasksPanelComponent,
     AddTaskComponent,
     CustomModalComponent,
+    MyBucketsComponent,
+    AllBucketsForUserComponent,
+    TasksOfBucketComponent,
+    EditBucketComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, BrowserAnimationsModule],
   providers: [],

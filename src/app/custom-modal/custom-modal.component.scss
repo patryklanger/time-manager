@@ -6,6 +6,7 @@
   height: 110vh;
   transform: translate(-5vw, -5vh);
   backdrop-filter: blur(5px);
+  z-index: 19;
 }
 .flex--center {
   position: fixed;
@@ -16,11 +17,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 21;
 }
 .modal--window {
-  padding: 20px 116px 38px 116px;
+  padding: 46px 116px 38px 116px;
   background: #c4c4c4;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+  z-index: 1;
 }
 .modal--window h1 {
   font-style: normal;

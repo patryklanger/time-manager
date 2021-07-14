@@ -5,21 +5,45 @@
     src="../../assets/header/_logo_.png"
   />
   <div class="links">
-    <div class="link--element" (click)="onBucketsClick()">
-      <img class="link-img" src="../../assets/header/_bucket.png" />
-      <p>Buckets</p>
+    <div class="dropdown--helper">
+      <button
+        class="link--element"
+        (click)="onBucketsClick()"
+        routerLink="/buckets"
+        routerLinkActive="active"
+      >
+        <img class="link-img" src="../../assets/header/_bucket.png" />
+        <p>Buckets</p>
+      </button>
+      <div class="dropdown">
+        <ul>
+          <li>
+            <div class="dropdown--element" (click)="onBucketsClick()">
+              <p>Your buckets</p>
+            </div>
+          </li>
+          <li>
+            <div class="dropdown--element" (click)="onAllBucketsClick()"><p>All buckets</p></div>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div class="link--element" (click)="onTasksClick()">
+    <button
+      class="link--element"
+      (click)="onTasksClick()"
+      routerLink="/tasks"
+      routerLinkActive="active"
+    >
       <img class="link-img" src="../../assets/header/_tasks.png" />
       <p>Tasks</p>
-    </div>
-    <div class="link--element">
+    </button>
+    <button class="link--element">
       <img class="link-img" src="../../assets/header/_profile.png" />
       <p>Edit profile</p>
-    </div>
-    <div class="link--element">
+    </button>
+    <button class="link--element">
       <img class="link-img" src="../../assets/header/_logout.png" />
       <p>Logout</p>
-    </div>
+    </button>
   </div>
 </div>

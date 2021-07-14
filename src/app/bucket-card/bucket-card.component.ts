@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bucket-card',
@@ -6,11 +7,36 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./bucket-card.component.scss'],
 })
 export class BucketCardComponent implements OnInit {
-  @Input() author = '';
-  @Input() bucketName = '';
-  @Input() description = '';
-  @Input() maxTasksAmount = '';
-  constructor() {}
+  // @Input() owner = '';
+  // @Input() name = '';
+  // @Input() description = '';
+  // @Input() maxTaskCount = '';
+  @Output() close = new EventEmitter<boolean>();
+  showBucketOptions = false;
+  showEditBucket = false;
+  @Input() bucket = {
+    bucketId: 1,
+    owner: '',
+    name: '',
+    description: '',
+    maxTaskCount: '',
+  };
+  constructor(private router: Router) {}
+  bucketClicked() {
+    this.showBucketOptions = true;
+  }
+  onShowTasksClick() {
+    // this.router.navigate(['/tasks/bucket'], {
+    //   queryParams: { bucketId: this.bucket.bucketId },
+    this.router.navigateByUrl('tasks/bucket/' + this.bucket.bucketId);
+  }
+  onEditBucketClick() {
+    this.showBucketOptions = false;
+    this.showEditBucket = true;
+  }
+  onEditBucketClose() {
+    this.showEditBucket = false;
+  }
 
   ngOnInit(): void {}
 }

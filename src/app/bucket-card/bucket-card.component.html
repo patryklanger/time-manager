@@ -1,9 +1,33 @@
-<div class="card">
-  <p class="author">{{ author }}</p>
-  <p class="bucketName">{{ bucketName }}</p>
+<div class="card" (click)="bucketClicked()">
+  <p class="author">{{ bucket.owner }}</p>
+  <p class="bucketName">{{ bucket.name }}</p>
   <div class="description">
     <p class="placeholder">description:</p>
-    <p class="body">{{ description }}</p>
+    <p class="body">{{ bucket.description }}</p>
   </div>
-  <p class="taskAmount">max tasks amount: {{ maxTasksAmount }}</p>
+  <p class="taskAmount">max tasks amount: {{ bucket.maxTaskCount }}</p>
 </div>
+<app-custom-modal *ngIf="showBucketOptions">
+  <h1 style="text-align: center">
+    What do you want to do<br />with that bucket?
+  </h1>
+  <div class="row">
+    <button class="button button--grey" (click)="onEditBucketClick()">
+      Edit
+    </button>
+    <button class="button button--grey">Delete</button>
+  </div>
+  <div class="row">
+    <button class="button button--grey" style="width: 209px; padding: 25px 0">
+      Show members
+    </button>
+    <button class="button button--grey" (click)="onShowTasksClick()">
+      Show tasks
+    </button>
+  </div>
+</app-custom-modal>
+<app-edit-bucket
+  *ngIf="showEditBucket"
+  [bucketId]="bucket.bucketId.toString()"
+  (close)="onEditBucketClose()"
+></app-edit-bucket>

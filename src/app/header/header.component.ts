@@ -13,10 +13,13 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/user-panel');
   };
   onBucketsClick = () => {
-    this.router.navigateByUrl('/buckets');
+    this.router.navigateByUrl('/buckets/my');
   };
   onTasksClick = () => {
     this.router.navigateByUrl('/tasks');
+  };
+  onAllBucketsClick = () => {
+    this.router.navigateByUrl('/buckets/all');
   };
 
   ngOnInit(): void {}

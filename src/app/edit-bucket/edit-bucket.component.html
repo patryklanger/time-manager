@@ -1,0 +1,39 @@
+<app-modal-text-insertion
+  name="Edit bucket's name"
+  label="Bucket name"
+  placeholder="Type in new bucket name"
+  button="Next"
+  (cancel)="onCancelClick()"
+  (value)="onNameAdded($event)"
+  *ngIf="modals.name"
+></app-modal-text-insertion>
+<app-modal-text-insertion
+  name="Edit bucket's description"
+  label="Description"
+  placeholder="Type in new backet description"
+  button="Next"
+  (cancel)="onCancelClick()"
+  (value)="onDescriptionAdded($event)"
+  *ngIf="modals.description"
+  [textArea]="true"
+></app-modal-text-insertion>
+<app-modal-text-insertion
+  type="number"
+  name="Edit bucket's maximal tasks amount"
+  label="Maximal tasks amount"
+  placeholder="Type in new maximal tasks amount"
+  button="Next"
+  (cancel)="onCancelClick()"
+  (value)="onMaxTaskAdded($event)"
+  *ngIf="modals.maxTask"
+></app-modal-text-insertion>
+<app-modal-text-insertion
+  name="Edit bucket's bucket team"
+  label="Members"
+  placeholder="Start typing your collegue's e-mail address"
+  button="Add bucket"
+  (cancel)="onCancelClick()"
+  (value)="onMembersAdded($event)"
+  *ngIf="modals.team"
+  [textArea]="true"
+></app-modal-text-insertion>

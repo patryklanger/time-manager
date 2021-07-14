@@ -4,6 +4,9 @@ import { UserPanelMainComponent } from './user-panel-main/user-panel-main.compon
 import { BucketsPanelComponent } from './buckets-panel/buckets-panel.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { TasksPanelComponent } from './tasks-panel/tasks-panel.component';
+import { MyBucketsComponent } from './my-buckets/my-buckets.component';
+import { AllBucketsForUserComponent } from './all-buckets-for-user/all-buckets-for-user.component';
+import { TasksOfBucketComponent } from './tasks-of-bucket/tasks-of-bucket.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user-panel', pathMatch: 'full' },
@@ -12,12 +15,20 @@ const routes: Routes = [
     component: UserPanelMainComponent,
   },
   {
-    path: 'buckets',
-    component: BucketsPanelComponent,
+    path: 'buckets/my',
+    component: MyBucketsComponent,
+  },
+  {
+    path: 'buckets/all',
+    component: AllBucketsForUserComponent,
   },
   {
     path: 'admin-panel',
     component: AdminPanelComponent,
+  },
+  {
+    path: 'tasks/bucket/:id',
+    component: TasksOfBucketComponent,
   },
   {
     path: 'tasks',
