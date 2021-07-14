@@ -21,6 +21,7 @@ import { MyBucketsComponent } from './my-buckets/my-buckets.component';
 import { AllBucketsForUserComponent } from './all-buckets-for-user/all-buckets-for-user.component';
 import { TasksOfBucketComponent } from './tasks-of-bucket/tasks-of-bucket.component';
 import { EditBucketComponent } from './edit-bucket/edit-bucket.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { EditBucketComponent } from './edit-bucket/edit-bucket.component';
     AllBucketsForUserComponent,
     TasksOfBucketComponent,
     EditBucketComponent,
+    EditProfileComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, BrowserAnimationsModule],
   providers: [],

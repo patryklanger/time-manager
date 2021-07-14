@@ -6,13 +6,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./modal-text-insertion.component.scss'],
 })
 export class ModalTextInsertionComponent implements OnInit {
+  @Input() inputValue = '';
   @Input() type = 'text';
   @Input() name = '';
   @Input() label = '';
   @Input() placeholder = '';
   @Input() button = 'next';
   @Input() textArea = false;
-  _textValue = '';
+  @Input() _textValue = '';
   @Output() value = new EventEmitter<string>();
   @Output() cancel = new EventEmitter<boolean>();
   constructor() {}

@@ -37,7 +37,9 @@ export class EditBucketComponent implements OnInit {
     this.modals.team = true;
   }
   onMembersAdded(members: string) {
-    this.newBucket.team.push(members);
+    const teamX = [''];
+    teamX.push(members);
+    this.newBucket.team = teamX;
     this.onSuccessfullyAdded();
   }
   onCancelClick() {
@@ -46,7 +48,6 @@ export class EditBucketComponent implements OnInit {
     this.modals.maxTask = false;
     this.modals.team = false;
     this.close.emit(false);
-    console.log('close me');
   }
   onSuccessfullyAdded() {
     console.log(this.newBucket);
@@ -55,6 +56,7 @@ export class EditBucketComponent implements OnInit {
     this.modals.maxTask = false;
     this.modals.team = false;
     this.close.emit(true);
+    console.log(this.newBucket);
   }
   ngOnInit(): void {}
 }

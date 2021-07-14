@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  showEditProfile = false;
   constructor(private router: Router) {}
 
   onLogoClick = () => {
@@ -21,6 +22,12 @@ export class HeaderComponent implements OnInit {
   onAllBucketsClick = () => {
     this.router.navigateByUrl('/buckets/all');
   };
+  onEditProfileClick() {
+    this.showEditProfile = true;
+  }
+  onEditProfileClose() {
+    this.showEditProfile = false;
+  }
 
   ngOnInit(): void {}
 }
