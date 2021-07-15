@@ -18,5 +18,11 @@ export class UserPanelMainComponent implements OnInit {
   onYourBucketsClicked() {
     this.router.navigateByUrl('/buckets/my');
   }
+  onTasksClicked() {
+    this.router.navigateByUrl('tasks/all');
+  }
+  onYourTasksClicked() {
+    this.router.navigateByUrl('tasks/my');
+  }
   ngOnInit(): void {}
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-user-card',
@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class UserCardComponent implements OnInit {
   showEditProfile = false;
   color = '#727272';
-  user = {
+  @Input() user = {
     userId: 0,
     userName: '',
     firstName: '',
@@ -22,15 +22,5 @@ export class UserCardComponent implements OnInit {
     this.showEditProfile = !this.showEditProfile;
   }
 
-  ngOnInit(): void {
-    this.user = {
-      userId: 12,
-      userName: 'patryklanger',
-      firstName: 'Patryk',
-      lastName: 'Langer',
-      position: 'Intern',
-      eMail: 'patryklanger@icloud.com',
-      role: 'Intern',
-    };
-  }
+  ngOnInit(): void {}
 }

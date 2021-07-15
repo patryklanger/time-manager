@@ -37,6 +37,9 @@ export class BucketCardComponent implements OnInit {
   onEditBucketClose() {
     this.showEditBucket = false;
   }
+  onBucketOptionsClose() {
+    this.showBucketOptions = false;
+  }
 
   ngOnInit(): void {}
 }

@@ -10,6 +10,8 @@ import { TasksOfBucketComponent } from './tasks-of-bucket/tasks-of-bucket.compon
 import { MyTasksComponent } from './my-tasks/my-tasks.component';
 import { AllTasksForUserComponent } from './all-tasks-for-user/all-tasks-for-user.component';
 import { UsersPanelComponent } from './users-panel/users-panel.component';
+import { AllBucketsComponent } from './all-buckets/all-buckets.component';
+import { AllTasksComponent } from './all-tasks/all-tasks.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user-panel', pathMatch: 'full' },
@@ -34,12 +36,20 @@ const routes: Routes = [
     component: AllBucketsForUserComponent,
   },
   {
-    path: 'users',
+    path: 'admin-panel',
+    component: AdminPanelComponent,
+  },
+  {
+    path: 'admin-panel/users',
     component: UsersPanelComponent,
   },
   {
-    path: 'admin-panel',
-    component: AdminPanelComponent,
+    path: 'admin-panel/tasks',
+    component: AllTasksComponent,
+  },
+  {
+    path: 'admin-panel/buckets',
+    component: AllBucketsComponent,
   },
   {
     path: 'tasks/bucket/:id',

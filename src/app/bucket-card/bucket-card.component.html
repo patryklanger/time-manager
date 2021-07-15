@@ -7,7 +7,7 @@
   </div>
   <p class="taskAmount">max tasks amount: {{ bucket.maxTaskCount }}</p>
 </div>
-<app-custom-modal *ngIf="showBucketOptions">
+<app-custom-modal *ngIf="showBucketOptions" (close)="onBucketOptionsClose()">
   <h1 style="text-align: center">
     What do you want to do<br />with that bucket?
   </h1>

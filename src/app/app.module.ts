@@ -26,6 +26,8 @@ import { MyTasksComponent } from './my-tasks/my-tasks.component';
 import { AllTasksForUserComponent } from './all-tasks-for-user/all-tasks-for-user.component';
 import { UsersPanelComponent } from './users-panel/users-panel.component';
 import { UserCardComponent } from './user-card/user-card.component';
+import { AllBucketsComponent } from './all-buckets/all-buckets.component';
+import { AllTasksComponent } from './all-tasks/all-tasks.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { UserCardComponent } from './user-card/user-card.component';
     AllTasksForUserComponent,
     UsersPanelComponent,
     UserCardComponent,
+    AllBucketsComponent,
+    AllTasksComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, BrowserAnimationsModule],
   providers: [],

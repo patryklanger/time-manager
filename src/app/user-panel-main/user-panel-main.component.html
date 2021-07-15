@@ -17,11 +17,13 @@
       name="Tasks"
       description="Here you can find all tasks you are assigned to"
       imgSource="../../assets/_tasks_card_img.png"
+      (click)="onTasksClicked()"
     ></app-panel-card
     ><app-panel-card
       name="Your tasks"
       description="Here you can find all tasks managed by you"
       imgSource="../../assets/_mytasks_card_img.png"
+      (click)="onYourTasksClicked()"
     ></app-panel-card
     ><app-panel-card
       name="Admininstator panel"
