@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-edit-profile',
@@ -6,6 +6,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./edit-profile.component.scss'],
 })
 export class EditProfileComponent implements OnInit {
+  @Input() userId = -1;
+  @Input() title = 'Edit profile';
+  @Input() subTitle =
+    'If you want to edit your profile just <br />change information below';
   @Output() close = new EventEmitter<boolean>();
   currentUser = {
     firstName: 'Patryk',

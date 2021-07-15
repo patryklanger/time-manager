@@ -1,0 +1,36 @@
+<div class="card">
+  <p class="username">{{ user.userName }}</p>
+  <div class="card--inner">
+    <div class="priority" [style.background]="color"></div>
+    <div class="inner--element">
+      <p class="label firstName--label">First name:</p>
+      <p class="value firstName--value">{{ user.firstName }}</p>
+    </div>
+    <div class="inner--element">
+      <p class="label lastName--label">Last name:</p>
+      <p class="value lastName--value">{{ user.lastName }}</p>
+    </div>
+    <div class="inner--element">
+      <p class="label position--label">Position:</p>
+      <p class="value position--value">{{ user.position }}</p>
+    </div>
+    <div class="inner--element">
+      <p class="label eMail--label">E-mail:</p>
+      <p class="value eMail--value">{{ user.eMail }}</p>
+    </div>
+    <div class="inner--element">
+      <p class="label role--label">Role:</p>
+      <p class="value role--value">{{ user.role }}</p>
+    </div>
+    <div class="inner--element buttons--element">
+      <img src="../../assets/_edit_button.png" (click)="onEditToggle()" />
+      <img src="../../assets/_log_button.png" />
+      <img src="../../assets/_delete_button.png" />
+    </div>
+  </div>
+</div>
+<app-edit-profile
+  [userId]="user.userId"
+  *ngIf="showEditProfile"
+  (close)="onEditToggle()"
+></app-edit-profile>

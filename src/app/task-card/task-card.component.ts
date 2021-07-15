@@ -1,5 +1,12 @@
 import { decimalDigest } from '@angular/compiler/src/i18n/digest';
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 
 @Component({
   selector: 'app-task-card',
@@ -18,6 +25,7 @@ export class TaskCardComponent implements OnInit {
   // @Input() priority = '';
   timeleft = '';
   color = '';
+  showDetails = false;
   @Input() managerTask = {
     taskId: 0,
     bucketName: '',
@@ -47,7 +55,23 @@ export class TaskCardComponent implements OnInit {
     medium: '#BABD10',
     high: '#B52920',
   };
-  constructor() {}
+  constructor(private elementRef: ElementRef, private renderer: Renderer2) {
+    this.renderer.listen('window', 'click', (e: Event) => {
+      let menu =
+        elementRef.nativeElement.getElementsByClassName('options--menu');
+      let toggle =
+        elementRef.nativeElement.getElementsByClassName('details--toggle');
+      let toggleImg = elementRef.nativeElement.getElementsByClassName(
+        'details--toggle--img'
+      );
+      if (
+        e.target !== menu[0] &&
+        e.target !== toggle[0] &&
+        e.target !== toggleImg[0]
+      )
+        this.showDetails = false;
+    });
+  }
   getColor() {
     if (this.managerCard) {
       if (this.managerTask.taskPriority == 1)
@@ -61,6 +85,9 @@ export class TaskCardComponent implements OnInit {
         this.color = this.priorityColor.medium;
       else this.color = this.priorityColor.high;
     }
+  }
+  onDetailsClicked() {
+    this.showDetails = !this.showDetails;
   }
   ngOnInit(): void {
     this.normalCard = !this.managerCard;

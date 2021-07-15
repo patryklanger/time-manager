@@ -24,9 +24,31 @@
       <p class="value author--value">{{ managerTask.taskOwner }}</p>
     </div>
     <div class="inner--element buttons--element">
-      <img src="../../assets/_play_button.png" />
-      <img src="../../assets/_stop_button.png" />
-      <img src="../../assets/_more_button.png" />
+      <div class="task--options--button">
+        <img src="../../assets/_play_button.png" />
+      </div>
+      <div class="task--options--button">
+        <img src="../../assets/_stop_button.png" />
+      </div>
+      <div class="dropdown--manager">
+        <button
+          class="task--options--button details--toggle"
+          (click)="onDetailsClicked()"
+        >
+          <img
+            class="details--toggle--img"
+            src="../../assets/_more_button.png"
+          />
+        </button>
+        <div class="options--menu" *ngIf="showDetails">
+          <ul>
+            <li><a href="#">Task's users</a></li>
+            <li><a href="#">Task's details</a></li>
+            <li><a href="#">Edit task</a></li>
+            <li><a href="#">Delete task</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>

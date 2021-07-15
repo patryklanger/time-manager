@@ -24,6 +24,8 @@ import { EditBucketComponent } from './edit-bucket/edit-bucket.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { MyTasksComponent } from './my-tasks/my-tasks.component';
 import { AllTasksForUserComponent } from './all-tasks-for-user/all-tasks-for-user.component';
+import { UsersPanelComponent } from './users-panel/users-panel.component';
+import { UserCardComponent } from './user-card/user-card.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { AllTasksForUserComponent } from './all-tasks-for-user/all-tasks-for-use
     EditProfileComponent,
     MyTasksComponent,
     AllTasksForUserComponent,
+    UsersPanelComponent,
+    UserCardComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, BrowserAnimationsModule],
   providers: [],

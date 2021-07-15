@@ -1,9 +1,7 @@
 <app-custom-modal *ngIf="showEditProfile">
   <div class="center--flex">
-    <h1>Edit profile</h1>
-    <h3>
-      If you want to edit your profile just <br />change information below
-    </h3>
+    <h1>{{ title }}</h1>
+    <h3 [innerHTML]="subTitle"></h3>
     <div class="input--container">
       <p>First name</p>
       <input
@@ -81,7 +79,9 @@
       <input type="password" placeholder="Type in current password" required />
     </div>
     <div class="button--container">
-      <button class="button button--black" (click)="onAccountActionConfirm()">Confirm</button>
+      <button class="button button--black" (click)="onAccountActionConfirm()">
+        Confirm
+      </button>
       <button class="button button--black" (click)="onCancelClick()">
         Cancel
       </button>

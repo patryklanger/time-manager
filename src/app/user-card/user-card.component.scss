@@ -71,7 +71,7 @@ button {
   line-height: 19px;
   font-weight: 500;
 }
-.taskName {
+.username {
   font-size: 24px;
   line-height: 36px;
   margin-top: 4px;
@@ -104,6 +104,9 @@ button {
   align-items: center;
   z-index: 1;
 }
+.buttons--element img {
+  cursor: pointer;
+}
 .task--options--button img {
   width: 38px;
   object-fit: scale-down;
@@ -123,26 +126,6 @@ button {
 .task--options--button:last-of-type {
   position: relative;
 }
-.options--menu {
-  background: rgb(135, 135, 135);
-  position: absolute;
-  width: 400%;
-  padding: 15px 20px 10px 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-.dropdown--manager {
-  position: relative;
-  display: inline-block;
-}
-.dropdown--manager ul {
-  list-style: none;
-}
-.dropdown--manager ul li {
-  margin-bottom: 10px;
-  border-bottom: 2px solid black;
-}
-.dropdown--manager a {
-  color: black;
-  text-decoration: none;
+.buttons--element {
+  margin-top: 8px;
 }
