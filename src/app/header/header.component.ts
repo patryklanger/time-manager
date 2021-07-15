@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/buckets/my');
   };
   onTasksClick = () => {
-    this.router.navigateByUrl('/tasks');
+    this.router.navigateByUrl('/tasks/my');
   };
   onAllBucketsClick = () => {
     this.router.navigateByUrl('/buckets/all');
@@ -27,6 +27,9 @@ export class HeaderComponent implements OnInit {
   }
   onEditProfileClose() {
     this.showEditProfile = false;
+  }
+  onAllTasksClick() {
+    this.router.navigateByUrl('/tasks/all');
   }
 
   ngOnInit(): void {}

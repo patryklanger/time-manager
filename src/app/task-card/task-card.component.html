@@ -1,15 +1,15 @@
-<div class="card">
-  <p class="bucket">{{ bucket }}</p>
-  <p class="taskName">{{ taskName }}</p>
+<div class="card" *ngIf="managerCard">
+  <p class="bucket">{{ managerTask.bucketName }}</p>
+  <p class="taskName">{{ managerTask.taskName }}</p>
   <div class="card--inner">
     <div class="priority" [style.background]="color"></div>
     <div class="inner--element">
       <p class="label deadline--label">Deadline:</p>
-      <p class="value deadline--value">{{ deadline }}</p>
+      <p class="value deadline--value">{{ managerTask.taskDeadline }}</p>
     </div>
     <div class="inner--element">
       <p class="label state--label">Task state:</p>
-      <p class="value state--value">{{ state }}</p>
+      <p class="value state--value">{{ managerTask.taskState }}</p>
     </div>
     <div class="inner--element">
       <p class="label timeleft--label">Time left:</p>
@@ -17,11 +17,11 @@
     </div>
     <div class="inner--element">
       <p class="label editors--label">Editors:</p>
-      <p class="value editors--value">{{ editors }}</p>
+      <p class="value editors--value">{{ managerTask.taskEditorsCount }}</p>
     </div>
     <div class="inner--element">
       <p class="label author--label">Author:</p>
-      <p class="value author--value">{{ author }}</p>
+      <p class="value author--value">{{ managerTask.taskOwner }}</p>
     </div>
     <div class="inner--element buttons--element">
       <img src="../../assets/_play_button.png" />
@@ -29,5 +29,35 @@
       <img src="../../assets/_more_button.png" />
     </div>
   </div>
-  <p class="taskAmount">max tasks amount: {{ maxTasksAmount }}</p>
+</div>
+<div class="card" *ngIf="normalCard">
+  <p class="bucket">{{ task.bucketName }}</p>
+  <p class="taskName">{{ task.taskName }}</p>
+  <div class="card--inner">
+    <div class="priority" [style.background]="color"></div>
+    <div class="inner--element">
+      <p class="label deadline--label">Deadline:</p>
+      <p class="value deadline--value">{{ task.taskDeadline }}</p>
+    </div>
+    <div class="inner--element">
+      <p class="label state--label">Start time:</p>
+      <p class="value state--value">{{ task.creationTime }}</p>
+    </div>
+    <div class="inner--element">
+      <p class="label timeleft--label">Est. duration:</p>
+      <p class="value timeleft--value">{{ task.estDuration }}</p>
+    </div>
+    <div class="inner--element">
+      <p class="label editors--label">Time left:</p>
+      <p class="value editors--value">{{ timeleft }}</p>
+    </div>
+    <div class="inner--element">
+      <p class="label author--label">Author:</p>
+      <p class="value author--value">{{ task.taskOwner }}</p>
+    </div>
+    <div class="inner--element buttons--element">
+      <img src="../../assets/_play_button.png" />
+      <img src="../../assets/_stop_button.png" />
+    </div>
+  </div>
 </div>

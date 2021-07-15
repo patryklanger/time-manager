@@ -12,5 +12,11 @@ export class UserPanelMainComponent implements OnInit {
   adminPanelClick = () => {
     this.router.navigateByUrl('/admin-panel');
   };
+  onBucketsClicked() {
+    this.router.navigateByUrl('/buckets/all');
+  }
+  onYourBucketsClicked() {
+    this.router.navigateByUrl('/buckets/my');
+  }
   ngOnInit(): void {}
 }

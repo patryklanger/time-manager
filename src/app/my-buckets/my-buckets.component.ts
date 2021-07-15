@@ -21,7 +21,7 @@ export class MyBucketsComponent implements OnInit {
 
   ngOnInit(): void {
     this.title = 'Buckets managed by you';
-    this.subtitle = 'Here you can find all buckets manahed by you';
+    this.subtitle = 'Here you can find all buckets managed by you';
     this.buckets = [
       {
         bucketId: 1,
