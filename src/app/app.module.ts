@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +30,22 @@ import { UserCardComponent } from './user-card/user-card.component';
 import { AllBucketsComponent } from './all-buckets/all-buckets.component';
 import { AllTasksComponent } from './all-tasks/all-tasks.component';
 
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: 'http://10.1.17.45:8080/auth',
+        realm: 'time-manager',
+        clientId: 'Spring-boot-timemanager',
+      },
+      initOptions: {
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri:
+          window.location.origin + '/assets/silent-check-sso.html',
+      },
+    });
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,8 +73,21 @@ import { AllTasksComponent } from './all-tasks/all-tasks.component';
     AllBucketsComponent,
     AllTasksComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, BrowserAnimationsModule],
-  providers: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    KeycloakAngularModule,
+  ],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService],
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
