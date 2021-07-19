@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 
 @Injectable({
@@ -15,7 +14,7 @@ export class AuthGuard extends KeycloakAuthGuard {
     super(router, keycloak);
   }
   
-  async isAccessAllowed(
+  async canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Promise<boolean | UrlTree> {
     
@@ -24,7 +23,14 @@ export class AuthGuard extends KeycloakAuthGuard {
         redirectUri: window.location.origin + state.url,
       });
     }
+      
+    const requiredRoles = route.data.roles;
 
-    return this.authenticated;
+    if(!(requiredRoles instanceof Array) || requiredRoles.length === 0) {
+      return true;
+    }
+
+    return requiredRoles.every((role)=>this.roles.includes(role))
+
   }
 }

@@ -35,11 +35,11 @@ function initializeKeycloak(keycloak: KeycloakService) {
     keycloak.init({
       config: {
         url: 'http://10.1.17.45:8080/auth',
-        realm: 'time-manager',
-        clientId: 'Spring-boot-timemanager',
+        realm: 'test-realm',
+        clientId: 'front-end-client',
       },
       initOptions: {
-        onLoad: 'check-sso',
+        onLoad: 'login-required',
         silentCheckSsoRedirectUri:
           window.location.origin + '/assets/silent-check-sso.html',
       },
