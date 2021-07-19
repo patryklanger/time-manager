@@ -1,0 +1,90 @@
+<app-custom-modal *ngIf="showEditProfile">
+  <div class="center--flex">
+    <h1>{{ title }}</h1>
+    <h3 [innerHTML]="subTitle"></h3>
+    <div class="input--container">
+      <p>First name</p>
+      <input
+        [(ngModel)]="currentUser.firstName"
+        placeholder="Your first name"
+        required
+      />
+    </div>
+    <div class="input--container">
+      <p>Last name</p>
+      <input
+        [(ngModel)]="currentUser.lastName"
+        placeholder="Your last name"
+        required
+      />
+    </div>
+    <div class="input--container">
+      <p>Email</p>
+      <input
+        [(ngModel)]="currentUser.email"
+        type="email"
+        placeholder="Your email address"
+        required
+      />
+    </div>
+    <div class="input--container">
+      <p>Password</p>
+      <input type="password" placeholder="Type in new password" required />
+    </div>
+    <div class="input--container">
+      <p>Confirm password</p>
+      <input type="password" placeholder="Confirm new password" required />
+    </div>
+    <div class="input--container">
+      <p>Current password</p>
+      <input type="password" placeholder="Type in current password" required />
+    </div>
+    <div class="button--container">
+      <button class="button button--black">Confirm</button>
+      <button class="button button--black" (click)="onCancelClick()">
+        Cancel
+      </button>
+    </div>
+    <a (click)="onDeleteProfileClick()">Delete or deactivate account</a>
+  </div>
+</app-custom-modal>
+<app-custom-modal *ngIf="showDeleteProfile">
+  <div class="center--flex">
+    <h1>What do you <br />want to do next?</h1>
+    <h3>Do you want to delete or <br />deactivate your account?</h3>
+    <div class="radio--container">
+      <div class="radio--element">
+        <input
+          type="radio"
+          id="delete"
+          name="deleteDeactivate"
+          value="delete"
+          (click)="radioChecked('delete')"
+        />
+        <label for="delete">Delete</label>
+      </div>
+      <div class="radio--element">
+        <input
+          type="radio"
+          id="deactivate"
+          name="deleteDeactivate"
+          value="deactivate"
+          (click)="radioChecked('deactivate')"
+        />
+        <label for="deactivate">Deactivate</label>
+      </div>
+    </div>
+    <div class="input--container">
+      <p>Current password</p>
+      <input type="password" placeholder="Type in current password" required />
+    </div>
+    <div class="button--container">
+      <button class="button button--black" (click)="onAccountActionConfirm()">
+        Confirm
+      </button>
+      <button class="button button--black" (click)="onCancelClick()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</app-custom-modal>

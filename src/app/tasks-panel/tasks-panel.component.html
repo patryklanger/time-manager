@@ -1,0 +1,21 @@
+<h1>{{ title }}</h1>
+<h3>{{ subTitle }}</h3>
+
+<div class="tasks--cards--container">
+  <ng-template ngFor let-task *ngIf="managerTask" [ngForOf]="managerTasks">
+    <app-task-card [managerTask]="task"></app-task-card>
+  </ng-template>
+  <ng-template ngFor let-task *ngIf="normalTask" [ngForOf]="tasks">
+    <app-task-card [task]="task" [managerCard]="managerTask"></app-task-card>
+  </ng-template>
+</div>
+<div class="flex--center">
+  <button class="button button--green" (click)="onShowAdding()">
+    Add new task
+  </button>
+</div>
+
+<app-add-task
+  *ngIf="addTaskShow"
+  (closeEmitter)="onCloseAdding()"
+></app-add-task>

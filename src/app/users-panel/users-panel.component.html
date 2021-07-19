@@ -1,0 +1,8 @@
+<h1>{{ title }}</h1>
+<h3>{{ subTitle }}</h3>
+
+<div class="users--cards--container">
+  <ng-template ngFor let-user [ngForOf]="users">
+    <app-user-card [user]="user"></app-user-card>
+  </ng-template>
+</div>

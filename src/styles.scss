@@ -1,0 +1,131 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '~@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$time-manager-primary: mat.define-palette(mat.$indigo-palette);
+$time-manager-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$time-manager-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$time-manager-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $time-manager-primary,
+      accent: $time-manager-accent,
+      warn: $time-manager-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($time-manager-theme);
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;900&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Poppins;
+}
+body {
+  background: #999;
+  width: 100vw;
+  overflow-x: hidden;
+}
+h1 {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 54px;
+  text-align: center;
+}
+h3 {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 27px;
+  text-align: center;
+
+  color: #212121;
+}
+.button {
+  padding: 25px 36px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: 0;
+  min-width: 209px;
+  text-align: center;
+  cursor: pointer;
+}
+.button:focus {
+  outline: none;
+}
+.button:active {
+  transform: scale(1.1);
+}
+.button--green {
+  background: #678c5e;
+  color: #fff;
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 300;
+}
+.button--red {
+  background: #aa6767;
+  color: #fff;
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 300;
+}
+.button--grey {
+  background: #5a5a5a;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 27px;
+
+  color: #ffffff;
+}
+.button--black {
+  padding: 0;
+  width: 100px !important;
+  min-width: unset;
+  height: 50px;
+  background: #000000;
+  border: 0.6px solid #ffffff;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+  color: #ffffff;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

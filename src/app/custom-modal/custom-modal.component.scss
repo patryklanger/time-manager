@@ -1,0 +1,121 @@
+.blur--effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 110vw;
+  height: 110vh;
+  transform: translate(-5vw, -5vh);
+  backdrop-filter: blur(5px);
+  z-index: 19;
+}
+.flex--center {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 21;
+}
+.modal--window {
+  padding: 46px 116px 38px 116px;
+  background: #c4c4c4;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+  z-index: 1;
+}
+.modal--window h1 {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 54px;
+  /* identical to box height */
+  color: #212121;
+  text-align: center;
+}
+.modal--window input {
+  display: block;
+  width: 537px;
+  height: 40px;
+  background: #f7f7fa;
+  border: 0;
+  padding: 6px 12px;
+  border-radius: 3px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 27px;
+  /* identical to box height */
+
+  color: rgba(0, 0, 0, 1);
+  margin-bottom: 43px;
+}
+.modal--window input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+.modal--window input:focus {
+  outline: none;
+}
+.modal--window p {
+  margin-top: 23px;
+  margin-bottom: 11px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  /* or 133% */
+
+  display: flex;
+  align-items: center;
+
+  color: rgba(0, 0, 0, 0.75);
+}
+.flex--button {
+  display: flex;
+  justify-content: space-between;
+  width: 503px;
+  justify-self: center;
+}
+.flex--center--button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.modal--window textarea {
+  width: 817px;
+  height: 200px;
+  resize: none;
+  border: 0;
+  border-radius: 3px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 300;
+  padding: 6px 12px;
+  font-size: 18px;
+  line-height: 27px;
+  /* identical to box height */
+
+  color: rgba(0, 0, 0, 1);
+  margin-bottom: 43px;
+}
+.modal--window textarea::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+.modal--window textarea:focus {
+  outline: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.modal--window input::-webkit-outer-spin-button,
+.modal--window input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.modal--window input[type="number"] {
+  -moz-appearance: textfield;
+}

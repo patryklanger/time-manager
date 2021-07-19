@@ -1,0 +1,131 @@
+button {
+  border: 0;
+  outline: none;
+  background: none;
+}
+.card--inner {
+  position: relative;
+  width: 375px;
+  height: 385px;
+  background: #c4c4c4;
+  padding: 17px 7px 22px 7px;
+  font-size: 13px;
+  line-height: 24px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: unset;
+}
+.label {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+}
+.value {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+}
+.inner--element {
+  padding-left: 8px;
+  padding-right: 8px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 122px auto;
+  padding-bottom: 17px;
+  margin-top: 17px;
+  border-bottom: 1px solid black;
+}
+.inner--element:first-of-type {
+  margin-top: 0;
+}
+.placeholder {
+  position: absolute;
+  top: 14px;
+  left: 17px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 16.5px;
+  text-transform: uppercase;
+}
+.bucket {
+  font-size: 13px;
+  line-height: 19px;
+  font-weight: 500;
+}
+.username {
+  font-size: 24px;
+  line-height: 36px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+.taskAmount {
+  text-transform: uppercase;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 700;
+  margin-top: 8px;
+  margin-left: 9px;
+}
+.priority {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 14px;
+  border-radius: 5px 5px 0 0;
+}
+.buttons--element {
+  width: 237px;
+  height: 100%;
+  border: 0;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0px;
+  padding: 8px;
+  align-items: center;
+  z-index: 1;
+}
+.buttons--element img {
+  cursor: pointer;
+}
+.task--options--button img {
+  width: 38px;
+  object-fit: scale-down;
+  cursor: pointer;
+}
+.task--options--button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1/1;
+}
+.task--options--button:hover {
+  background: rgb(135, 135, 135);
+  box-shadow: 2px 2px 2px rgba($color: #000000, $alpha: 0.25);
+  border-radius: 5px;
+}
+.task--options--button:last-of-type {
+  position: relative;
+}
+.buttons--element {
+  margin-top: 8px;
+}
