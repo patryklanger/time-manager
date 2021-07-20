@@ -41,6 +41,7 @@ export class AddTaskComponent implements OnInit {
     this.modals.estDuration = false;
     this.modals.state = true;
   }
+
   onCancelClick() {
     this.closeEmitter.emit(false);
   }

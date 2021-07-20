@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-user-panel-main',
@@ -7,8 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-panel-main.component.scss'],
 })
 export class UserPanelMainComponent implements OnInit {
-  @Input() name = '';
-  constructor(private router: Router) {}
+  userRole = [''];
+  welcomeName = '';
+  constructor(private router: Router, private readonly kc: KeycloakService) {}
   adminPanelClick = () => {
     this.router.navigateByUrl('/admin-panel');
   };
@@ -24,5 +26,18 @@ export class UserPanelMainComponent implements OnInit {
   onYourTasksClicked() {
     this.router.navigateByUrl('tasks/my');
   }
-  ngOnInit(): void {}
+  isAdmin() {
+    if (this.userRole.includes('ADMIN')) return true;
+    return false;
+  }
+  ngOnInit(): void {
+    try {
+      this.userRole = this.kc.getUserRoles();
+      let token: any = this.kc.getKeycloakInstance().tokenParsed;
+      if (token.given_name !== '') this.welcomeName == token.given_name;
+      else this.welcomeName = token.preferred_username;
+    } catch (e) {
+      console.log('failed to load user data', e);
+    }
+  }
 }
