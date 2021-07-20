@@ -11,10 +11,14 @@ export class EditProfileComponent implements OnInit {
   @Input() subTitle =
     'If you want to edit your profile just <br />change information below';
   @Output() close = new EventEmitter<boolean>();
-  currentUser = {
-    firstName: 'Patryk',
-    lastName: 'Langer',
-    email: 'patryklanger@icloud.com',
+  @Input() currentUser = {
+    firstName: '',
+    lastName: '',
+    eMail: '',
+    role: '',
+    position: '',
+    userName: '',
+    password: '',
   };
   showEditProfile = true;
   showDeleteProfile = false;

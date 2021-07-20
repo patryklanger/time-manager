@@ -1,5 +1,6 @@
 <app-buckets-panel
-  [buckets]="buckets" | async
+  *ngIf="dataFetched"
+  [buckets]="buckets"
   [title]="title"
   [subTitle]="subtitle"
 ></app-buckets-panel>

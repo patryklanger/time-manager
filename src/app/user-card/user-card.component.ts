@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class UserCardComponent implements OnInit {
   showEditProfile = false;
+  dataFetched = false;
   color = '#727272';
   @Input() user = {
     userId: 0,
