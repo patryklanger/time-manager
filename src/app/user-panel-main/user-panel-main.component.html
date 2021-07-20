@@ -1,4 +1,4 @@
-<h1 style="text-align: center; margin-top: 105px">Welcome {{ name }}!</h1>
+<h1 style="text-align: center; margin-top: 105px">Welcome {{ welcomeName }}!</h1>
 <div class="flex--center">
   <div class="cards--container">
     <app-panel-card
@@ -30,6 +30,7 @@
       description="Here you can find all of administrator settings"
       imgSource="../../assets/_administrator_card_img.png"
       (click)="adminPanelClick()"
+      *ngIf="isAdmin()"
     ></app-panel-card>
   </div>
 </div>

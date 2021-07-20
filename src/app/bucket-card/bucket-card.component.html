@@ -15,7 +15,9 @@
     <button class="button button--grey" (click)="onEditBucketClick()">
       Edit
     </button>
-    <button class="button button--grey">Delete</button>
+    <button class="button button--grey" (click)="onDeleteBucketClicked()">
+      Delete
+    </button>
   </div>
   <div class="row">
     <button class="button button--grey" style="width: 209px; padding: 25px 0">
@@ -28,6 +30,7 @@
 </app-custom-modal>
 <app-edit-bucket
   *ngIf="showEditBucket"
-  [bucketId]="bucket.bucketId.toString()"
+  [bucketId]="bucket.bucketId"
   (close)="onEditBucketClose()"
+  (bucketEditted)="onBucketEditted($event)"
 ></app-edit-bucket>

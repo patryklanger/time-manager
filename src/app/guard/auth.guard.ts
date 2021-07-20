@@ -14,7 +14,7 @@ export class AuthGuard extends KeycloakAuthGuard {
     super(router, keycloak);
   }
   
-  async canActivate(
+  async isAccessAllowed(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Promise<boolean | UrlTree> {
     
@@ -24,11 +24,13 @@ export class AuthGuard extends KeycloakAuthGuard {
       });
     }
       
-    const requiredRoles = route.data.roles;
+    const requiredRoles = route.data.requiredRoles;
+
 
     if(!(requiredRoles instanceof Array) || requiredRoles.length === 0) {
       return true;
     }
+
 
     return requiredRoles.every((role)=>this.roles.includes(role))
 

@@ -1,5 +1,8 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+import * as GlobalVariables from '../globals';
 
 @Component({
   selector: 'app-bucket-card',
@@ -11,17 +14,29 @@ export class BucketCardComponent implements OnInit {
   // @Input() name = '';
   // @Input() description = '';
   // @Input() maxTaskCount = '';
-  @Output() close = new EventEmitter<boolean>();
+  @Output() delete = new EventEmitter<number>();
   showBucketOptions = false;
   showEditBucket = false;
   @Input() bucket = {
-    bucketId: 1,
+    bucketId: -1,
     owner: '',
     name: '',
     description: '',
     maxTaskCount: '',
+    createdTime: '',
   };
-  constructor(private router: Router) {}
+  response$ = new Observable<any>();
+  subscription = new Subscription();
+  path = GlobalVariables.GlobalServerPath;
+  headers = new HttpHeaders();
+  constructor(private router: Router, private http: HttpClient) {
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers = this.headers.append('Accept', 'application/json');
+  }
+  errorHandler = (err: any) => {
+    alert(err.message);
+    console.log(err);
+  };
   bucketClicked() {
     this.showBucketOptions = true;
   }
@@ -39,6 +54,23 @@ export class BucketCardComponent implements OnInit {
   }
   onBucketOptionsClose() {
     this.showBucketOptions = false;
+  }
+  onBucketEditted(bucket: any) {
+    console.log(bucket);
+    this.bucket = bucket;
+    this.showEditBucket = false;
+  }
+  onDeleteBucketClicked() {
+    let deletePath = this.path + '/buckets/' + this.bucket.bucketId;
+    this.response$ = this.http.delete(deletePath, { headers: this.headers });
+    this.subscription = this.response$.subscribe(
+      (res) => {
+        console.log(res);
+        this.delete.emit(this.bucket.bucketId);
+        this.showBucketOptions = false;
+      },
+      (err) => console.log(err),
+    );
   }
 
   ngOnInit(): void {}

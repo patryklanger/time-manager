@@ -1,4 +1,19 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  ErrorHandler,
+} from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import * as GlobalVariables from '../globals';
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpHeaders,
+} from '@angular/common/http';
+import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-add-bucket',
@@ -7,11 +22,27 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class AddBucketComponent implements OnInit {
   @Output() closeEmitter = new EventEmitter<boolean>();
+  @Output() bucketAdded = new EventEmitter<{
+    bucketId: number;
+    cretedTime: string;
+    description: string;
+    maxTaskCount: string;
+    name: string;
+    owner: string;
+  }>();
   modals = {
     name: true,
     description: false,
     maxTask: false,
     team: false,
+  };
+  responseBucket = {
+    bucketId: -1,
+    cretedTime: '',
+    description: '',
+    maxTaskCount: '',
+    name: '',
+    owner: '',
   };
   newBucket = {
     name: '',
@@ -19,7 +50,19 @@ export class AddBucketComponent implements OnInit {
     maxTask: '',
     team: [''],
   };
-  constructor() {}
+  dataFetched = false;
+  headers = new HttpHeaders();
+  path = GlobalVariables.GlobalServerPath;
+  subscription = new Subscription();
+  response$ = new Observable<any>();
+  constructor(private http: HttpClient) {
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers = this.headers.append('Accept', 'application/json');
+  }
+  errorHandler = (err: any) => {
+    alert(err);
+    console.log(err);
+  };
   onNameAdded(name: string) {
     this.newBucket.name = name;
     this.modals.name = false;
@@ -52,7 +95,28 @@ export class AddBucketComponent implements OnInit {
     this.modals.description = false;
     this.modals.maxTask = false;
     this.modals.team = false;
-    this.closeEmitter.emit(true);
+
+    let bucket = {
+      name: this.newBucket.name,
+      description: this.newBucket.description,
+      maxTaskCount: Number(this.newBucket.maxTask),
+    };
+
+    this.response$ = this.http.post(
+      this.path + '/buckets',
+      JSON.stringify(bucket),
+      {
+        headers: this.headers,
+      },
+    );
+    this.subscription = this.response$.subscribe((res) => {
+      console.log(res);
+      this.responseBucket = res;
+      this.bucketAdded.emit(this.responseBucket);
+    }, this.errorHandler);
   }
   ngOnInit(): void {}
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }

@@ -6,61 +6,50 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./buckets-panel.component.scss'],
 })
 export class BucketsPanelComponent implements OnInit {
+  showBuckets = false;
   @Input() buckets = [
     {
-      bucketId: 1,
+      bucketId: -1,
       owner: '',
       name: '',
       description: '',
       maxTaskCount: '',
+      createdTime: '',
     },
   ];
   @Input() title = '';
   @Input() subTitle = '';
   constructor() {}
+
   addBucketShow = false;
-  // buckets = [
-  //   {
-  //     bucketId: 1,
-  //     owner: 'Artur Lamnger',
-  //     name: 'Bucket',
-  //     description: 'This is my bucket',
-  //     maxTaskCount: '7',
-  //   },
-  //   {
-  //     bucketId: 2,
-  //     owner: 'Artur Lamnger',
-  //     name: 'Bucket',
-  //     description: 'This is my bucket',
-  //     maxTaskCount: '7',
-  //   },
-  //   {
-  //     bucketId: 3,
-  //     owner: 'Artur Lamnger',
-  //     name: 'Bucket',
-  //     description: 'This is my bucket',
-  //     maxTaskCount: '7',
-  //   },
-  //   {
-  //     bucketId: 4,
-  //     owner: 'Artur Lamnger',
-  //     name: 'Bucket',
-  //     description: 'This is my bucket',
-  //     maxTaskCount: '7',
-  //   },
-  //   {
-  //     bucketId: 5,
-  //     owner: 'Artur Lamnger',
-  //     name: 'Bucket',
-  //     description: 'This is my bucket',
-  //     maxTaskCount: '7',
-  //   },
-  // ];
+
   addBucket() {
     this.addBucketShow = true;
   }
   addBucketClosed(success: boolean) {
     this.addBucketShow = false;
   }
-  ngOnInit(): void {}
+  onBucketAdded(event: any) {
+    let bucket = {
+      bucketId: -1,
+      owner: '',
+      name: '',
+      description: '',
+      maxTaskCount: '',
+      createdTime: '',
+    };
+    console.log(event);
+    bucket = event;
+    this.buckets.unshift(bucket);
+    this.addBucketShow = false;
+  }
+  onBucketDeleted(bucketId: number) {
+    const buckets = this.buckets.filter((el) => el.bucketId != bucketId);
+    this.buckets = buckets;
+  }
+  ngOnInit(): void {
+    if (this.buckets.length > 1)
+      if (this.buckets[0].bucketId !== -1) this.showBuckets = true;
+    console.log(this.showBuckets);
+  }
 }

@@ -10,11 +10,12 @@ export class AllBucketsForUserComponent implements OnInit {
   @Input() subtitle = '';
   @Input() buckets = [
     {
-      bucketId: 1,
+      bucketId: -1,
       owner: '',
       name: '',
       description: '',
       maxTaskCount: '',
+      createdTime: ''
     },
   ];
   constructor() {}
@@ -22,42 +23,6 @@ export class AllBucketsForUserComponent implements OnInit {
   ngOnInit(): void {
     this.title = 'All buckets you are part of';
     this.subtitle = 'Here you can find all buckets you are assigned to';
-    this.buckets = [
-      {
-        bucketId: 1,
-        owner: 'Artur Lamnger',
-        name: 'Bucket',
-        description: 'This is my bucket',
-        maxTaskCount: '7',
-      },
-      {
-        bucketId: 2,
-        owner: 'Artur Lamnger',
-        name: 'Bucket',
-        description: 'This is my bucket',
-        maxTaskCount: '7',
-      },
-      {
-        bucketId: 3,
-        owner: 'Artur Lamnger',
-        name: 'Bucket',
-        description: 'This is my bucket',
-        maxTaskCount: '7',
-      },
-      {
-        bucketId: 4,
-        owner: 'Artur Lamnger',
-        name: 'Bucket',
-        description: 'This is my bucket',
-        maxTaskCount: '7',
-      },
-      {
-        bucketId: 5,
-        owner: 'Artur Lamnger',
-        name: 'Bucket',
-        description: 'This is my bucket',
-        maxTaskCount: '7',
-      },
-    ];
+    
   }
 }

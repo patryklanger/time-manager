@@ -2,6 +2,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,7 +40,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
         clientId: 'front-end-client',
       },
       initOptions: {
-        onLoad: 'login-required',
+        onLoad: 'check-sso',
         silentCheckSsoRedirectUri:
           window.location.origin + '/assets/silent-check-sso.html',
       },
@@ -79,6 +80,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     FormsModule,
     BrowserAnimationsModule,
     KeycloakAngularModule,
+    HttpClientModule
   ],
   providers: [
     {

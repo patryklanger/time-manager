@@ -1,4 +1,12 @@
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
+import { KeycloakService } from 'keycloak-angular';
+import { Observable, Subscription } from 'rxjs';
+import * as GlobalVariables from '../globals';
 
 @Component({
   selector: 'app-all-buckets',
@@ -8,6 +16,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class AllBucketsComponent implements OnInit {
   title = 'All buckets';
   subtitle = 'Here you can find all buckets created with Time Manager';
+  dataFetched = false;
   @Input() buckets = [
     {
       bucketId: -1,
@@ -15,47 +24,31 @@ export class AllBucketsComponent implements OnInit {
       name: '',
       description: '',
       maxTaskCount: '',
+      createdTime: '',
     },
   ];
-  constructor() {}
+  headers = new HttpHeaders();
+  path = GlobalVariables.GlobalServerPath;
+  subscription = new Subscription();
+  response$ = new Observable<any>();
+  constructor(private http: HttpClient) {
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers = this.headers.append('Accept', 'application/json');
 
+    this.response$ = this.http.get(this.path + '/buckets/all', {
+      headers: this.headers,
+    });
+  }
   ngOnInit(): void {
-    this.buckets = [
-      {
-        bucketId: 1,
-        owner: 'Artur Lamnger',
-        name: 'Bucket',
-        description: 'This is my bucket',
-        maxTaskCount: '7',
-      },
-      {
-        bucketId: 2,
-        owner: 'Artur Lamnger',
-        name: 'Bucket',
-        description: 'This is my bucket',
-        maxTaskCount: '7',
-      },
-      {
-        bucketId: 3,
-        owner: 'Artur Lamnger',
-        name: 'Bucket',
-        description: 'This is my bucket',
-        maxTaskCount: '7',
-      },
-      {
-        bucketId: 4,
-        owner: 'Artur Lamnger',
-        name: 'Bucket',
-        description: 'This is my bucket',
-        maxTaskCount: '7',
-      },
-      {
-        bucketId: 5,
-        owner: 'Artur Lamnger',
-        name: 'Bucket',
-        description: 'This is my bucket',
-        maxTaskCount: '7',
-      },
-    ];
+    this.subscription = this.response$.subscribe((res) => {
+      this.buckets = [...res];
+      this.dataFetched = true;
+      console.log(this.buckets);
+    });
+  }
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

@@ -3,20 +3,20 @@
   label="Bucket name"
   placeholder="Type in new bucket name"
   button="Next"
-  [_textValue]="newBucket.name"
+  [_textValue]="editBucket.name"
   (cancel)="onCancelClick()"
   (value)="onNameAdded($event)"
-  *ngIf="modals.name"
+  *ngIf="dataFetched"
 ></app-modal-text-insertion>
 <app-modal-text-insertion
   name="Edit bucket's description"
   label="Description"
   placeholder="Type in new backet description"
   button="Next"
-  [_textValue]="newBucket.description"
+  [_textValue]="editBucket.description"
   (cancel)="onCancelClick()"
   (value)="onDescriptionAdded($event)"
-  *ngIf="modals.description"
+  *ngIf="modals.description && dataFetched"
   [textArea]="true"
 ></app-modal-text-insertion>
 <app-modal-text-insertion
@@ -25,19 +25,19 @@
   label="Maximal tasks amount"
   placeholder="Type in new maximal tasks amount"
   button="Next"
-  [_textValue]="newBucket.maxTask"
+  [_textValue]="editBucket.maxTaskCount"
   (cancel)="onCancelClick()"
   (value)="onMaxTaskAdded($event)"
-  *ngIf="modals.maxTask"
+  *ngIf="modals.maxTask && dataFetched"
 ></app-modal-text-insertion>
 <app-modal-text-insertion
   name="Edit bucket's bucket team"
   label="Members"
   placeholder="Start typing your collegue's e-mail address"
   button="Add bucket"
-  [_textValue]="newBucket.team.join(' ')"
+  [_textValue]="editBucket.createdTime"
   (cancel)="onCancelClick()"
   (value)="onMembersAdded($event)"
-  *ngIf="modals.team"
+  *ngIf="modals.team && dataFetched"
   [textArea]="true"
 ></app-modal-text-insertion>
