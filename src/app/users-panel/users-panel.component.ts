@@ -1,4 +1,7 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import * as GlobalVariables from '../globals';
 
 @Component({
   selector: 'app-users-panel',
@@ -8,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class UsersPanelComponent implements OnInit {
   title = 'Users';
   subTitle = 'Here you can edit and delete users profiles';
+  dataFetched = false;
   users = [
     {
       userId: -1,
@@ -19,45 +23,30 @@ export class UsersPanelComponent implements OnInit {
       role: '',
     },
   ];
-  constructor() {}
+  headers = new HttpHeaders();
+  path = GlobalVariables.GlobalServerPath;
+  subscription = new Subscription();
+  response$ = new Observable<any>();
+  constructor(private http: HttpClient) {
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers = this.headers.append('Accept', 'application/json');
+
+    this.response$ = this.http.get(this.path + '/users', {
+      headers: this.headers,
+    });
+  }
   ngOnInit(): void {
-    this.users = [
-      {
-        userId: 12,
-        userName: 'patryklanger',
-        firstName: 'Patryk',
-        lastName: 'Langer',
-        position: 'Intern',
-        eMail: 'patryklanger@icloud.com',
-        role: 'Intern',
-      },
-      {
-        userId: 12,
-        userName: 'patryklanger',
-        firstName: 'Patryk',
-        lastName: 'Langer',
-        position: 'Intern',
-        eMail: 'patryklanger@icloud.com',
-        role: 'Intern',
-      },
-      {
-        userId: 12,
-        userName: 'patryklanger',
-        firstName: 'Patryk',
-        lastName: 'Langer',
-        position: 'Intern',
-        eMail: 'patryklanger@icloud.com',
-        role: 'Intern',
-      },
-      {
-        userId: 12,
-        userName: 'patryklanger',
-        firstName: 'Patryk',
-        lastName: 'Langer',
-        position: 'Intern',
-        eMail: 'patryklanger@icloud.com',
-        role: 'Intern',
-      },
-    ];
+    this.subscription = this.response$.subscribe((res) => {
+      this.users = [...res];
+
+      this.dataFetched = true;
+      console.log(this.users);
+      console.log(this.dataFetched);
+    });
+  }
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

@@ -1,10 +1,5 @@
-import {
-  HttpClient,
-  HttpClientModule,
-  HttpHeaders,
-} from '@angular/common/http';
-import { Component, OnInit, Input } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import * as GlobalVariables from '../globals';
 
@@ -17,7 +12,7 @@ export class AllBucketsComponent implements OnInit {
   title = 'All buckets';
   subtitle = 'Here you can find all buckets created with Time Manager';
   dataFetched = false;
-  @Input() buckets = [
+  buckets = [
     {
       bucketId: -1,
       owner: '',
@@ -42,8 +37,10 @@ export class AllBucketsComponent implements OnInit {
   ngOnInit(): void {
     this.subscription = this.response$.subscribe((res) => {
       this.buckets = [...res];
+
       this.dataFetched = true;
       console.log(this.buckets);
+      console.log(this.dataFetched);
     });
   }
   ngOnDestroy(): void {

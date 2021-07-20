@@ -48,7 +48,7 @@ export class BucketsPanelComponent implements OnInit {
     this.buckets = buckets;
   }
   ngOnInit(): void {
-    if (this.buckets.length > 1)
+    if (this.buckets.length > 0)
       if (this.buckets[0].bucketId !== -1) this.showBuckets = true;
     console.log(this.showBuckets);
   }
