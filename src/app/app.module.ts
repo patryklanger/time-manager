@@ -6,30 +6,30 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PanelCardComponent } from './panel-card/panel-card.component';
-import { UserPanelMainComponent } from './user-panel-main/user-panel-main.component';
-import { HeaderComponent } from './header/header.component';
-import { BucketsPanelComponent } from './buckets-panel/buckets-panel.component';
-import { BucketCardComponent } from './bucket-card/bucket-card.component';
-import { AdminPanelComponent } from './admin-panel/admin-panel.component';
-import { ModalTextInsertionComponent } from './modal-text-insertion/modal-text-insertion.component';
-import { AddBucketComponent } from './add-bucket/add-bucket.component';
-import { TaskCardComponent } from './task-card/task-card.component';
-import { TasksPanelComponent } from './tasks-panel/tasks-panel.component';
-import { AddTaskComponent } from './add-task/add-task.component';
+import { PanelCardComponent } from './ui/panel-card/panel-card.component';
+import { UserPanelMainComponent } from './ui/user-panel-main/user-panel-main.component';
+import { HeaderComponent } from './ui/header/header.component';
+import { BucketsPanelComponent } from './buckets/buckets-panel/buckets-panel.component';
+import { BucketCardComponent } from './buckets/bucket-card/bucket-card.component';
+import { AdminPanelComponent } from './ui/admin-panel/admin-panel.component';
+import { ModalTextInsertionComponent } from './ui/modal-text-insertion/modal-text-insertion.component';
+import { AddBucketComponent } from './buckets/add-bucket/add-bucket.component';
+import { TaskCardComponent } from './tasks/task-card/task-card.component';
+import { TasksPanelComponent } from './tasks/tasks-panel/tasks-panel.component';
+import { AddTaskComponent } from './tasks/add-task/add-task.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CustomModalComponent } from './custom-modal/custom-modal.component';
-import { MyBucketsComponent } from './my-buckets/my-buckets.component';
-import { AllBucketsForUserComponent } from './all-buckets-for-user/all-buckets-for-user.component';
-import { TasksOfBucketComponent } from './tasks-of-bucket/tasks-of-bucket.component';
-import { EditBucketComponent } from './edit-bucket/edit-bucket.component';
-import { EditProfileComponent } from './edit-profile/edit-profile.component';
-import { MyTasksComponent } from './my-tasks/my-tasks.component';
-import { AllTasksForUserComponent } from './all-tasks-for-user/all-tasks-for-user.component';
-import { UsersPanelComponent } from './users-panel/users-panel.component';
-import { UserCardComponent } from './user-card/user-card.component';
-import { AllBucketsComponent } from './all-buckets/all-buckets.component';
-import { AllTasksComponent } from './all-tasks/all-tasks.component';
+import { CustomModalComponent } from './ui/custom-modal/custom-modal.component';
+import { MyBucketsComponent } from './buckets/my-buckets/my-buckets.component';
+import { AllBucketsForUserComponent } from './buckets/all-buckets-for-user/all-buckets-for-user.component';
+import { TasksOfBucketComponent } from './tasks/tasks-of-bucket/tasks-of-bucket.component';
+import { EditBucketComponent } from './buckets/edit-bucket/edit-bucket.component';
+import { EditProfileComponent } from './users/edit-profile/edit-profile.component';
+import { MyTasksComponent } from './tasks/my-tasks/my-tasks.component';
+import { AllTasksForUserComponent } from './tasks/all-tasks-for-user/all-tasks-for-user.component';
+import { UsersPanelComponent } from './users/users-panel/users-panel.component';
+import { UserCardComponent } from './users/user-card/user-card.component';
+import { AllBucketsComponent } from './buckets/all-buckets/all-buckets.component';
+import { AllTasksComponent } from './tasks/all-tasks/all-tasks.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -80,7 +80,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     FormsModule,
     BrowserAnimationsModule,
     KeycloakAngularModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     {

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import * as GlobalVariables from '../globals';
+import * as GlobalVariables from '../../globals';
 
 @Component({
   selector: 'app-bucket-card',
@@ -61,6 +61,7 @@ export class BucketCardComponent implements OnInit {
     this.showEditBucket = false;
   }
   onDeleteBucketClicked() {
+    console.log(this.bucket.bucketId);
     let deletePath = this.path + '/buckets/' + this.bucket.bucketId;
     this.response$ = this.http.delete(deletePath, { headers: this.headers });
     this.subscription = this.response$.subscribe(

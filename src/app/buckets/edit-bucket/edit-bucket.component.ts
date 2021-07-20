@@ -8,7 +8,7 @@ import {
   ComponentFactoryResolver,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import * as GlobalVariables from '../globals';
+import * as GlobalVariables from '../../globals';
 
 @Component({
   selector: 'app-edit-bucket',

@@ -6,7 +6,7 @@ import {
   ErrorHandler,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import * as GlobalVariables from '../globals';
+import * as GlobalVariables from '../../globals';
 import {
   HttpClient,
   HttpClientModule,

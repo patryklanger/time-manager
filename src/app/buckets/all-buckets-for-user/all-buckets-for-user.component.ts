@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import * as GlobalVariables from '../globals';
+import * as GlobalVariables from '../../globals';
 
 @Component({
   selector: 'app-all-buckets-for-user',
