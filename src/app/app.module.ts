@@ -1,6 +1,6 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -30,6 +30,7 @@ import { UsersPanelComponent } from './users/users-panel/users-panel.component';
 import { UserCardComponent } from './users/user-card/user-card.component';
 import { AllBucketsComponent } from './buckets/all-buckets/all-buckets.component';
 import { AllTasksComponent } from './tasks/all-tasks/all-tasks.component';
+import { RegistrationPanelComponent } from './ui/registration-panel/registration-panel.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -73,6 +74,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     UserCardComponent,
     AllBucketsComponent,
     AllTasksComponent,
+    RegistrationPanelComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +83,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     BrowserAnimationsModule,
     KeycloakAngularModule,
     HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {

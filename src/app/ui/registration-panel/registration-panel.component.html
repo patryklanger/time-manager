@@ -1,0 +1,158 @@
+<form novalidate [formGroup]="formValidator">
+  <div class="flex--center">
+    <h1>{{ title }}</h1>
+    <div class="input--container">
+      <p>Username</p>
+      <input
+        placeholder="Your username"
+        formControlName="userName"
+        required
+        [class.submitted]="submittedCheck"
+        [class.already--taken]="loginExists"
+      />
+      <p
+        class="danger"
+        *ngIf="
+          formValidator.controls['userName'].hasError('required') &&
+          submittedCheck
+        "
+      >
+        Username is required
+      </p>
+      <p *ngIf="loginExists" class="danger">This username is already taken</p>
+      <p
+        class="danger"
+        *ngIf="
+          formValidator.controls['userName'].hasError('minlength') &&
+          submittedCheck
+        "
+      >
+        Username must be at least 4 characters long
+      </p>
+    </div>
+    <div class="input--container">
+      <p>First name</p>
+      <input
+        placeholder="Your first name"
+        required
+        formControlName="firstName"
+        [class.submitted]="submittedCheck"
+      />
+      <p
+        class="danger"
+        *ngIf="
+          formValidator.controls['firstName'].hasError('required') &&
+          submittedCheck
+        "
+      >
+        First name is required
+      </p>
+    </div>
+    <div class="input--container">
+      <p>Last name</p>
+      <input
+        placeholder="Your last name"
+        required
+        formControlName="lastName"
+        [class.submitted]="submittedCheck"
+      />
+      <p
+        class="danger"
+        *ngIf="
+          formValidator.controls['lastName'].hasError('required') &&
+          submittedCheck
+        "
+      >
+        Last name is required
+      </p>
+    </div>
+    <div class="input--container">
+      <p>Email</p>
+      <input
+        type="email"
+        placeholder="Your email address"
+        formControlName="email"
+        required
+        [class.submitted]="submittedCheck"
+        [class.already--taken]="emailExists"
+      />
+      <p
+        class="danger"
+        *ngIf="
+          formValidator.controls['email'].hasError('required') && submittedCheck
+        "
+      >
+        Email is required
+      </p>
+      <p *ngIf="emailExists" class="danger">
+        This e-mail address is already taken
+      </p>
+      <p
+        class="danger"
+        *ngIf="
+          formValidator.controls['email'].hasError('email') && submittedCheck
+        "
+      >
+        Please provide valid e-mail address
+      </p>
+    </div>
+    <div class="input--container">
+      <p>Position</p>
+      <select id="position" name="position" required formControlName="position">
+        <option value="INTERN">Intern</option>
+        <option value="JUNIOR">Junior</option>
+        <option value="MID">Mid</option>
+        <option value="SENIOR">Senior</option>
+        <option value="CEO">CEO</option>
+      </select>
+    </div>
+    <div class="input--container">
+      <p>Role</p>
+      <select id="role" name="role" required formControlName="role">
+        <option value="TEAM_MANAGER">Team manager</option>
+        <option value="MEMBER">Member</option>
+      </select>
+    </div>
+
+    <div class="input--container">
+      <p>Password</p>
+      <input
+        type="password"
+        placeholder="Type in new password"
+        required
+        formControlName="password"
+        [class.submitted]="submittedCheck"
+      />
+      <p
+        class="danger"
+        *ngIf="
+          formValidator.controls['password'].hasError('required') &&
+          submittedCheck
+        "
+      >
+        Password is required
+      </p>
+      <p
+        class="danger"
+        *ngIf="
+          formValidator.controls['password'].hasError('minlength') &&
+          submittedCheck
+        "
+      >
+        Password must be at least 6 characters long
+      </p>
+    </div>
+    <div class="button--container">
+      <button (click)="onSubmitClick()" class="button button--black">
+        Confirm
+      </button>
+    </div>
+  </div>
+</form>
+<app-custom-modal *ngIf="registrated"
+  ><div class="modal--container">
+    <h1>Thanks for registration!</h1>
+    <h3>Now you can login to Time manager!</h3>
+    <button (click)="onModalClose()" class="button button--black">Close</button>
+  </div></app-custom-modal
+>

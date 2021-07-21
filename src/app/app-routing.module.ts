@@ -13,6 +13,7 @@ import { UsersPanelComponent } from './users/users-panel/users-panel.component';
 import { AllBucketsComponent } from './buckets/all-buckets/all-buckets.component';
 import { AllTasksComponent } from './tasks/all-tasks/all-tasks.component';
 import { AuthGuard } from './guard/auth.guard';
+import { RegistrationPanelComponent } from './ui/registration-panel/registration-panel.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user-panel', pathMatch: 'full' },
@@ -76,10 +77,16 @@ const routes: Routes = [
   {
     path: 'tasks/bucket/:id',
     component: TasksOfBucketComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'tasks',
     component: TasksPanelComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'register',
+    component: RegistrationPanelComponent,
   },
 ];
 @NgModule({
