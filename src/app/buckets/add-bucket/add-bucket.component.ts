@@ -60,7 +60,6 @@ export class AddBucketComponent implements OnInit {
     this.headers = this.headers.append('Accept', 'application/json');
   }
   errorHandler = (err: any) => {
-    alert(err);
     console.log(err);
   };
   onNameAdded(name: string) {
@@ -103,7 +102,7 @@ export class AddBucketComponent implements OnInit {
     };
 
     this.response$ = this.http.post(
-      this.path + '/buckets',
+      this.path + GlobalVariables.BucketsPath,
       JSON.stringify(bucket),
       {
         headers: this.headers,

@@ -21,6 +21,7 @@ export class RegistrationPanelComponent implements OnInit {
   path = GlobalVariables.GlobalServerPath;
   subscription = new Subscription();
   response$ = new Observable<any>();
+  textareaContent = '';
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.formValidator = this.fb.group({
       userName: ['', [Validators.required, Validators.minLength(4)]],

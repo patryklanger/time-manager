@@ -62,7 +62,8 @@ export class BucketCardComponent implements OnInit {
   }
   onDeleteBucketClicked() {
     console.log(this.bucket.bucketId);
-    let deletePath = this.path + '/buckets/' + this.bucket.bucketId;
+    let deletePath =
+      this.path + GlobalVariables.BucketsPath + this.bucket.bucketId;
     this.response$ = this.http.delete(deletePath, { headers: this.headers });
     this.subscription = this.response$.subscribe(
       (res) => {

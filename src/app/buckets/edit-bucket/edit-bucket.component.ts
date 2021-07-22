@@ -60,7 +60,7 @@ export class EditBucketComponent implements OnInit {
     console.log(err);
   };
   putBucket() {
-    let putPath = this.path + '/buckets/' + this.bucketId;
+    let putPath = this.path + GlobalVariables.BucketsPath + this.bucketId;
     let messageBucket = {
       name: this.editBucket.name,
       description: this.editBucket.description,

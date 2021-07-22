@@ -30,7 +30,7 @@ export class AllBucketsForUserComponent implements OnInit {
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers = this.headers.append('Accept', 'application/json');
 
-    this.response$ = this.http.get(this.path + '/buckets', {
+    this.response$ = this.http.get(this.path + GlobalVariables.BucketsPath, {
       headers: this.headers,
     });
   }

@@ -30,9 +30,12 @@ export class AllBucketsComponent implements OnInit {
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers = this.headers.append('Accept', 'application/json');
 
-    this.response$ = this.http.get(this.path + '/buckets/all', {
-      headers: this.headers,
-    });
+    this.response$ = this.http.get(
+      this.path + GlobalVariables.BucketsPath + 'all',
+      {
+        headers: this.headers,
+      },
+    );
   }
   ngOnInit(): void {
     this.subscription = this.response$.subscribe((res) => {
