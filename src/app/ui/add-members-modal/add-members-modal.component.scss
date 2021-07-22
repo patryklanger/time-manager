@@ -1,0 +1,27 @@
+.list {
+  position: absolute;
+}
+.add--members input {
+  margin-bottom: 0;
+}
+.list {
+  width: inherit;
+  width: 537px;
+  border-radius: 3px;
+}
+.list--element {
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 0.5px solid rgb(100, 100, 100);
+  border-radius: 3px;
+  margin-bottom: 0;
+  height: 40px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 27px;
+  display: flex;
+  align-items: center;
+
+  padding: 6px 12px;
+}

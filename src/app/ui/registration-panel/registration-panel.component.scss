@@ -28,7 +28,8 @@ select {
 input::placeholder {
   color: rgba(0, 0, 0, 0.5);
 }
-input:focus {
+input:focus,
+select:focus {
   outline: none;
 }
 p {

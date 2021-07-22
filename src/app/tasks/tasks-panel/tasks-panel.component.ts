@@ -38,6 +38,7 @@ export class TasksPanelComponent implements OnInit {
   addTaskShow = false;
 
   onShowAdding() {
+    console.log('SHow adding');
     this.addTaskShow = true;
   }
   onCloseAdding() {

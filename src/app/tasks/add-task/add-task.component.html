@@ -6,6 +6,8 @@
   (cancel)="onCancelClick()"
   (value)="onNameAdded($event)"
   *ngIf="modals.name"
+  [required]="true"
+  [maxLength]="20"
 ></app-modal-text-insertion>
 <app-modal-text-insertion
   name="Choose task's description"
@@ -16,6 +18,7 @@
   (value)="onDescriptionAdded($event)"
   *ngIf="modals.description"
   [textArea]="true"
+  [maxLength]="255"
 ></app-modal-text-insertion>
 <app-modal-text-insertion
   type="number"
@@ -26,4 +29,81 @@
   (cancel)="onCancelClick()"
   (value)="onEstDurAdded($event)"
   *ngIf="modals.estDuration"
+  [required]="true"
 ></app-modal-text-insertion>
+<form [formGroup]="formValidator">
+  <app-custom-modal *ngIf="modals.deadline">
+    <h1>Set task's deadline</h1>
+
+    <div class="input--container">
+      <p>Deadline</p>
+      <input
+        class="my-input"
+        [ngxMatDatetimePicker]="pickerForDeadline"
+        placeholder="Select deadline date"
+        [min]="today"
+        [(ngModel)]="deadline"
+        formControlName="deadline"
+        [class.next--clicked]="invalid"
+      />
+      <mat-datepicker-toggle
+        [for]="$any(pickerForDeadline)"
+      ></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker
+        #pickerForDeadline
+        [enableMeridian]="true"
+        [showSeconds]="true"
+      >
+        <!-- [color]="color"
+    [hideTime]="hideTime" -->
+      </ngx-mat-datetime-picker>
+      <p
+        class="danger"
+        *ngIf="
+          formValidator.controls['deadline'].hasError('required') &&
+          (formValidator.controls['deadline'].touched ||
+            formValidator.controls['deadline'].dirty ||
+            invalid)
+        "
+      >
+        You must set deadline
+      </p>
+    </div>
+    <div class="flex--center--button">
+      <div class="flex--button">
+        <button class="button button--green" (click)="onDeadlineAdded()">
+          Next
+        </button>
+        <button class="button button--red" (click)="onCancelClick()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </app-custom-modal>
+  <app-custom-modal *ngIf="modals.priority">
+    <h1>Set task's priority</h1>
+    <div class="input--container">
+      <p>Priority</p>
+      <select
+        class="my-input"
+        id="priority"
+        name="priority"
+        formControlName="priority"
+      >
+        <option value="1">Low</option>
+        <option value="2">Medium</option>
+        <option value="2">High</option>
+      </select>
+    </div>
+    <div class="flex--center--button">
+      <div class="flex--button">
+        <button class="button button--green" (click)="onPriorityAdded()">
+          Next
+        </button>
+        <button class="button button--red" (click)="onCancelClick()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </app-custom-modal>
+</form>

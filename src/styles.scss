@@ -34,7 +34,7 @@ $time-manager-theme: mat.define-light-theme(
 // that you are using.
 @include mat.all-component-themes($time-manager-theme);
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;900&display=swap');
 * {
   box-sizing: border-box;
   margin: 0;
@@ -121,11 +121,36 @@ h3 {
   color: #ffffff;
 }
 
+.my-input {
+  display: block;
+  width: 537px;
+  height: 40px;
+  background: #f7f7fa;
+  border: 0;
+  padding: 6px 12px;
+  border-radius: 3px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 27px;
+  /* identical to box height */
+
+  color: rgba(0, 0, 0, 1);
+  margin-bottom: 43px;
+}
+.my-input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+.my-input:focus {
+  outline: none;
+}
+
 html,
 body {
   height: 100%;
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }

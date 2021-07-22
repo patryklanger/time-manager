@@ -31,6 +31,14 @@ import { UserCardComponent } from './users/user-card/user-card.component';
 import { AllBucketsComponent } from './buckets/all-buckets/all-buckets.component';
 import { AllTasksComponent } from './tasks/all-tasks/all-tasks.component';
 import { RegistrationPanelComponent } from './ui/registration-panel/registration-panel.component';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatTimepickerModule,
+} from '@angular-material-components/datetime-picker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
+import { AddMembersModalComponent } from './ui/add-members-modal/add-members-modal.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -75,8 +83,14 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AllBucketsComponent,
     AllTasksComponent,
     RegistrationPanelComponent,
+    AddMembersModalComponent,
   ],
   imports: [
+    NgxMatNativeDateModule,
+    MatDatepickerModule,
+    MatInputModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -86,6 +100,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ReactiveFormsModule,
   ],
   providers: [
+    NgxMatNativeDateModule,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,

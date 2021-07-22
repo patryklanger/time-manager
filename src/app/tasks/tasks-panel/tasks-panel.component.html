@@ -9,13 +9,3 @@
     <app-task-card [task]="task" [managerCard]="managerTask"></app-task-card>
   </ng-template>
 </div>
-<div class="flex--center">
-  <button class="button button--green" (click)="onShowAdding()">
-    Add new task
-  </button>
-</div>
-
-<app-add-task
-  *ngIf="addTaskShow"
-  (closeEmitter)="onCloseAdding()"
-></app-add-task>

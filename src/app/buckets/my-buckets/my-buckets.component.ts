@@ -34,9 +34,12 @@ export class MyBucketsComponent implements OnInit {
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers = this.headers.append('Accept', 'application/json');
 
-    this.response$ = this.http.get(this.path + '/buckets/owner', {
-      headers: this.headers,
-    });
+    this.response$ = this.http.get(
+      this.path + GlobalVariables.BucketsPath + 'owner',
+      {
+        headers: this.headers,
+      },
+    );
   }
   ngOnInit(): void {
     this.title = 'Buckets managed by you';

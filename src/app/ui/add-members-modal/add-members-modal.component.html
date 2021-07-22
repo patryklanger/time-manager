@@ -1,0 +1,19 @@
+<app-custom-modal>
+  <h1>Add members</h1>
+  <div class="add--members">
+    <input
+      class="my-input"
+      type="text"
+      (keyup)="keyDownOnTextarea()"
+      [(ngModel)]="textareaContent"
+      placeholder="Start typing user's email"
+    />
+    <div class="list">
+      <div class="emails--container">
+        <ng-template ngFor let-email [ngForOf]="userArray">
+          <div class="list--element">{{ email }}</div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</app-custom-modal>
