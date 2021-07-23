@@ -1,4 +1,4 @@
-<div class="card" *ngIf="managerCard">
+<!-- <div class="card" *ngIf="managerCard">
   <p class="bucket">{{ managerTask.bucketName }}</p>
   <p class="taskName">{{ managerTask.taskName }}</p>
   <div class="card--inner">
@@ -82,4 +82,63 @@
       <img src="../../assets/_stop_button.png" />
     </div>
   </div>
-</div>
+</div> -->
+<mat-card *ngIf="managerCard" class="card">
+  <mat-card-header>
+    <div class="priority" [style.background]="color"></div>
+    <mat-card-title>{{ managerTask.taskName }}</mat-card-title>
+    <mat-card-subtitle>{{ managerTask.bucketName }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="inner--element">
+      <p class="label deadline--label">Deadline:</p>
+      <p class="value deadline--value">{{ managerTask.taskDeadline }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label state--label">Task state:</p>
+      <p class="value state--value">{{ managerTask.taskState }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label timeleft--label">Time left:</p>
+      <p class="value timeleft--value">{{ timeleft }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label editors--label">Editors:</p>
+      <p class="value editors--value">{{ managerTask.taskEditorsCount }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label author--label">Author:</p>
+      <p class="value author--value">{{ managerTask.taskOwner }}</p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="mat--actions">
+    <button mat-stroked-button color="primary">PLAY</button>
+    <button mat-stroked-button color="primary">STOP</button>
+    <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
+      MORE
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>group</mat-icon>
+        <span>Task's users</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>info</mat-icon>
+        <span>Task's details</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>info</mat-icon>
+        <span>Edit task</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>clear</mat-icon>
+        <span>Delete task</span>
+      </button>
+    </mat-menu>
+  </mat-card-actions>
+</mat-card>
