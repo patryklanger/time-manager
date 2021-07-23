@@ -3,6 +3,9 @@ button {
   outline: none;
   background: none;
 }
+.card {
+  overflow: hidden;
+}
 .card--inner {
   position: relative;
   width: 375px;
@@ -52,7 +55,6 @@ button {
   grid-template-columns: 122px auto;
   padding-bottom: 17px;
   margin-top: 17px;
-  border-bottom: 1px solid black;
 }
 .inner--element:first-of-type {
   margin-top: 0;
@@ -86,12 +88,11 @@ button {
   margin-left: 9px;
 }
 .priority {
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 14px;
-  border-radius: 5px 5px 0 0;
+  opacity: 0.4;
 }
 .buttons--element {
   width: 237px;
@@ -103,6 +104,11 @@ button {
   padding: 8px;
   align-items: center;
   z-index: 1;
+}
+.mat--actions {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
 }
 .task--options--button img {
   width: 38px;

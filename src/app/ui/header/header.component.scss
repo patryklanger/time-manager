@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;900&display=swap');
 .header {
   position: relative;
   background: transparent;
@@ -11,12 +11,12 @@
 }
 .header::after {
   position: absolute;
-  content: "";
+  content: '';
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  background: #616161;
+  background: rgba(100, 100, 100, 0.1);
   z-index: -1;
 }
 .logo {
@@ -39,7 +39,7 @@
   padding: 0 25px;
   flex-direction: row;
   border: 0;
-  background: #616161;
+  background: transparent;
   height: 60px;
   align-items: center;
   justify-content: center;
@@ -50,15 +50,15 @@
 .link--element.active,
 .link--element:hover,
 .dropdown--helper:hover > .link--element {
-  background: rgb(184, 184, 184);
+  background: rgba(100, 100, 100, 0.2);
 }
 .link--element::before {
-  content: "";
+  content: '';
   position: absolute;
   width: 0;
   height: 3px;
   border: 50%;
-  background: #cddc39;
+  background: #000;
   bottom: 0;
   left: 0;
   transition: width ease-in-out 0.5s;
@@ -94,7 +94,7 @@
   display: none;
   position: absolute;
   width: 100%;
-  background: rgb(184, 184, 184);
+  background: rgba(235, 235, 235, 1);
 }
 .link--element:hover + .dropdown {
   display: unset;
@@ -117,5 +117,5 @@
   cursor: pointer;
 }
 .dropdown--element:hover {
-  background: rgb(135, 135, 135);
+  background: rgba(100, 100, 100, 0.2);
 }

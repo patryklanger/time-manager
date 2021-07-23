@@ -1,19 +1,41 @@
 <app-custom-modal>
-  <h1>Add members</h1>
-  <div class="add--members">
-    <input
-      class="my-input"
-      type="text"
-      (keyup)="keyDownOnTextarea()"
-      [(ngModel)]="textareaContent"
-      placeholder="Start typing user's email"
-    />
-    <div class="list">
-      <div class="emails--container">
-        <ng-template ngFor let-email [ngForOf]="userArray">
-          <div class="list--element">{{ email }}</div>
-        </ng-template>
+  <form [formGroup]="emailValidityCheck">
+    <h1>Add members</h1>
+    <div class="add--members">
+      <input
+        class="my-input"
+        type="text"
+        (keyup)="keyDownOnTextarea()"
+        placeholder="Start typing user's email"
+        formControlName="emailValidity"
+      />
+
+      <div class="list">
+        <div class="emails--container">
+          <div
+            class="list--element"
+            *ngIf="
+              showCustomEmailAddressAdditionOption &&
+              emailValidityCheck.controls['emailValidity'].valid
+            "
+          >
+            Add unregistred user with '{{ textareaContent }}'
+          </div>
+          <ng-template
+            ngFor
+            let-email
+            [ngForOf]="userArray"
+            *ngIf="showContextMenu"
+          >
+            <div
+              class="list--element"
+              (click)="onEmailOnContextClicked($event)"
+            >
+              {{ email }}
+            </div>
+          </ng-template>
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 </app-custom-modal>

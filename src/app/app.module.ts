@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { HttpClientModule } from '@angular/common/http';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,6 +32,7 @@ import { UserCardComponent } from './users/user-card/user-card.component';
 import { AllBucketsComponent } from './buckets/all-buckets/all-buckets.component';
 import { AllTasksComponent } from './tasks/all-tasks/all-tasks.component';
 import { RegistrationPanelComponent } from './ui/registration-panel/registration-panel.component';
+import { MatCard, MatCardModule } from '@angular/material/card';
 import {
   NgxMatDatetimePickerModule,
   NgxMatTimepickerModule,
@@ -39,6 +41,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 import { AddMembersModalComponent } from './ui/add-members-modal/add-members-modal.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -86,9 +91,14 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AddMembersModalComponent,
   ],
   imports: [
+    MatDividerModule,
+    MatIconModule,
+    MatMenuModule,
+    MatButtonModule,
     NgxMatNativeDateModule,
     MatDatepickerModule,
     MatInputModule,
+    MatCardModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     BrowserModule,

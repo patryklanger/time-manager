@@ -14,6 +14,7 @@ import {
 } from '@angular/common/http';
 import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 import { ThisReceiver } from '@angular/compiler';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-add-bucket',

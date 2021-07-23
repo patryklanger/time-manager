@@ -1,4 +1,4 @@
-<div class="card" (click)="bucketClicked()">
+<!-- <div class="card" (click)="bucketClicked()">
   <p class="author">{{ bucket.owner }}</p>
   <p class="bucketName">{{ bucket.name }}</p>
   <div class="description">
@@ -28,6 +28,42 @@
     </button>
   </div>
 </app-custom-modal>
+<app-edit-bucket
+  *ngIf="showEditBucket"
+  [bucketId]="bucket.bucketId"
+  (close)="onEditBucketClose()"
+  (bucketEditted)="onBucketEditted($event)"
+></app-edit-bucket> -->
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>{{ bucket.name }}</mat-card-title>
+    <mat-card-subtitle
+      >{{ bucket.owner }} <mat-divider></mat-divider
+    ></mat-card-subtitle>
+  </mat-card-header>
+  <!-- <img
+    mat-card-image
+    src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+    alt="Photo of a Shiba Inu"
+  /> -->
+  <mat-card-content>
+    <p>
+      {{ bucket.description }}
+    </p>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions class="buttons">
+    <button mat-icon-button color="basic" (click)="onEditBucketClick()">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button color="baisc" (click)="onShowTasksClick()">
+      <mat-icon>task</mat-icon>
+    </button>
+    <button mat-icon-button color="warn" (click)="onEditBucketClick()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
 <app-edit-bucket
   *ngIf="showEditBucket"
   [bucketId]="bucket.bucketId"
