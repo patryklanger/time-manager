@@ -1,54 +1,65 @@
 <div class="blur--effect"></div>
 <div class="flex--center">
-  <form [formGroup]="formValidator" (submit)="continueClicked()">
-    <div class="modal--window">
+  <form (submit)="continueClicked()">
+    <mat-card>
       <h1>{{ name }}</h1>
-      <p>{{ label }}</p>
+      <!-- <p>{{ label }}</p>
       <input
         type="{{ type }}"
         placeholder="{{ placeholder }}"
         *ngIf="!textArea"
         formControlName="inputValidation"
         [class.next--clicked]="nextClicked"
-      />
-      <textarea
-        placeholder="{{ placeholder }}"
+      /> -->
+      <mat-form-field
+        *ngIf="!textArea"
+        class="full-width-input"
+        appearance="fill"
+      >
+        <mat-label>{{ label }}</mat-label>
+        <input
+          type="{{ type }}"
+          matInput
+          placeholder="{{ placeholder }}"
+          [formControl]="inputValidation"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-error *ngIf="inputValidation.hasError('maxlength')">
+          This field has max length of {{ maxLength }}
+        </mat-error>
+        <mat-error *ngIf="inputValidation.hasError('required')">
+          This field is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field
         *ngIf="textArea"
-        formControlName="inputValidation"
-        [class.next--clicked]="nextClicked"
-      ></textarea>
-      <p
-        *ngIf="
-          formValidator.controls['inputValidation'].hasError('required') &&
-          (formValidator.controls['inputValidation'].dirty ||
-            formValidator.controls['inputValidation'].touched ||
-            nextClicked)
-        "
-        class="danger"
-        [class.next--clicked]="nextClicked"
+        class="full-width-input"
+        appearance="fill"
       >
-        {{ label }} is required
-      </p>
-      <p
-        *ngIf="
-          formValidator.controls['inputValidation'].hasError('maxlength') &&
-          (formValidator.controls['inputValidation'].dirty ||
-            formValidator.controls['inputValidation'].touched)
-        "
-        class="danger"
-      >
-        {{ label }} must be shorter than {{ maxLength }} letters.
-      </p>
+        <mat-label>{{ label }}</mat-label>
+        <textarea
+          matInput
+          placeholder="{{ placeholder }}"
+          [formControl]="inputValidation"
+          [errorStateMatcher]="matcher"
+        ></textarea>
+        <mat-error *ngIf="inputValidation.hasError('maxlength')">
+          This field has max length of {{ maxLength }}
+        </mat-error>
+        <mat-error *ngIf="inputValidation.hasError('required')">
+          This field is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
       <div class="flex--center--button">
         <div class="flex--button">
-          <button class="button button--green" type="submit">
-            {{ button }}
-          </button>
-          <button class="button button--red" (click)="onCancelClicked()">
+          <button mat-button color="primary" type="submit">{{ button }}</button>
+          <button mat-button color="warn" (click)="onCancelClicked()">
             Cancel
           </button>
         </div>
       </div>
-    </div>
+    </mat-card>
   </form>
 </div>

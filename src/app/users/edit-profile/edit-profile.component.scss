@@ -45,7 +45,7 @@ p {
   margin-top: 50px;
   width: 269px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 a {
   margin-top: 27px;
@@ -59,9 +59,10 @@ a {
   line-height: 24px;
 }
 .radio--container {
-  display: flex;
+  //   display: flex;
   margin-top: 50px;
-  margin-bottom: 25px;
+  margin-bottom: 35px;
+  //   margin-bottom: 25px;
 }
 .radio--element {
   display: flex;
@@ -73,4 +74,7 @@ a {
 }
 .radio--element:nth-of-type(2) {
   margin-left: 60px;
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
 }

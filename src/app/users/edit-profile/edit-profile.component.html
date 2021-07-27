@@ -48,8 +48,14 @@
       <input type="password" placeholder="Type in current password" required />
     </div>
     <div class="button--container">
-      <button class="button button--black">Confirm</button>
-      <button class="button button--black" (click)="onCancelClick()">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onAccountActionConfirm()"
+      >
+        Confirm
+      </button>
+      <button mat-raised-button color="warn" (click)="onCancelClick()">
         Cancel
       </button>
     </div>
@@ -60,7 +66,7 @@
   <div class="center--flex">
     <h1>What do you <br />want to do next?</h1>
     <h3>Do you want to delete or <br />deactivate your account?</h3>
-    <div class="radio--container">
+    <!-- <div class="radio--container">
       <div class="radio--element">
         <input
           type="radio"
@@ -81,16 +87,36 @@
         />
         <label for="deactivate">Deactivate</label>
       </div>
-    </div>
+    </div> -->
+    <mat-radio-group aria-label="Select an option" class="radio--container">
+      <mat-radio-button
+        id="delete"
+        name="deleteDeactivate"
+        value="delete"
+        (click)="radioChecked('delete')"
+        >Delete</mat-radio-button
+      >
+      <mat-radio-button
+        id="deactivate"
+        name="deleteDeactivate"
+        value="deactivate"
+        (click)="radioChecked('deactivate')"
+        >Deactivate</mat-radio-button
+      >
+    </mat-radio-group>
     <div class="input--container">
       <p>Current password</p>
       <input type="password" placeholder="Type in current password" required />
     </div>
     <div class="button--container">
-      <button class="button button--black" (click)="onAccountActionConfirm()">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onAccountActionConfirm()"
+      >
         Confirm
       </button>
-      <button class="button button--black" (click)="onCancelClick()">
+      <button mat-raised-button color="warn" (click)="onCancelClick()">
         Cancel
       </button>
     </div>

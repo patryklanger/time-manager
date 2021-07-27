@@ -19,13 +19,7 @@
   align-items: center;
   z-index: 60;
 }
-.modal--window {
-  padding: 20px 116px 38px 116px;
-  background: #c4c4c4;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
-  z-index: 80;
-}
-.modal--window h1 {
+mat-card h1 {
   font-style: normal;
   font-weight: bold;
   font-size: 36px;
@@ -34,32 +28,36 @@
   color: #212121;
   text-align: center;
 }
-.modal--window input {
-  display: block;
-  width: 537px;
-  height: 40px;
-  background: #f7f7fa;
-  border: 0;
-  padding: 6px 12px;
-  border-radius: 3px;
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 18px;
-  line-height: 27px;
-  margin-bottom: 0 !important;
-  /* identical to box height */
+// mat-card input {
+//   display: block;
+//   width: 537px;
+//   height: 40px;
+//   background: #f7f7fa;
+//   border: 0;
+//   padding: 6px 12px;
+//   border-radius: 3px;
+//   font-family: Poppins;
+//   font-style: normal;
+//   font-weight: 300;
+//   font-size: 18px;
+//   line-height: 27px;
+//   margin-bottom: 0 !important;
+//   /* identical to box height */
 
-  color: rgba(0, 0, 0, 1);
-  margin-bottom: 43px;
+//   color: rgba(0, 0, 0, 1);
+//   margin-bottom: 43px;
+// // }
+// mat-card input::placeholder {
+//   color: rgba(0, 0, 0, 0.5);
+// }
+// mat-card input:focus {
+//   outline: none;
+// }
+
+.full-width-input {
+  width: 100%;
 }
-.modal--window input::placeholder {
-  color: rgba(0, 0, 0, 0.5);
-}
-.modal--window input:focus {
-  outline: none;
-}
-.modal--window p {
+mat-card p {
   margin-top: 23px;
   margin-bottom: 11px;
   font-family: Poppins;
@@ -76,7 +74,7 @@
 }
 .flex--button {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 503px;
   justify-self: center;
 }
@@ -86,7 +84,7 @@
   display: flex;
   justify-content: center;
 }
-.modal--window textarea {
+mat-card textarea {
   width: 817px;
   height: 200px;
   resize: none;
@@ -112,11 +110,11 @@
 }
 
 /* Chrome, Safari, Edge, Opera */
-.modal--window input::-webkit-outer-spin-button,
-.modal--window input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+// .modal--window input::-webkit-outer-spin-button,
+// .modal--window input::-webkit-inner-spin-button {
+//   -webkit-appearance: none;
+//   margin: 0;
+// }
 
 /* Firefox */
 .modal--window input[type='number'] {

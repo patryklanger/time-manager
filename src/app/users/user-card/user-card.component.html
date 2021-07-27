@@ -1,4 +1,4 @@
-<div class="card">
+<!-- <div class="card">
   <p class="username">{{ user.userName }}</p>
   <div class="card--inner">
     <div class="priority" [style.background]="color"></div>
@@ -27,9 +27,46 @@
       <img src="../../assets/_log_button.png" />
     </div>
   </div>
-</div>
+</div> -->
 <app-edit-profile
   [userId]="user.userId"
   *ngIf="showEditProfile"
   (close)="onEditToggle()"
 ></app-edit-profile>
+<mat-card class="card"
+  ><div class="priority" [style.background]="color"></div>
+  <mat-card-header>
+    <mat-card-title>{{ user.userName }}</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="inner--element">
+      <p class="label deadline--label">First name:</p>
+      <p class="value deadline--value">{{ user.firstName }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label state--label">Last name:</p>
+      <p class="value state--value">{{ user.lastName }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label timeleft--label">Position:</p>
+      <p class="value timeleft--value">{{ user.position }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label editors--label">E-mail:</p>
+      <p class="value editors--value">{{ user.eMail }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label author--label">Role:</p>
+      <p class="value author--value">{{ user.role }}</p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="mat--actions">
+    <button mat-stroked-button color="primary">Edit user</button>
+    <button mat-stroked-button color="primary">Show logs</button>
+  </mat-card-actions>
+</mat-card>

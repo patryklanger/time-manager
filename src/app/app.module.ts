@@ -44,22 +44,22 @@ import { AddMembersModalComponent } from './ui/add-members-modal/add-members-mod
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-
-// function initializeKeycloak(keycloak: KeycloakService) {
-//   return () =>
-//     keycloak.init({
-//       config: {
-//         url: 'http://10.1.17.45:8080/auth',
-//         realm: 'test-realm',
-//         clientId: 'front-end-client',
-//       },
-//       initOptions: {
-//         onLoad: 'check-sso',
-//         silentCheckSsoRedirectUri:
-//           window.location.origin + '/assets/silent-check-sso.html',
-//       },
-//     });
-// }
+import { MatRadioModule } from '@angular/material/radio';
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: 'http://10.1.17.45:8080/auth',
+        realm: 'test-realm',
+        clientId: 'front-end-client',
+      },
+      initOptions: {
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri:
+          window.location.origin + '/assets/silent-check-sso.html',
+      },
+    });
+}
 
 @NgModule({
   declarations: [
@@ -91,6 +91,7 @@ import { MatMenuModule } from '@angular/material/menu';
     AddMembersModalComponent,
   ],
   imports: [
+    MatRadioModule,
     MatDividerModule,
     MatIconModule,
     MatMenuModule,
@@ -111,12 +112,12 @@ import { MatMenuModule } from '@angular/material/menu';
   ],
   providers: [
     NgxMatNativeDateModule,
-    // {
-    //   provide: APP_INITIALIZER,
-    //   useFactory: initializeKeycloak,
-    //   multi: true,
-    //   deps: [KeycloakService],
-    // },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService],
+    },
   ],
   bootstrap: [AppComponent],
 })

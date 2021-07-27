@@ -4,8 +4,24 @@ import {
   FormControl,
   FormGroup,
   Validators,
+  NgForm,
+  FormGroupDirective,
 } from '@angular/forms';
 
+import { ErrorStateMatcher } from '@angular/material/core';
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null,
+  ): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || control.touched || isSubmitted)
+    );
+  }
+}
 @Component({
   selector: 'app-modal-text-insertion',
   templateUrl: './modal-text-insertion.component.html',
@@ -22,20 +38,20 @@ export class ModalTextInsertionComponent implements OnInit {
   @Input() required = false;
   @Input() maxLength = -1;
   @Input() _textValue = '';
+  @Input() minValue = 0;
   @Output() value = new EventEmitter<string>();
   @Output() cancel = new EventEmitter<boolean>();
   nextClicked = false;
-  formValidator: FormGroup;
-  constructor(private fb: FormBuilder) {
-    this.formValidator = this.fb.group({
-      inputValidation: new FormControl(this._textValue, []),
-    });
-  }
+  inputValidation = new FormControl(this._textValue, []);
+  constructor() {}
+  matcher = new MyErrorStateMatcher();
+
   continueClicked() {
     this.nextClicked = true;
-    if (this.formValidator.get('inputValidation')?.valid) {
-      this.value.emit(this.formValidator.get('inputValidation')?.value);
-      this.formValidator.get('inputValidation')?.setValue('');
+    console.log(this.inputValidation.valid);
+    if (this.inputValidation.valid) {
+      this.value.emit(this.inputValidation.value);
+      this.inputValidation.setValue('');
       this.nextClicked = false;
     }
   }
@@ -43,11 +59,11 @@ export class ModalTextInsertionComponent implements OnInit {
     this.cancel.emit(false);
   }
   ngOnInit(): void {
-    console.log(this.required);
     let validatorsTab = [];
+    validatorsTab.push(Validators.min(this.minValue));
     if (this.required) validatorsTab.push(Validators.required);
     if (this.maxLength > 0)
       validatorsTab.push(Validators.maxLength(this.maxLength));
-    this.formValidator.get('inputValidation')?.setValidators(validatorsTab);
+    this.inputValidation.setValidators(validatorsTab);
   }
 }

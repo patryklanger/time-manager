@@ -52,7 +52,6 @@ button {
   grid-template-columns: 122px auto;
   padding-bottom: 17px;
   margin-top: 17px;
-  border-bottom: 1px solid black;
 }
 .inner--element:first-of-type {
   margin-top: 0;
@@ -128,4 +127,9 @@ button {
 }
 .buttons--element {
   margin-top: 8px;
+}
+.mat--actions {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
 }
