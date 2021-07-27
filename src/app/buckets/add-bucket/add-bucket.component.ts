@@ -1,20 +1,7 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  ErrorHandler,
-} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import * as GlobalVariables from '../../globals';
-import {
-  HttpClient,
-  HttpClientModule,
-  HttpHeaders,
-} from '@angular/common/http';
-import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
-import { ThisReceiver } from '@angular/compiler';
-import { MatCardModule } from '@angular/material/card';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-bucket',

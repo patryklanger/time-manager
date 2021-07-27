@@ -1,12 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  ComponentFactoryResolver,
-} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import * as GlobalVariables from '../../globals';
 
@@ -43,14 +36,18 @@ export class EditBucketComponent implements OnInit {
     maxTaskCount: '',
     createdTime: '',
   };
-  headers = new HttpHeaders();
   path = GlobalVariables.GlobalServerPath;
+
+  headers = new HttpHeaders();
+
   bucketsSubscription = new Subscription();
   bucketMembersSubscription = new Subscription();
   editBucketSubscription = new Subscription();
+
   getBucketResponse$ = new Observable<any>();
   getBucketMembersResponse$ = new Observable<any>();
   editBucketResponse$ = new Observable<any>();
+
   constructor(private http: HttpClient) {
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers = this.headers.append('Accept', 'application/json');
