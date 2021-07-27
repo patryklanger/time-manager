@@ -83,9 +83,9 @@
     </div>
   </div>
 </div> -->
-<mat-card *ngIf="managerCard" class="card">
+<mat-card *ngIf="managerCard" class="card"><div class="priority" [style.background]="color"></div>
   <mat-card-header>
-    <div class="priority" [style.background]="color"></div>
+    
     <mat-card-title>{{ managerTask.taskName }}</mat-card-title>
     <mat-card-subtitle>{{ managerTask.bucketName }}</mat-card-subtitle>
   </mat-card-header>

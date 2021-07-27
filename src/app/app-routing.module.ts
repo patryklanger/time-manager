@@ -20,69 +20,69 @@ const routes: Routes = [
   {
     path: 'user-panel',
     component: UserPanelMainComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'buckets/my',
     component: MyBucketsComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'tasks/my',
     component: MyTasksComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'tasks/all',
     component: AllTasksForUserComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'buckets/all',
     component: AllBucketsForUserComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'admin-panel',
     component: AdminPanelComponent,
-    canActivate: [AuthGuard],
-    data: {
-      requiredRoles: ['ADMIN'],
-    },
+    // canActivate: [AuthGuard],
+    // data: {
+    //   requiredRoles: ['ADMIN'],
+    // },
   },
   {
     path: 'admin-panel/users',
     component: UsersPanelComponent,
-    canActivate: [AuthGuard],
-    data: {
-      requiredRoles: ['ADMIN'],
-    },
+    // canActivate: [AuthGuard],
+    // data: {
+    //   requiredRoles: ['ADMIN'],
+    // },
   },
   {
     path: 'admin-panel/tasks',
     component: AllTasksComponent,
-    canActivate: [AuthGuard],
-    data: {
-      requiredRoles: ['ADMIN'],
-    },
+    // canActivate: [AuthGuard],
+    // data: {
+    //   requiredRoles: ['ADMIN'],
+    // },
   },
   {
     path: 'admin-panel/buckets',
     component: AllBucketsComponent,
-    canActivate: [AuthGuard],
-    data: {
-      requiredRoles: ['ADMIN'],
-    },
+    // canActivate: [AuthGuard],
+    // data: {
+    //   requiredRoles: ['ADMIN'],
+    // },
   },
   {
     path: 'tasks/bucket/:id',
     component: TasksOfBucketComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'tasks',
     component: TasksPanelComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'register',
