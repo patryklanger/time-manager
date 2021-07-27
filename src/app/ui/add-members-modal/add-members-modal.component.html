@@ -1,41 +1,39 @@
 <app-custom-modal>
-  <form [formGroup]="emailValidityCheck">
-    <h1>Add members</h1>
-    <div class="add--members">
+  <h1>Add members</h1>
+  <mat-form-field class="chip-list" appearance="fill">
+    <mat-label>Members</mat-label>
+    <mat-chip-list #chipList aria-label="Members">
+      <mat-chip
+        *ngFor="let email of addedUsers"
+        [selectable]="selectable"
+        [removable]="removable"
+        (removed)="remove(email)"
+      >
+        {{ email }}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
       <input
-        class="my-input"
-        type="text"
-        (keyup)="keyDownOnTextarea()"
-        placeholder="Start typing user's email"
-        formControlName="emailValidity"
+        class="chip--input"
+        placeholder="New member..."
+        #emailInput
+        (keydown)="keyDownOnTextarea()"
+        [formControl]="emailCtrl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="add($event)"
       />
-
-      <div class="list">
-        <div class="emails--container">
-          <div
-            class="list--element"
-            *ngIf="
-              showCustomEmailAddressAdditionOption &&
-              emailValidityCheck.controls['emailValidity'].valid
-            "
-          >
-            Add unregistred user with '{{ textareaContent }}'
-          </div>
-          <ng-template
-            ngFor
-            let-email
-            [ngForOf]="userArray"
-            *ngIf="showContextMenu"
-          >
-            <div
-              class="list--element"
-              (click)="onEmailOnContextClicked($event)"
-            >
-              {{ email }}
-            </div>
-          </ng-template>
-        </div>
-      </div>
-    </div>
-  </form>
+    </mat-chip-list>
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="selected($event)"
+    >
+      <mat-option *ngFor="let email of filteredEmails | async" [value]="email">
+        {{ email }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="onAddMembersClick()">
+    Add members
+  </button>
 </app-custom-modal>

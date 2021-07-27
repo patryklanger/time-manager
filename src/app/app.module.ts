@@ -45,6 +45,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { DialogBoxMessageComponent } from './ui/dialog-box-message/dialog-box-message.component';
+import { MatDialogModule } from '@angular/material/dialog';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -89,8 +94,13 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AllTasksComponent,
     RegistrationPanelComponent,
     AddMembersModalComponent,
+    DialogBoxMessageComponent,
   ],
   imports: [
+    MatDialogModule,
+    MatAutocompleteModule,
+    MatSelectModule,
+    MatChipsModule,
     MatRadioModule,
     MatDividerModule,
     MatIconModule,

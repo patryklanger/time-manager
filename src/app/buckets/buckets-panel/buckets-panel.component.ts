@@ -38,9 +38,9 @@ export class BucketsPanelComponent implements OnInit {
       maxTaskCount: '',
       createdTime: '',
     };
-    console.log(event);
     bucket = event;
     this.buckets.unshift(bucket);
+    if (!this.showBuckets) this.showBuckets = true;
     this.addBucketShow = false;
   }
   onBucketDeleted(bucketId: number) {

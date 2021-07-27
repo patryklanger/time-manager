@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {
-  FormBuilder,
   FormControl,
-  FormGroup,
   Validators,
   NgForm,
   FormGroupDirective,
@@ -39,6 +37,7 @@ export class ModalTextInsertionComponent implements OnInit {
   @Input() maxLength = -1;
   @Input() _textValue = '';
   @Input() minValue = 0;
+  @Input() maxValue = 2147483647;
   @Output() value = new EventEmitter<string>();
   @Output() cancel = new EventEmitter<boolean>();
   nextClicked = false;
@@ -59,8 +58,10 @@ export class ModalTextInsertionComponent implements OnInit {
     this.cancel.emit(false);
   }
   ngOnInit(): void {
+    this.inputValidation.setValue(this._textValue);
     let validatorsTab = [];
     validatorsTab.push(Validators.min(this.minValue));
+    validatorsTab.push(Validators.max(this.maxValue));
     if (this.required) validatorsTab.push(Validators.required);
     if (this.maxLength > 0)
       validatorsTab.push(Validators.maxLength(this.maxLength));

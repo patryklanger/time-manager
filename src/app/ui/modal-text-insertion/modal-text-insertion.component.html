@@ -30,6 +30,12 @@
         <mat-error *ngIf="inputValidation.hasError('required')">
           This field is <strong>required</strong>
         </mat-error>
+        <mat-error *ngIf="inputValidation.hasError('min')">
+          Minimal value for this field is {{ minValue }}
+        </mat-error>
+        <mat-error *ngIf="inputValidation.hasError('max')">
+          Maximal value for this field is {{ maxValue }}
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field
