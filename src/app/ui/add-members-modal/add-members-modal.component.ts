@@ -60,7 +60,9 @@ export class AddMembersModalComponent implements OnInit {
     );
   }
   onEmailOnContextClicked(event: any) {
-    console.log(event.target.innerText);
+    if (this.addedUsers[0] == '') this.addedUsers = event.target.innerText;
+    else this.addedUsers.push(event.target.innerText);
+    console.log(this.addedUsers);
   }
   ngOnInit(): void {}
 }
