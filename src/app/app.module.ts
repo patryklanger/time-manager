@@ -50,6 +50,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DialogBoxMessageComponent } from './ui/dialog-box-message/dialog-box-message.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { SureDialogComponentComponent } from './ui/sure-dialog-component/sure-dialog-component.component';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -95,6 +96,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     RegistrationPanelComponent,
     AddMembersModalComponent,
     DialogBoxMessageComponent,
+    SureDialogComponentComponent,
   ],
   imports: [
     MatDialogModule,

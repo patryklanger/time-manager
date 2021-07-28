@@ -115,6 +115,11 @@
       <p class="label author--label">Author:</p>
       <p class="value author--value">{{ task.owner }}</p>
     </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label author--label">Timer:</p>
+      <p class="value author--value">00:00:00</p>
+    </div>
   </mat-card-content>
   <mat-card-actions class="mat--actions">
     <button mat-stroked-button color="primary">PLAY</button>
@@ -150,17 +155,22 @@
     <mat-divider></mat-divider>
     <div class="inner--element">
       <p class="label timeleft--label">Time left:</p>
-      <p class="value timeleft--value">{{ timeleft }}</p>
+      <p class="value timeleft--value">{{ timeLeft }}</p>
     </div>
     <mat-divider></mat-divider>
     <div class="inner--element">
       <p class="label editors--label">Editors:</p>
-      <p class="value editors--value">{{ task.taskEditorsCount }}</p>
+      <p class="value editors--value">{{ task.editorsCount }}</p>
     </div>
     <mat-divider></mat-divider>
     <div class="inner--element">
       <p class="label author--label">Author:</p>
       <p class="value author--value">{{ task.owner }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label author--label">Timer:</p>
+      <p class="value author--value">00:00:00</p>
     </div>
   </mat-card-content>
   <mat-card-actions class="mat--actions">

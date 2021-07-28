@@ -127,7 +127,7 @@ export class EditBucketComponent implements OnInit {
     );
     if (members.UserNoInDB.length > 0) {
       var message =
-        "Following users cannot be added,\n because they weren't found in database: \n\n";
+        "Following users cannot be added,\nbecause they weren't found in database: \n\n";
       members.UserNoInDB.forEach((e: string) => {
         message += e + '\n';
       });

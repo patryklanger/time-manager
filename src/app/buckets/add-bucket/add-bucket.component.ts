@@ -62,11 +62,6 @@ export class AddBucketComponent implements OnInit {
   onMaxTaskAdded(maxTask: string) {
     this.newBucket.maxTask = maxTask;
     this.modals.maxTask = false;
-    this.modals.team = true;
-  }
-  onMembersAdded(members: any) {
-    console.log(members);
-    // this.newBucket.team.push(members);
     this.onSuccessfullyAdded();
   }
   onCancelClick() {
@@ -78,10 +73,6 @@ export class AddBucketComponent implements OnInit {
   }
   onSuccessfullyAdded() {
     console.log(this.newBucket);
-    this.modals.name = true;
-    this.modals.description = false;
-    this.modals.maxTask = false;
-    this.modals.team = false;
 
     let bucket = {
       name: this.newBucket.name,
@@ -100,6 +91,11 @@ export class AddBucketComponent implements OnInit {
       console.log(res);
       this.responseBucket = res;
       this.bucketAdded.emit(this.responseBucket);
+
+      this.modals.name = true;
+      this.modals.description = false;
+      this.modals.maxTask = false;
+      this.modals.team = false;
     }, this.errorHandler);
   }
   ngOnInit(): void {}
