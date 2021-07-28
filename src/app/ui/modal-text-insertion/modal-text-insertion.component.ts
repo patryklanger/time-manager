@@ -47,7 +47,6 @@ export class ModalTextInsertionComponent implements OnInit {
 
   continueClicked() {
     this.nextClicked = true;
-    console.log(this.inputValidation.valid);
     if (this.inputValidation.valid) {
       this.value.emit(this.inputValidation.value);
       this.inputValidation.setValue('');

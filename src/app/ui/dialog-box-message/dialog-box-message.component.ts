@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export interface DialogData {
   animal: string;
   name: string;
@@ -10,7 +10,9 @@ export interface DialogData {
   styleUrls: ['./dialog-box-message.component.scss'],
 })
 export class DialogBoxMessageComponent implements OnInit {
-  constructor() {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: { title: string; message: string },
+  ) {}
 
   ngOnInit(): void {}
 }

@@ -1,4 +1,7 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import * as GlobalVariables from '../../globals';
 
 @Component({
   selector: 'app-my-tasks',
@@ -8,72 +11,39 @@ import { Component, OnInit } from '@angular/core';
 export class MyTasksComponent implements OnInit {
   title = 'Tasks managed by you';
   subTitle = 'You manage all tasks listed below';
-  tasks = [
-    {
-      taskId: 0,
-      bucketName: '',
-      taskName: '',
-      taskPriority: 0,
-      taskDeadline: '',
-      taskState: '',
-      taskEditorsCount: 0,
-      taskOwner: '',
-    },
-  ];
-  constructor() {}
+  dataFetched = false;
+  tasks: {
+    taskId: number;
+    bucketName: string;
+    taskName: string;
+    owner: string;
+    taskPriority: number;
+    taskDeadline: string;
+    taskState: string;
+    taskEditorsCount: number;
+    taskCreationTime: string;
+    taskExpectedTime: number;
+    editorsCount: number;
+  }[] = [];
+  headers = new HttpHeaders();
+  path = GlobalVariables.GlobalServerPath;
+  subscription = new Subscription();
+  response$ = new Observable<any>();
+  constructor(private http: HttpClient) {
+    this.headers = this.headers.append('Content-Type', 'application/json');
+    this.headers = this.headers.append('Accept', 'application/json');
+
+    this.response$ = this.http.get(this.path + GlobalVariables.TasksPath, {
+      headers: this.headers,
+    });
+  }
 
   ngOnInit(): void {
-    this.tasks = [
-      {
-        taskId: 1,
-        bucketName: 'Bucket',
-        taskName: 'task no uno',
-        taskPriority: 1,
-        taskDeadline: 'wtorek',
-        taskState: 'NEW',
-        taskEditorsCount: 7,
-        taskOwner: 'Arturitto don Huano',
-      },
-      {
-        taskId: 1,
-        bucketName: 'Bucket',
-        taskName: 'task no uno',
-        taskPriority: 1,
-        taskDeadline: 'wtorek',
-        taskState: 'NEW',
-        taskEditorsCount: 7,
-        taskOwner: 'Arturitto don Huano',
-      },
-      {
-        taskId: 1,
-        bucketName: 'Bucket',
-        taskName: 'task no uno',
-        taskPriority: 1,
-        taskDeadline: 'wtorek',
-        taskState: 'NEW',
-        taskEditorsCount: 7,
-        taskOwner: 'Arturitto don Huano',
-      },
-      {
-        taskId: 1,
-        bucketName: 'Bucket',
-        taskName: 'task no uno',
-        taskPriority: 2,
-        taskDeadline: 'wtorek',
-        taskState: 'NEW',
-        taskEditorsCount: 7,
-        taskOwner: 'Arturitto don Huano',
-      },
-      {
-        taskId: 1,
-        bucketName: 'Bucket',
-        taskName: 'task no uno',
-        taskPriority: 3,
-        taskDeadline: 'wtorek',
-        taskState: 'NEW',
-        taskEditorsCount: 7,
-        taskOwner: 'Arturitto don Huano',
-      },
-    ];
+    console.log('On tasks init');
+    this.subscription = this.response$.subscribe((res) => {
+      console.log(res);
+      this.tasks = res;
+      this.dataFetched = true;
+    });
   }
 }

@@ -3,7 +3,7 @@
 
 <div class="tasks--cards--container">
   <ng-template ngFor let-task *ngIf="managerTask" [ngForOf]="managerTasks">
-    <app-task-card [managerTask]="task"></app-task-card>
+    <app-task-card [task]="task"></app-task-card>
   </ng-template>
   <ng-template ngFor let-task *ngIf="normalTask" [ngForOf]="tasks">
     <app-task-card [task]="task" [managerCard]="managerTask"></app-task-card>

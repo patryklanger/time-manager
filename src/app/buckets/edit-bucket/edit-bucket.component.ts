@@ -1,6 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ComponentFactoryResolver,
+} from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
+import { DialogBoxMessageComponent } from 'src/app/ui/dialog-box-message/dialog-box-message.component';
 import * as GlobalVariables from '../../globals';
 
 @Component({
@@ -28,6 +37,8 @@ export class EditBucketComponent implements OnInit {
   };
   dataFetched = false;
 
+  membersEmails: string[];
+
   editBucket = {
     bucketId: -1,
     owner: '',
@@ -43,14 +54,17 @@ export class EditBucketComponent implements OnInit {
   bucketsSubscription = new Subscription();
   bucketMembersSubscription = new Subscription();
   editBucketSubscription = new Subscription();
+  patchBucketMembersSubscription = new Subscription();
 
   getBucketResponse$ = new Observable<any>();
   getBucketMembersResponse$ = new Observable<any>();
   editBucketResponse$ = new Observable<any>();
+  patchBucketMembersResponse$ = new Observable<any>();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dialog: MatDialog) {
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers = this.headers.append('Accept', 'application/json');
+    this.membersEmails = [];
   }
   errorHandler = (err: any) => {
     alert(err.message);
@@ -89,11 +103,44 @@ export class EditBucketComponent implements OnInit {
     this.modals.maxTask = false;
     this.modals.team = true;
   }
-  onMembersAdded(members: string) {
-    // const teamX = [''];
-    // teamX.push(members);
-    const teamX = '';
-    this.editBucket.createdTime = teamX;
+  onMembersAdded(members: any) {
+    let arrayOfExistingUsersId: number[] = [];
+    members.UserInDB.forEach(
+      (e: {
+        userId: number;
+        userName: string;
+        firstName: string;
+        lastName: string;
+        position: string;
+        role: string;
+        email: string;
+      }) => {
+        arrayOfExistingUsersId.push(e.userId);
+      },
+    );
+    this.patchBucketMembersResponse$ = this.http.patch(
+      this.path +
+        GlobalVariables.BucketsPath +
+        this.editBucket.bucketId +
+        '/users',
+      arrayOfExistingUsersId,
+    );
+    if (members.UserNoInDB.length > 0) {
+      var message =
+        "Following users cannot be added,\n because they weren't found in database: \n\n";
+      members.UserNoInDB.forEach((e: string) => {
+        message += e + '\n';
+      });
+      console.log(message);
+      this.dialog.open(DialogBoxMessageComponent, {
+        data: {
+          title: 'Cannot add user',
+          message: message,
+        },
+      });
+    }
+    this.patchBucketMembersSubscription =
+      this.patchBucketMembersResponse$.subscribe((res) => console.log(res));
     this.onSuccessfullyAdded();
   }
   onCancelClick() {
@@ -112,11 +159,11 @@ export class EditBucketComponent implements OnInit {
     this.putBucket();
   }
   ngOnInit(): void {
-    let path = this.path + '/buckets/' + this.bucketId;
+    let path = this.path + GlobalVariables.BucketsPath + this.bucketId;
     this.getBucketResponse$ = this.http.get(path, {
       headers: this.headers,
     });
-    path = this.path + '/buckets/' + this.bucketId + '/users';
+    path = this.path + GlobalVariables.BucketsPath + this.bucketId + '/users';
     this.getBucketMembersResponse$ = this.http.get(path, {
       headers: this.headers,
     });
@@ -125,16 +172,28 @@ export class EditBucketComponent implements OnInit {
       this.dataFetched = true;
     });
     this.bucketMembersSubscription = this.getBucketMembersResponse$.subscribe(
-      (res) => {
-        // console.log(res);
+      (members) => {
+        members.forEach(
+          (e: {
+            email: string;
+            firstName: string;
+            lastName: string;
+            position: string;
+            role: string;
+            userId: number;
+            userName: string;
+          }) => {
+            this.membersEmails.push(e.email);
+          },
+        );
       },
       this.errorHandler,
     );
   }
   ngOnDestroy() {
-    console.log('destroy');
-    this.bucketsSubscription.unsubscribe();
-    this.bucketMembersSubscription.unsubscribe();
+    if (this.bucketsSubscription) this.bucketsSubscription.unsubscribe();
+    if (this.bucketMembersSubscription)
+      this.bucketMembersSubscription.unsubscribe();
     if (this.editBucketSubscription) this.editBucketSubscription.unsubscribe();
   }
 }

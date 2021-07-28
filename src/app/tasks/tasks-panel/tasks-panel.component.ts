@@ -13,13 +13,16 @@ export class TasksPanelComponent implements OnInit {
   @Input() managerTasks = [
     {
       taskId: 0,
-      bucketName: 'XD',
+      bucketName: '',
       taskName: '',
+      owner: '',
       taskPriority: 0,
       taskDeadline: '',
       taskState: '',
       taskEditorsCount: 0,
-      taskOwner: '',
+      taskCreationTime: '',
+      taskExpectedTime: -1,
+      editorsCount: -1,
     },
   ];
   @Input() tasks = [
@@ -27,11 +30,14 @@ export class TasksPanelComponent implements OnInit {
       taskId: 0,
       bucketName: '',
       taskName: '',
-      creationTime: '',
+      owner: '',
       taskPriority: 0,
       taskDeadline: '',
-      estDuration: '',
-      taskOwner: '',
+      taskState: '',
+      taskEditorsCount: 0,
+      taskCreationTime: '',
+      taskExpectedTime: -1,
+      editorsCount: -1,
     },
   ];
   constructor() {}

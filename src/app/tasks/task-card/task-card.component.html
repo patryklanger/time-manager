@@ -83,22 +83,69 @@
     </div>
   </div>
 </div> -->
-<mat-card *ngIf="managerCard" class="card"><div class="priority" [style.background]="color"></div>
+<mat-card *ngIf="normalCard" class="card"
+  ><div class="priority" [style.background]="color"></div>
   <mat-card-header>
-    
-    <mat-card-title>{{ managerTask.taskName }}</mat-card-title>
-    <mat-card-subtitle>{{ managerTask.bucketName }}</mat-card-subtitle>
+    <mat-card-title>{{ task.taskName }}</mat-card-title>
+    <mat-card-subtitle>{{ task.bucketName }}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
     <div class="inner--element">
       <p class="label deadline--label">Deadline:</p>
-      <p class="value deadline--value">{{ managerTask.taskDeadline }}</p>
+      <p class="value deadline--value">{{ deadline }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label state--label">Start time:</p>
+      <p class="value state--value">{{ startTime }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label timeleft--label">Time left:</p>
+      <p class="value timeleft--value">{{ timeLeft }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label editors--label">Est. duration:</p>
+      <p class="value editors--value">{{ task.taskExpectedTime }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label author--label">Author:</p>
+      <p class="value author--value">{{ task.owner }}</p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="mat--actions">
+    <button mat-stroked-button color="primary">PLAY</button>
+    <button mat-stroked-button color="primary">STOP</button>
+    <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
+      MORE
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>info</mat-icon>
+        <span>Task's details</span>
+      </button>
+    </mat-menu>
+  </mat-card-actions>
+</mat-card>
+<mat-card *ngIf="managerCard" class="card"
+  ><div class="priority" [style.background]="color"></div>
+  <mat-card-header>
+    <mat-card-title>{{ task.taskName }}</mat-card-title>
+    <mat-card-subtitle>{{ task.bucketName }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="inner--element">
+      <p class="label deadline--label">Deadline:</p>
+      <p class="value deadline--value">{{ deadline }}</p>
     </div>
     <mat-divider></mat-divider>
     <div class="inner--element">
       <p class="label state--label">Task state:</p>
-      <p class="value state--value">{{ managerTask.taskState }}</p>
+      <p class="value state--value">{{ task.taskState }}</p>
     </div>
     <mat-divider></mat-divider>
     <div class="inner--element">
@@ -108,12 +155,12 @@
     <mat-divider></mat-divider>
     <div class="inner--element">
       <p class="label editors--label">Editors:</p>
-      <p class="value editors--value">{{ managerTask.taskEditorsCount }}</p>
+      <p class="value editors--value">{{ task.taskEditorsCount }}</p>
     </div>
     <mat-divider></mat-divider>
     <div class="inner--element">
       <p class="label author--label">Author:</p>
-      <p class="value author--value">{{ managerTask.taskOwner }}</p>
+      <p class="value author--value">{{ task.owner }}</p>
     </div>
   </mat-card-content>
   <mat-card-actions class="mat--actions">
@@ -127,7 +174,7 @@
         <mat-icon>group</mat-icon>
         <span>Task's users</span>
       </button>
-      <button mat-menu-item disabled>
+      <button mat-menu-item>
         <mat-icon>info</mat-icon>
         <span>Task's details</span>
       </button>

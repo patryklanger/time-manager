@@ -1,1 +1,7 @@
-<p>tasks-of-bucket works!</p>
+<app-tasks-panel
+  *ngIf="dataFetched"
+  [managerTask]="false"
+  [title]="title"
+  [subTitle]="subTitle"
+  [tasks]="tasks"
+></app-tasks-panel>

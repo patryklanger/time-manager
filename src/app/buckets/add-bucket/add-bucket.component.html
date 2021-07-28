@@ -32,13 +32,3 @@
   (value)="onMaxTaskAdded($event)"
   *ngIf="modals.maxTask"
 ></app-modal-text-insertion>
-<app-modal-text-insertion
-  name="Choose bucket's bucket team"
-  label="Members"
-  placeholder="Start typing your collegue's e-mail address"
-  button="Add bucket"
-  (cancel)="onCancelClick()"
-  (value)="onMembersAdded($event)"
-  *ngIf="modals.team"
-  [textArea]="true"
-></app-modal-text-insertion>

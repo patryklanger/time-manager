@@ -41,8 +41,6 @@ export class BucketCardComponent implements OnInit {
     this.showBucketOptions = true;
   }
   onShowTasksClick() {
-    // this.router.navigate(['/tasks/bucket'], {
-    //   queryParams: { bucketId: this.bucket.bucketId },
     this.router.navigateByUrl('tasks/bucket/' + this.bucket.bucketId);
   }
   onEditBucketClick() {

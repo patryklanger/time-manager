@@ -6,7 +6,7 @@
   [_textValue]="editBucket.name"
   (cancel)="onCancelClick()"
   (value)="onNameAdded($event)"
-  *ngIf="dataFetched"
+  *ngIf="dataFetched && modals.name"
 ></app-modal-text-insertion>
 <app-modal-text-insertion
   name="Edit bucket's description"
@@ -30,14 +30,10 @@
   (value)="onMaxTaskAdded($event)"
   *ngIf="modals.maxTask && dataFetched"
 ></app-modal-text-insertion>
-<app-modal-text-insertion
-  name="Edit bucket's bucket team"
-  label="Members"
-  placeholder="Start typing your collegue's e-mail address"
-  button="Add bucket"
-  [_textValue]="editBucket.createdTime"
+<app-add-members-modal
+  *ngIf="modals.team && dataFetched"
   (cancel)="onCancelClick()"
   (value)="onMembersAdded($event)"
-  *ngIf="modals.team && dataFetched"
-  [textArea]="true"
-></app-modal-text-insertion>
+  [membersEmails]="membersEmails"
+>
+</app-add-members-modal>

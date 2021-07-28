@@ -1,14 +1,22 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  Output,
+  Input,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, VirtualTimeScheduler } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs';
 import * as GlobalVariables from '../../globals';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { map, startWith } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
+import { EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-add-members-modal',
   templateUrl: './add-members-modal.component.html',
@@ -17,12 +25,15 @@ import { MatDialog } from '@angular/material/dialog';
 export class AddMembersModalComponent implements OnInit {
   selectable = true;
   removable = true;
-  separatorKeysCodes: number[] = [ENTER, COMMA];
+  separatorKeysCodes: number[] = [ENTER, COMMA, SPACE];
 
   addCustomEmailAddress = {
     add: false,
     address: '',
   };
+  @Input() membersEmails: string[];
+  @Output() cancel = new EventEmitter<boolean>();
+  @Output() value = new EventEmitter<any>();
 
   path = GlobalVariables.GlobalServerPath;
   headers = new HttpHeaders();
@@ -38,9 +49,10 @@ export class AddMembersModalComponent implements OnInit {
 
   @ViewChild('emailInput') emailInput: ElementRef<HTMLInputElement>;
 
-  constructor(private http: HttpClient, public dialog: MatDialog) {
+  constructor(private http: HttpClient) {
     this.addedUsers = [];
     this.allEmails = [];
+    this.membersEmails = [];
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers = this.headers.append('Accept', 'application/json');
 
@@ -70,6 +82,9 @@ export class AddMembersModalComponent implements OnInit {
       this.addedUsers.splice(index, 1);
     }
   }
+  onCloseClick() {
+    this.cancel.emit();
+  }
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.addedUsers.push(event.option.viewValue);
@@ -79,7 +94,7 @@ export class AddMembersModalComponent implements OnInit {
 
   keyDownOnTextarea() {
     this.response$ = this.http.get(
-      this.path + '/findUserByEmail?substring=' + this.emailCtrl.value,
+      this.path + '/emails?substring=' + this.emailCtrl.value,
     );
     this.subscription = this.response$.subscribe(
       (res) => {
@@ -98,11 +113,19 @@ export class AddMembersModalComponent implements OnInit {
   onEmailOnContextClicked(event: any) {
     if (this.addedUsers[0] == '') this.addedUsers = event.target.innerText;
     else this.addedUsers.push(event.target.innerText);
-    console.log(this.addedUsers);
   }
   onAddMembersClick() {
     this.response1$ = this.http.post(this.path + '/users', this.addedUsers);
-    this.subscription1 = this.response1$.subscribe((res) => console.log(res));
+    this.subscription1 = this.response1$.subscribe((res) => {
+      console.log(res);
+      this.value.emit(res);
+    });
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.addedUsers = this.membersEmails;
+  }
+  ngOnDestroy() {
+    this.subscription1.unsubscribe();
+    this.subscription.unsubscribe();
+  }
 }

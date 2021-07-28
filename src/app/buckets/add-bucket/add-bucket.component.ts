@@ -36,7 +36,6 @@ export class AddBucketComponent implements OnInit {
     name: '',
     description: '',
     maxTask: '',
-    team: [''],
   };
   dataFetched = false;
   headers = new HttpHeaders();
@@ -65,8 +64,9 @@ export class AddBucketComponent implements OnInit {
     this.modals.maxTask = false;
     this.modals.team = true;
   }
-  onMembersAdded(members: string) {
-    this.newBucket.team.push(members);
+  onMembersAdded(members: any) {
+    console.log(members);
+    // this.newBucket.team.push(members);
     this.onSuccessfullyAdded();
   }
   onCancelClick() {

@@ -33,7 +33,12 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  <button mat-raised-button color="primary" (click)="onAddMembersClick()">
-    Add members
-  </button>
+  <div class="button--container">
+    <button mat-raised-button color="primary" (click)="onAddMembersClick()">
+      Add members
+    </button>
+    <button mat-raised-button color="warn" (click)="onCloseClick()">
+      Close
+    </button>
+  </div>
 </app-custom-modal>
