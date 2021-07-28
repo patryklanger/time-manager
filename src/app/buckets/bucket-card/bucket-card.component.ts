@@ -58,6 +58,7 @@ export class BucketCardComponent implements OnInit {
     this.bucket = bucket;
     this.showEditBucket = false;
   }
+  onAddTaskClick() {}
   onDeleteBucketClicked() {
     console.log(this.bucket.bucketId);
     let deletePath =

@@ -8,7 +8,6 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./task-card.component.scss'],
 })
 export class TaskCardComponent implements OnInit {
-  timeleft = '';
   color = '';
   response$ = new Observable<any>();
   subscription = new Subscription();
@@ -21,7 +20,6 @@ export class TaskCardComponent implements OnInit {
     taskPriority: 0,
     taskDeadline: '',
     taskState: '',
-    taskEditorsCount: 0,
     taskCreationTime: '',
     taskExpectedTime: -1,
     editorsCount: -1,
@@ -39,27 +37,7 @@ export class TaskCardComponent implements OnInit {
     medium: '#BABD10',
     high: '#B52920',
   };
-  constructor(
-    private elementRef: ElementRef,
-    private renderer: Renderer2,
-    private http: HttpClient,
-  ) {
-    this.renderer.listen('window', 'click', (e: Event) => {
-      let menu =
-        elementRef.nativeElement.getElementsByClassName('options--menu');
-      let toggle =
-        elementRef.nativeElement.getElementsByClassName('details--toggle');
-      let toggleImg = elementRef.nativeElement.getElementsByClassName(
-        'details--toggle--img',
-      );
-      if (
-        e.target !== menu[0] &&
-        e.target !== toggle[0] &&
-        e.target !== toggleImg[0]
-      )
-        this.showDetails = false;
-    });
-  }
+  constructor(private renderer: Renderer2, private http: HttpClient) {}
   getColor() {
     if (this.managerCard) {
       if (this.task.taskPriority == 1) this.color = this.priorityColor.low;
@@ -126,8 +104,6 @@ export class TaskCardComponent implements OnInit {
     this.timeConversion();
     this.normalCard = !this.managerCard;
     this.getColor();
-    if (this.managerCard) this.timeleft = this.task.taskDeadline;
-    else this.timeleft = this.task.taskDeadline;
   }
   ngOnDestroy() {}
 }
