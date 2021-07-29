@@ -9,7 +9,7 @@ export interface DialogData {
   templateUrl: './sure-dialog-component.component.html',
   styleUrls: ['./sure-dialog-component.component.scss'],
 })
-export class DialogBoxMessageComponent implements OnInit {
+export class SureDialogComponentComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { title: string; message: string },
   ) {}

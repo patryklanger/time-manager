@@ -150,7 +150,9 @@
     <mat-divider></mat-divider>
     <div class="inner--element">
       <p class="label state--label">Task state:</p>
-      <p class="value state--value">{{ task.taskState }}</p>
+      <p class="value state--value">
+        {{ taskStateToDisplay }}
+      </p>
     </div>
     <mat-divider></mat-divider>
     <div class="inner--element">

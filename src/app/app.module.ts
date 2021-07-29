@@ -33,10 +33,6 @@ import { AllBucketsComponent } from './buckets/all-buckets/all-buckets.component
 import { AllTasksComponent } from './tasks/all-tasks/all-tasks.component';
 import { RegistrationPanelComponent } from './ui/registration-panel/registration-panel.component';
 import { MatCard, MatCardModule } from '@angular/material/card';
-import {
-  NgxMatDatetimePickerModule,
-  NgxMatTimepickerModule,
-} from '@angular-material-components/datetime-picker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
@@ -50,6 +46,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DialogBoxMessageComponent } from './ui/dialog-box-message/dialog-box-message.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { SureDialogComponentComponent } from './ui/sure-dialog-component/sure-dialog-component.component';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -99,6 +96,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     SureDialogComponentComponent,
   ],
   imports: [
+    MatMomentDateModule,
     MatDialogModule,
     MatAutocompleteModule,
     MatSelectModule,
@@ -112,8 +110,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatDatepickerModule,
     MatInputModule,
     MatCardModule,
-    NgxMatDatetimePickerModule,
-    NgxMatTimepickerModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

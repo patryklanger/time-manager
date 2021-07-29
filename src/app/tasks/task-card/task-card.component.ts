@@ -24,7 +24,7 @@ export class TaskCardComponent implements OnInit {
     taskExpectedTime: -1,
     editorsCount: -1,
   };
-
+  taskStateToDisplay = '';
   deadline = '';
   startTime = '';
   timeLeft = '';
@@ -52,17 +52,16 @@ export class TaskCardComponent implements OnInit {
     }
   }
   formatTime(time: Date): string {
-    return (
-      time.getHours() +
-      ':' +
-      time.getMinutes() +
-      ', ' +
-      time.getDate() +
-      '.' +
-      (time.getMonth() + 1) +
-      '.' +
-      time.getFullYear()
-    );
+    let hours = time.getHours() < 10 ? '0' + time.getHours() : time.getHours();
+    let minutes =
+      time.getMinutes() < 10
+        ? ':0' + time.getMinutes()
+        : ':' + time.getMinutes();
+    let day =
+      time.getDate() < 10 ? ', 0' + time.getDate() : ', ' + time.getDate();
+    let month =
+      time.getMonth() < 10 ? '.0' + time.getMonth() : '.' + time.getMonth();
+    return hours + minutes + day + month + '.' + time.getFullYear();
   }
   substractDates(dat1: Date, dat2: Date): string {
     let differance = dat1.getTime() - dat2.getTime();
@@ -101,6 +100,12 @@ export class TaskCardComponent implements OnInit {
     // this.response$.get()
   }
   ngOnInit(): void {
+    if (this.task.taskState == 'NEW') this.taskStateToDisplay = 'New';
+    else if (this.task.taskState == 'IN_PROGRESS')
+      this.taskStateToDisplay = 'In progress';
+    else if (this.task.taskState == 'SUSPENDED')
+      this.taskStateToDisplay = 'Suspended';
+    else this.taskStateToDisplay = 'Finished';
     this.timeConversion();
     this.normalCard = !this.managerCard;
     this.getColor();

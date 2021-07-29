@@ -31,79 +31,75 @@
   *ngIf="modals.estDuration"
   [required]="true"
 ></app-modal-text-insertion>
-<form [formGroup]="formValidator">
-  <app-custom-modal *ngIf="modals.deadline">
-    <h1>Set task's deadline</h1>
-
-    <div class="input--container">
-      <p>Deadline</p>
+<app-custom-modal *ngIf="modals.deadline">
+  <h1>Set task's deadline</h1>
+  <form (submit)="onDeadlineAdded()">
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a date</mat-label>
       <input
-        class="my-input"
-        [ngxMatDatetimePicker]="pickerForDeadline"
-        placeholder="Select deadline date"
+        matInput
+        class="mat-input-class"
         [min]="today"
-        [(ngModel)]="deadline"
-        formControlName="deadline"
-        [class.next--clicked]="invalid"
+        [matDatepicker]="picker"
+        [formControl]="dateValidation"
+        [errorStateMatcher]="matcher"
       />
-      <mat-datepicker-toggle
-        [for]="$any(pickerForDeadline)"
-      ></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker
-        #pickerForDeadline
-        [enableMeridian]="true"
-        [showSeconds]="true"
-      >
-        <!-- [color]="color"
-    [hideTime]="hideTime" -->
-      </ngx-mat-datetime-picker>
-      <p
-        class="danger"
-        *ngIf="
-          formValidator.controls['deadline'].hasError('required') &&
-          (formValidator.controls['deadline'].touched ||
-            formValidator.controls['deadline'].dirty ||
-            invalid)
-        "
-      >
-        You must set deadline
-      </p>
-    </div>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker
+        #picker
+        startView="month"
+        [startAt]="today"
+      ></mat-datepicker>
+      <mat-error *ngIf="dateValidation.hasError('required')">
+        You must set deadline date
+      </mat-error>
+    </mat-form-field>
     <div class="flex--center--button">
       <div class="flex--button">
-        <button class="button button--green" (click)="onDeadlineAdded()">
-          Next
-        </button>
-        <button class="button button--red" (click)="onCancelClick()">
+        <button mat-button color="primary" type="submit">Next</button>
+        <button mat-button color="warn" (click)="onCancelClick()">
           Cancel
         </button>
       </div>
     </div>
-  </app-custom-modal>
-  <app-custom-modal *ngIf="modals.priority">
-    <h1>Set task's priority</h1>
+  </form>
+</app-custom-modal>
+<app-custom-modal *ngIf="modals.priority">
+  <h1>Set task's priority</h1>
+
+  <form (submit)="onPriorityAdded()">
     <div class="input--container">
-      <p>Priority</p>
-      <select
-        class="my-input"
-        id="priority"
-        name="priority"
-        formControlName="priority"
-      >
-        <option value="1">Low</option>
-        <option value="2">Medium</option>
-        <option value="2">High</option>
-      </select>
+      <!-- <select
+          class="my-input"
+          id="priority"
+          name="priority"
+          formControlName="priority"
+        >
+          <option value="1">Low</option>
+          <option value="2">Medium</option>
+          <option value="2">High</option>
+        </select> -->
+      <mat-form-field appearance="fill">
+        <mat-label>Priority</mat-label>
+        <select
+          matNativeControl
+          required
+          [formControl]="priorityValidation"
+          [errorStateMatcher]="matcher"
+        >
+          <option value="1">Low</option>
+          <option value="2">Medium</option>
+          <option value="3">High</option>
+        </select>
+      </mat-form-field>
     </div>
     <div class="flex--center--button">
       <div class="flex--button">
-        <button class="button button--green" (click)="onPriorityAdded()">
-          Next
-        </button>
-        <button class="button button--red" (click)="onCancelClick()">
+        <button mat-button color="primary" type="submit">Next</button>
+        <button mat-button color="warn" (click)="onCancelClick()">
           Cancel
         </button>
       </div>
     </div>
-  </app-custom-modal>
-</form>
+  </form>
+</app-custom-modal>

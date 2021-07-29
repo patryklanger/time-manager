@@ -1,8 +1,3 @@
-.my-input {
-  width: 450px;
-  display: inline;
-  margin-bottom: 0 !important;
-}
 .input--container p {
   margin-top: 23px;
   margin-bottom: 11px;
@@ -22,14 +17,14 @@
   display: flex;
   justify-content: space-between;
 }
-.danger {
-  color: red !important;
-  font-weight: bold !important;
-  margin-top: 5px !important;
-}
 .flex--center--button {
   margin-top: 30px;
 }
-input.ng-invalid.next--clicked {
-  border: 1.5px solid red;
+
+mat-form-field {
+  width: 100%;
+}
+
+.mat-input-class {
+  width: 100%;
 }

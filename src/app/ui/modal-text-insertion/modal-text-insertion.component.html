@@ -23,6 +23,7 @@
           placeholder="{{ placeholder }}"
           [formControl]="inputValidation"
           [errorStateMatcher]="matcher"
+          [required]="required"
         />
         <mat-error *ngIf="inputValidation.hasError('maxlength')">
           This field has max length of {{ maxLength }}

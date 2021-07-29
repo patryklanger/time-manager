@@ -1,39 +1,3 @@
-<!-- <div class="card" (click)="bucketClicked()">
-  <p class="author">{{ bucket.owner }}</p>
-  <p class="bucketName">{{ bucket.name }}</p>
-  <div class="description">
-    <p class="placeholder">description:</p>
-    <p class="body">{{ bucket.description }}</p>
-  </div>
-  <p class="taskAmount">max tasks amount: {{ bucket.maxTaskCount }}</p>
-</div>
-<app-custom-modal *ngIf="showBucketOptions" (close)="onBucketOptionsClose()">
-  <h1 style="text-align: center">
-    What do you want to do<br />with that bucket?
-  </h1>
-  <div class="row">
-    <button class="button button--grey" (click)="onEditBucketClick()">
-      Edit
-    </button>
-    <button class="button button--grey" (click)="onDeleteBucketClicked()">
-      Delete
-    </button>
-  </div>
-  <div class="row">
-    <button class="button button--grey" style="width: 209px; padding: 25px 0">
-      Show members
-    </button>
-    <button class="button button--grey" (click)="onShowTasksClick()">
-      Show tasks
-    </button>
-  </div>
-</app-custom-modal>
-<app-edit-bucket
-  *ngIf="showEditBucket"
-  [bucketId]="bucket.bucketId"
-  (close)="onEditBucketClose()"
-  (bucketEditted)="onBucketEditted($event)"
-></app-edit-bucket> -->
 <mat-card class="example-card">
   <mat-card-header>
     <mat-card-title>{{ bucket.name }}</mat-card-title>
@@ -47,8 +11,12 @@
     alt="Photo of a Shiba Inu"
   /> -->
   <mat-card-content>
-    <p>
+    <p class="descriptionParagrapgh">
       {{ bucket.description }}
+    </p>
+    <mat-divider></mat-divider>
+    <p class="maxTaskParagrapgh">
+      <strong> Max task count:</strong> {{ bucket.maxTaskCount }}
     </p>
   </mat-card-content>
   <mat-divider></mat-divider>
@@ -73,3 +41,8 @@
   (close)="onEditBucketClose()"
   (bucketEditted)="onBucketEditted($event)"
 ></app-edit-bucket>
+<app-add-task
+  [bucketId]="bucket.bucketId"
+  *ngIf="showAddTask"
+  (closeEmitter)="onAddTaskClose()"
+></app-add-task>
