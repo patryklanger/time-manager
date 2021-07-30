@@ -2,7 +2,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import * as GlobalVariables from '../../globals';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MyErrorStateMatcher } from '../../utility/MyErrorStateMatcher';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NgForm,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -13,6 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class RegistrationPanelComponent implements OnInit {
   emailExists = false;
   loginExists = false;
+
   title = 'Resitration';
   submittedCheck = false;
   registrated = false;
@@ -22,17 +33,37 @@ export class RegistrationPanelComponent implements OnInit {
   path = GlobalVariables.GlobalServerPath;
   subscription = new Subscription();
   response$ = new Observable<any>();
+  matcher = new MyErrorStateMatcher();
+
+  userNameValidation = new FormControl('', [
+    Validators.required,
+    Validators.minLength(4),
+  ]);
+  firstNameValidation = new FormControl('', [Validators.required]);
+  lastNameValidation = new FormControl('', [Validators.required]);
+  emailValidation = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+  positionValidation = new FormControl('INTERN', []);
+  roleValidation = new FormControl('MEMBER', []);
+  passwordValidation = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+  ]);
+
   textareaContent = '';
-  constructor(private fb: FormBuilder, private http: HttpClient) {
-    this.formValidator = this.fb.group({
-      userName: ['', [Validators.required, Validators.minLength(4)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      position: ['INTERN'],
-      role: ['TEAM_MANAGER'],
-      email: ['', [Validators.required, Validators.email]],
+  constructor(private http: HttpClient, private fb: FormBuilder) {
+    this.formValidator = new FormGroup({
+      position: this.positionValidation,
+      firstname: this.firstNameValidation,
+      lastname: this.lastNameValidation,
+      email: this.emailValidation,
+      username: this.userNameValidation,
+      password: this.passwordValidation,
+      role: this.roleValidation,
     });
+
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers = this.headers.append('Accept', 'application/json');
   }
@@ -51,12 +82,12 @@ export class RegistrationPanelComponent implements OnInit {
     console.log(this.formValidator.get('role')?.value);
     if (!this.formValidator.valid) return;
     let newUser = {
-      userName: this.formValidator.get('userName')?.value,
+      userName: this.formValidator.get('username')?.value,
       password: this.formValidator.get('password')?.value,
       role: this.formValidator.get('role')?.value,
-      firstName: this.formValidator.get('firstName')?.value,
+      firstName: this.formValidator.get('firstname')?.value,
       email: this.formValidator.get('email')?.value,
-      lastName: this.formValidator.get('lastName')?.value,
+      lastName: this.formValidator.get('lastname')?.value,
       position: this.formValidator.get('position')?.value,
     };
 

@@ -7,31 +7,31 @@
   justify-content: center;
   align-items: center;
 }
-input,
-select {
-  display: block;
-  width: 281px;
-  height: 40px;
-  background: #f7f7fa;
-  border: 0;
-  padding: 6px 12px;
-  border-radius: 3px;
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 18px;
-  line-height: 27px;
-  /* identical to box height */
+// input,
+// select {
+//   display: block;
+//   width: 281px;
+//   height: 40px;
+//   background: #f7f7fa;
+//   border: 0;
+//   padding: 6px 12px;
+//   border-radius: 3px;
+//   font-family: Poppins;
+//   font-style: normal;
+//   font-weight: 300;
+//   font-size: 18px;
+//   line-height: 27px;
+//   /* identical to box height */
 
-  color: rgba(0, 0, 0, 1);
-}
-input::placeholder {
-  color: rgba(0, 0, 0, 0.5);
-}
-input:focus,
-select:focus {
-  outline: none;
-}
+//   color: rgba(0, 0, 0, 1);
+// }
+// input::placeholder {
+//   color: rgba(0, 0, 0, 0.5);
+// }
+// input:focus,
+// select:focus {
+//   outline: none;
+// }
 p {
   margin-top: 16px;
   margin-bottom: 4px;
@@ -48,12 +48,8 @@ p {
   color: rgba(0, 0, 0, 0.75);
 }
 
-.ng-invalid.submitted,
-.already--taken {
-  border: 1.5px solid red;
-}
-
 .flex--center {
+  z-index: -100;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -75,14 +71,10 @@ a {
   font-size: 10px;
   line-height: 24px;
 }
-.danger {
-  color: red;
-  font-weight: bold;
-  margin-top: 5px;
-}
 .button--container {
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 .modal--container {
   display: flex;
@@ -92,4 +84,17 @@ a {
 }
 .modal--container > button {
   align-self: center;
+}
+.full-width-input {
+  width: 100%;
+  max-width: 600px;
+}
+
+mat-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 400px;
+}
+.form--class {
+  margin-top: 40px;
 }

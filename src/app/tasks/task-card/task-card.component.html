@@ -118,7 +118,7 @@
     <mat-divider></mat-divider>
     <div class="inner--element">
       <p class="label author--label">Timer:</p>
-      <p class="value author--value">00:00:00</p>
+      <p class="value author--value">{{ timerTime | numberToHhmmss }}</p>
     </div>
   </mat-card-content>
   <mat-card-actions class="mat--actions">
@@ -172,11 +172,13 @@
     <mat-divider></mat-divider>
     <div class="inner--element">
       <p class="label author--label">Timer:</p>
-      <p class="value author--value">00:00:00</p>
+      <p class="value author--value">{{ timerTime | numberToHhmmss }}</p>
     </div>
   </mat-card-content>
   <mat-card-actions class="mat--actions">
-    <button mat-stroked-button color="primary">PLAY</button>
+    <button mat-stroked-button (click)="startTimer()" color="primary">
+      PLAY
+    </button>
     <button mat-stroked-button color="primary">STOP</button>
     <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
       MORE

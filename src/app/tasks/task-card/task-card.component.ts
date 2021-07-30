@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import * as GlobalVariables from '../../globals';
 
 @Component({
   selector: 'app-task-card',
@@ -9,8 +10,13 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class TaskCardComponent implements OnInit {
   color = '';
-  response$ = new Observable<any>();
-  subscription = new Subscription();
+
+  timerResponse$ = new Observable<any>();
+  timerSubscription = new Subscription();
+
+  startTimerResponse$ = new Observable<any>();
+  startTimerSubscription = new Subscription();
+
   showDetails = false;
   @Input() task = {
     taskId: 0,
@@ -28,6 +34,7 @@ export class TaskCardComponent implements OnInit {
   deadline = '';
   startTime = '';
   timeLeft = '';
+  timerTime = 0;
 
   @Input() managerCard = true;
   normalCard = false;
@@ -96,8 +103,34 @@ export class TaskCardComponent implements OnInit {
   onDetailsClicked() {
     this.showDetails = !this.showDetails;
   }
+  startTimer() {
+    this.timerResponse$ = this.http.post(
+      GlobalVariables.GlobalServerPath +
+        GlobalVariables.TasksPath +
+        this.task.taskId +
+        GlobalVariables.TimerPath,
+      null,
+    );
+    this.startTimerSubscription = this.timerResponse$.subscribe((res) => {
+      console.log(res);
+      this.startTimerSubscription.unsubscribe();
+      setInterval(() => {
+        this.timerTime++;
+        console.log(this.timerTime);
+      }, 1000);
+    });
+  }
   getTimer() {
-    // this.response$.get()
+    this.timerResponse$ = this.http.get(
+      GlobalVariables.GlobalServerPath +
+        GlobalVariables.TasksPath +
+        this.task.taskId +
+        GlobalVariables.TimerPath,
+    );
+    this.timerSubscription = this.timerResponse$.subscribe((res) => {
+      console.log(res);
+      this.timerSubscription.unsubscribe();
+    });
   }
   ngOnInit(): void {
     if (this.task.taskState == 'NEW') this.taskStateToDisplay = 'New';
@@ -109,6 +142,7 @@ export class TaskCardComponent implements OnInit {
     this.timeConversion();
     this.normalCard = !this.managerCard;
     this.getColor();
+    this.getTimer();
   }
   ngOnDestroy() {}
 }

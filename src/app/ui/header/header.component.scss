@@ -16,8 +16,8 @@
   height: 100%;
   top: 0;
   left: 0;
-  background: rgba(100, 100, 100, 0.1);
-  z-index: -1;
+  background: rgba(200, 200, 200, 0.8);
+  z-index: 1;
 }
 .logo {
   height: 31px;
@@ -25,6 +25,7 @@
   margin-left: 6.04vw;
   cursor: pointer;
   align-self: center;
+  z-index: 10;
 }
 .links {
   display: flex;

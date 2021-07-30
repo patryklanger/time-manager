@@ -1,154 +1,136 @@
-<form novalidate [formGroup]="formValidator">
-  <div class="flex--center">
+<div class="flex--center">
+  <mat-card>
     <h1>{{ title }}</h1>
-    <div class="input--container">
-      <p>Username</p>
-      <input
-        placeholder="Your username"
-        formControlName="userName"
-        required
-        [class.submitted]="submittedCheck"
-        [class.already--taken]="loginExists"
-      />
-      <p
-        class="danger"
-        *ngIf="
-          formValidator.controls['userName'].hasError('required') &&
-          submittedCheck
-        "
-      >
-        Username is required
-      </p>
-      <p *ngIf="loginExists" class="danger">This username is already taken</p>
-      <p
-        class="danger"
-        *ngIf="
-          formValidator.controls['userName'].hasError('minlength') &&
-          submittedCheck
-        "
-      >
-        Username must be at least 4 characters long
-      </p>
-    </div>
-    <div class="input--container">
-      <p>First name</p>
-      <input
-        placeholder="Your first name"
-        required
-        formControlName="firstName"
-        [class.submitted]="submittedCheck"
-      />
-      <p
-        class="danger"
-        *ngIf="
-          formValidator.controls['firstName'].hasError('required') &&
-          submittedCheck
-        "
-      >
-        First name is required
-      </p>
-    </div>
-    <div class="input--container">
-      <p>Last name</p>
-      <input
-        placeholder="Your last name"
-        required
-        formControlName="lastName"
-        [class.submitted]="submittedCheck"
-      />
-      <p
-        class="danger"
-        *ngIf="
-          formValidator.controls['lastName'].hasError('required') &&
-          submittedCheck
-        "
-      >
-        Last name is required
-      </p>
-    </div>
-    <div class="input--container">
-      <p>Email</p>
-      <input
-        type="email"
-        placeholder="Your email address"
-        formControlName="email"
-        required
-        [class.submitted]="submittedCheck"
-        [class.already--taken]="emailExists"
-      />
-      <p
-        class="danger"
-        *ngIf="
-          formValidator.controls['email'].hasError('required') && submittedCheck
-        "
-      >
-        Email is required
-      </p>
-      <p *ngIf="emailExists" class="danger">
-        This e-mail address is already taken
-      </p>
-      <p
-        class="danger"
-        *ngIf="
-          formValidator.controls['email'].hasError('email') && submittedCheck
-        "
-      >
-        Please provide valid e-mail address
-      </p>
-    </div>
-    <div class="input--container">
-      <p>Position</p>
-      <select id="position" name="position" required formControlName="position">
-        <option value="INTERN">Intern</option>
-        <option value="JUNIOR">Junior</option>
-        <option value="MID">Mid</option>
-        <option value="SENIOR">Senior</option>
-        <option value="CEO">CEO</option>
-      </select>
-    </div>
-    <div class="input--container">
-      <p>Role</p>
-      <select id="role" name="role" required formControlName="role">
-        <option value="TEAM_MANAGER">Team manager</option>
-        <option value="MEMBER">Member</option>
-      </select>
-    </div>
 
-    <div class="input--container">
-      <p>Password</p>
-      <input
-        type="password"
-        placeholder="Type in new password"
-        required
-        formControlName="password"
-        [class.submitted]="submittedCheck"
-      />
-      <p
-        class="danger"
-        *ngIf="
-          formValidator.controls['password'].hasError('required') &&
-          submittedCheck
-        "
-      >
-        Password is required
-      </p>
-      <p
-        class="danger"
-        *ngIf="
-          formValidator.controls['password'].hasError('minlength') &&
-          submittedCheck
-        "
-      >
-        Password must be at least 6 characters long
-      </p>
-    </div>
-    <div class="button--container">
-      <button (click)="onSubmitClick()" class="button button--black">
-        Confirm
-      </button>
-    </div>
-  </div>
-</form>
+    <form
+      class="form--class"
+      ngForm="formValidation"
+      (submit)="onSubmitClick()"
+      ngFormModel="formValidator"
+    >
+      <div>
+        <mat-form-field class="full-width-input" appearance="fill">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            placeholder="Choose your username"
+            [formControl]="userNameValidation"
+            [errorStateMatcher]="matcher"
+            requiredS
+          />
+          <mat-error *ngIf="userNameValidation.hasError('minlength')">
+            Username must be at least <strong>5 characters long</strong>
+          </mat-error>
+          <mat-error *ngIf="userNameValidation.hasError('required')">
+            This field is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="loginExists">
+            This login is already taken
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="full-width-input" appearance="fill">
+          <mat-label>First name</mat-label>
+          <input
+            matInput
+            placeholder="Type in your first name"
+            [formControl]="firstNameValidation"
+            [errorStateMatcher]="matcher"
+            required
+          />
+          <mat-error *ngIf="firstNameValidation.hasError('required')">
+            This field is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="full-width-input" appearance="fill">
+          <mat-label>Last name</mat-label>
+          <input
+            matInput
+            placeholder="Type in your last name"
+            [formControl]="lastNameValidation"
+            [errorStateMatcher]="matcher"
+            required
+          />
+          <mat-error *ngIf="lastNameValidation.hasError('required')">
+            This field is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="full-width-input" appearance="fill">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            placeholder="Type in your email address"
+            [formControl]="emailValidation"
+            [errorStateMatcher]="matcher"
+            required
+          />
+          <mat-error *ngIf="emailValidation.hasError('required')">
+            This field is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="emailValidation.hasError('email')">
+            Type in <strong>valid e-mail address</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Position</mat-label>
+          <mat-select
+            required
+            [formControl]="positionValidation"
+            [errorStateMatcher]="matcher"
+          >
+            <mat-option value="INTERN">Intern</mat-option>
+            <mat-option value="JUNIOR">Junior</mat-option>
+            <mat-option value="MID">Mid</mat-option>
+            <mat-option value="SENIOR">Senior</mat-option>
+            <mat-option value="CEO">CEO</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Role</mat-label>
+          <mat-select
+            required
+            [formControl]="roleValidation"
+            [errorStateMatcher]="matcher"
+          >
+            <mat-option value="MEMBER">Member</mat-option>
+            <mat-option value="TEAM_MANAGER">Team manager</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="full-width-input" appearance="fill">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            placeholder="Choose your password"
+            [formControl]="passwordValidation"
+            [errorStateMatcher]="matcher"
+            required
+          />
+          <mat-error *ngIf="passwordValidation.hasError('required')">
+            This field is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="passwordValidation.hasError('minlength')">
+            Passwrod must be at least <strong>6 letters long</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="button--container">
+        <button mat-raised-button color="primary" type="submit">Confirm</button>
+      </div>
+    </form>
+  </mat-card>
+</div>
 <app-custom-modal *ngIf="registrated"
   ><div class="modal--container">
     <h1>Thanks for registration!</h1>

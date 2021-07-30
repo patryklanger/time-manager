@@ -48,6 +48,7 @@ import { DialogBoxMessageComponent } from './ui/dialog-box-message/dialog-box-me
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { SureDialogComponentComponent } from './ui/sure-dialog-component/sure-dialog-component.component';
+import { NumberToHhmmssPipe } from './pipes/number-to-hhmmss.pipe';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -94,6 +95,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AddMembersModalComponent,
     DialogBoxMessageComponent,
     SureDialogComponentComponent,
+    NumberToHhmmssPipe,
   ],
   imports: [
     MatMomentDateModule,

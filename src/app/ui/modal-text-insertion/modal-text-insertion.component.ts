@@ -1,25 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {
-  FormControl,
-  Validators,
-  NgForm,
-  FormGroupDirective,
-} from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
-import { ErrorStateMatcher } from '@angular/material/core';
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null,
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
-}
+import { MyErrorStateMatcher } from '../../utility/MyErrorStateMatcher';
 @Component({
   selector: 'app-modal-text-insertion',
   templateUrl: './modal-text-insertion.component.html',
