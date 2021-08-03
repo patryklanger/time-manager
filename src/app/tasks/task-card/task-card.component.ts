@@ -1,5 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  Output,
+  Renderer2,
+  EventEmitter,
+} from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import * as GlobalVariables from '../../globals';
 
@@ -10,12 +18,16 @@ import * as GlobalVariables from '../../globals';
 })
 export class TaskCardComponent implements OnInit {
   color = '';
+  @Output() delete = new EventEmitter<number>();
 
   timerResponse$ = new Observable<any>();
   timerSubscription = new Subscription();
 
   startTimerResponse$ = new Observable<any>();
   startTimerSubscription = new Subscription();
+
+  deleteTaskResponse$ = new Observable<any>();
+  deleteTaskSubscription = new Subscription();
 
   showEditTask = false;
 
@@ -65,7 +77,7 @@ export class TaskCardComponent implements OnInit {
     medium: '#BABD10',
     high: '#B52920',
   };
-  constructor(private renderer: Renderer2, private http: HttpClient) {
+  constructor(private http: HttpClient) {
     clearInterval(this.intervalId);
   }
   getColor() {
@@ -203,6 +215,18 @@ export class TaskCardComponent implements OnInit {
   }
   onEditTaskClose() {
     this.showEditTask = false;
+  }
+  onDeleteTaskClick() {
+    this.deleteTaskResponse$ = this.http.delete(
+      GlobalVariables.GlobalServerPath +
+        GlobalVariables.TasksPath +
+        this.task.taskId,
+    );
+    this.deleteTaskSubscription = this.deleteTaskResponse$.subscribe((res) => {
+      console.log(res);
+      this.deleteTaskSubscription.unsubscribe();
+    });
+    this.delete.emit(this.task.taskId);
   }
   ngOnInit(): void {
     console.log(this.task.timerState === null);
