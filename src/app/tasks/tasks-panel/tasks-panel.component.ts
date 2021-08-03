@@ -51,7 +51,14 @@ export class TasksPanelComponent implements OnInit {
   onCloseAdding() {
     this.addTaskShow = false;
   }
-
+  onTaskDelete(taskId: number) {
+    console.log(this.tasks);
+    const newTasksArray = this.tasks.filter((task) => {
+      return task.taskId != taskId;
+    });
+    console.log(newTasksArray);
+    this.tasks = newTasksArray;
+  }
   ngOnInit(): void {
     this.normalTask = !this.managerTask;
   }
