@@ -1,0 +1,96 @@
+<app-custom-modal>
+  <form (ngSubmit)="onSubmitEditing()">
+    <div class="fields-container">
+      <mat-form-field class="full-width-input" appearance="fill">
+        <mat-label>Task name</mat-label>
+        <input
+          matInput
+          placeholder="Editing task's name"
+          [formControl]="nameValidation"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-error *ngIf="nameValidation.hasError('maxlength')">
+          This field has max length of {{ maxTaskNameLength }}
+        </mat-error>
+        <mat-error *ngIf="nameValidation.hasError('required')">
+          This field is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input" appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea
+          style="resize: none; height: 200px"
+          matInput
+          placeholder="Editing task's description"
+          [formControl]="descriptionValidation"
+          [errorStateMatcher]="matcher"
+        ></textarea>
+        <mat-error *ngIf="descriptionValidation.hasError('maxlength')">
+          This field has max length of {{ maxTaskDescriptionLength }}
+        </mat-error>
+        <mat-error *ngIf="descriptionValidation.hasError('required')">
+          This field is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input" appearance="fill">
+        <mat-label>Task's expected time</mat-label>
+        <input
+          matInput
+          type="number"
+          placeholder="Editing task's expected time"
+          [formControl]="expectedTimeValidation"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-error *ngIf="expectedTimeValidation.hasError('min')">
+          This field cannot be smaller than 1
+        </mat-error>
+        <mat-error *ngIf="expectedTimeValidation.hasError('required')">
+          This field is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Choose a deadline date</mat-label>
+        <input
+          matInput
+          class="mat-input-class"
+          [min]="minDeadlineDate"
+          [matDatepicker]="picker"
+          [formControl]="taskDeadlineValidation"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker
+          #picker
+          startView="month"
+          [startAt]="minDeadlineDate"
+        ></mat-datepicker>
+        <mat-error *ngIf="taskDeadlineValidation.hasError('required')">
+          You must set <strong>deadline date</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Priority</mat-label>
+        <mat-select
+          matNativeControl
+          required
+          [formControl]="priorityValidation"
+          [errorStateMatcher]="matcher"
+        >
+          <mat-option value="1">Low</mat-option>
+          <mat-option value="2">Medium</mat-option>
+          <mat-option value="3">High</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <button mat-raised-button type="submit">Accept</button>
+        <button mat-raised-button color="warn" (click)="onCancelClick()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</app-custom-modal>

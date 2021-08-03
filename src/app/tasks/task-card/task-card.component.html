@@ -93,12 +93,12 @@
   <mat-card-content>
     <div class="inner--element">
       <p class="label deadline--label">Deadline:</p>
-      <p class="value deadline--value">{{ deadline }}</p>
+      <p class="value deadline--value">{{ deadline | dateToString }}</p>
     </div>
     <mat-divider></mat-divider>
     <div class="inner--element">
       <p class="label state--label">Start time:</p>
-      <p class="value state--value">{{ startTime }}</p>
+      <p class="value state--value">{{ time | dateToString }}</p>
     </div>
     <mat-divider></mat-divider>
     <div class="inner--element">
@@ -118,12 +118,16 @@
     <mat-divider></mat-divider>
     <div class="inner--element">
       <p class="label author--label">Timer:</p>
-      <p class="value author--value">{{ timerTime | numberToHhmmss }}</p>
+      <p class="value author--value">
+        {{ task.totalTimeOfTimer | numberToHhmmss }}
+      </p>
     </div>
   </mat-card-content>
   <mat-card-actions class="mat--actions">
-    <button mat-stroked-button color="primary">PLAY</button>
-    <button mat-stroked-button color="primary">STOP</button>
+    <button mat-stroked-button color="primary">{{ playPauseState }}</button>
+    <button mat-stroked-button color="primary" (click)="stopTimer()">
+      STOP
+    </button>
     <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
       MORE
     </button>
@@ -145,7 +149,7 @@
   <mat-card-content>
     <div class="inner--element">
       <p class="label deadline--label">Deadline:</p>
-      <p class="value deadline--value">{{ deadline }}</p>
+      <p class="value deadline--value">{{ deadline | dateToString }}</p>
     </div>
     <mat-divider></mat-divider>
     <div class="inner--element">
@@ -172,14 +176,18 @@
     <mat-divider></mat-divider>
     <div class="inner--element">
       <p class="label author--label">Timer:</p>
-      <p class="value author--value">{{ timerTime | numberToHhmmss }}</p>
+      <p class="value author--value">
+        {{ task.totalTimeOfTimer | numberToHhmmss }}
+      </p>
     </div>
   </mat-card-content>
   <mat-card-actions class="mat--actions">
     <button mat-stroked-button (click)="startTimer()" color="primary">
-      PLAY
+      {{ playPauseState }}
     </button>
-    <button mat-stroked-button color="primary">STOP</button>
+    <button mat-stroked-button color="primary" (click)="stopTimer()">
+      STOP
+    </button>
     <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
       MORE
     </button>
@@ -192,7 +200,7 @@
         <mat-icon>info</mat-icon>
         <span>Task's details</span>
       </button>
-      <button mat-menu-item>
+      <button mat-menu-item (click)="onEditTaskClick()">
         <mat-icon>info</mat-icon>
         <span>Edit task</span>
       </button>
@@ -203,3 +211,9 @@
     </mat-menu>
   </mat-card-actions>
 </mat-card>
+<app-edit-task
+  *ngIf="showEditTask"
+  [task]="task"
+  (close)="onEditTaskClose()"
+  (taskEditted)="onTaskEditted($event)"
+></app-edit-task>

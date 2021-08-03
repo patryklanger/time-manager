@@ -10,41 +10,42 @@ export class TasksPanelComponent implements OnInit {
   normalTask = false;
   @Input() title = '';
   @Input() subTitle = '';
-  @Input() managerTasks = [
-    {
-      taskId: 0,
-      bucketName: '',
-      taskName: '',
-      owner: '',
-      taskPriority: 0,
-      taskDeadline: '',
-      taskState: '',
-      taskEditorsCount: 0,
-      taskCreationTime: '',
-      taskExpectedTime: -1,
-      editorsCount: -1,
-    },
-  ];
-  @Input() tasks = [
-    {
-      taskId: 0,
-      bucketName: '',
-      taskName: '',
-      owner: '',
-      taskPriority: 0,
-      taskDeadline: '',
-      taskState: '',
-      taskEditorsCount: 0,
-      taskCreationTime: '',
-      taskExpectedTime: -1,
-      editorsCount: -1,
-    },
-  ];
+  @Input() managerTasks: {
+    taskId: number;
+    bucketName: string;
+    taskName: string;
+    owner: string;
+    taskPriority: number;
+    taskDescription: string;
+    taskDeadline: string;
+    taskState: string;
+    taskEditorsCount: number;
+    taskCreationTime: string;
+    taskExpectedTime: number;
+    editorsCount: number;
+    totalTimeOfTimer: number;
+    timerState: string;
+  }[] = [];
+  @Input() tasks: {
+    taskId: number;
+    bucketName: string;
+    taskName: string;
+    owner: string;
+    taskPriority: number;
+    taskDescription: string;
+    taskDeadline: string;
+    taskState: string;
+    taskEditorsCount: number;
+    taskCreationTime: string;
+    taskExpectedTime: number;
+    editorsCount: number;
+    totalTimeOfTimer: number;
+    timerState: string;
+  }[] = [];
   constructor() {}
   addTaskShow = false;
 
   onShowAdding() {
-    console.log('SHow adding');
     this.addTaskShow = true;
   }
   onCloseAdding() {

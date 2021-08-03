@@ -18,12 +18,15 @@ export class AllTasksForUserComponent implements OnInit {
     taskName: string;
     owner: string;
     taskPriority: number;
+    taskDescription: string;
     taskDeadline: string;
     taskState: string;
     taskEditorsCount: number;
     taskCreationTime: string;
     taskExpectedTime: number;
     editorsCount: number;
+    totalTimeOfTimer: number;
+    timerState: string;
   }[] = [];
   headers = new HttpHeaders();
   path = GlobalVariables.GlobalServerPath;

@@ -49,6 +49,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { SureDialogComponentComponent } from './ui/sure-dialog-component/sure-dialog-component.component';
 import { NumberToHhmmssPipe } from './pipes/number-to-hhmmss.pipe';
+import { EditTaskComponent } from './tasks/edit-task/edit-task.component';
+import { DateToStringPipe } from './pipes/date-to-string.pipe';
+import { DateToTimeStringPipe } from './pipes/date-to-time-string.pipe';
+import { DateToServerStringPipe } from './pipes/date-to-server-string.pipe';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -96,6 +100,10 @@ function initializeKeycloak(keycloak: KeycloakService) {
     DialogBoxMessageComponent,
     SureDialogComponentComponent,
     NumberToHhmmssPipe,
+    EditTaskComponent,
+    DateToStringPipe,
+    DateToTimeStringPipe,
+    DateToServerStringPipe,
   ],
   imports: [
     MatMomentDateModule,

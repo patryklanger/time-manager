@@ -12,21 +12,22 @@ export class AllTasksComponent implements OnInit {
   title = 'All tasks';
   subTitle = 'Here you can find all tasks created with Time Manager';
   dataFetched = false;
-  tasks = [
-    {
-      taskId: 0,
-      bucketName: '',
-      taskName: '',
-      owner: '',
-      taskPriority: 0,
-      taskDeadline: '',
-      taskState: '',
-      taskEditorsCount: 0,
-      taskCreationTime: '',
-      taskExpectedTime: -1,
-      editorsCount: -1,
-    },
-  ];
+  tasks: {
+    taskId: number;
+    bucketName: string;
+    taskName: string;
+    owner: string;
+    taskPriority: number;
+    taskDescription: string;
+    taskDeadline: string;
+    taskState: string;
+    taskEditorsCount: number;
+    taskCreationTime: string;
+    taskExpectedTime: number;
+    editorsCount: number;
+    totalTimeOfTimer: number;
+    timerState: string;
+  }[] = [];
   headers = new HttpHeaders();
   path = GlobalVariables.GlobalServerPath;
   subscription = new Subscription();

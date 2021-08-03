@@ -1,31 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import {
-  Form,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-} from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
+import { MyErrorStateMatcher } from '../../utility/MyErrorStateMatcher';
 import { Observable, Subscription } from 'rxjs';
 import * as GlobalVariables from '../../globals';
+import { DateToServerStringPipe } from 'src/app/pipes/date-to-server-string.pipe';
 
-import { ErrorStateMatcher } from '@angular/material/core';
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null,
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
-}
 @Component({
   selector: 'app-add-task',
   templateUrl: './add-task.component.html',
@@ -82,26 +62,8 @@ export class AddTaskComponent implements OnInit {
     this.modals.deadline = false;
     this.modals.priority = true;
     let deadline = new Date(this.dateValidation.value);
-    let date = [deadline.getFullYear()];
-    date.push(deadline.getMonth() + 1);
-    date.push(deadline.getDate());
-    date.push(deadline.getHours());
-    date.push(deadline.getMinutes());
-    date.push(deadline.getSeconds());
-    let timeString: string;
-    timeString = '' + date[0];
-    if (date[1] < 10) timeString += '-0' + date[1];
-    else timeString += '-' + date[1].toString();
-    if (date[2] < 10) timeString += '-0' + date[2];
-    else timeString += '-' + date[2].toString() + 'T';
-    if (date[3] < 10) timeString += '0' + date[3];
-    else timeString += date[3].toString();
-    if (date[4] < 10) timeString += ':0' + date[4];
-    else timeString += ':' + date[4];
-    if (date[5] < 10) timeString += ':0' + date[5];
-    else timeString += ':' + date[5];
-    console.log(timeString);
-    this.newTask.taskDeadline = timeString;
+    const dateToStringPipe = new DateToServerStringPipe();
+    this.newTask.taskDeadline = dateToStringPipe.transform(deadline);
   }
   onPriorityAdded() {
     this.modals.priority = false;
