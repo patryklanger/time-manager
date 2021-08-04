@@ -21,7 +21,7 @@ export class UserCardComponent implements OnInit {
   headers = new HttpHeaders();
 
   @Output() delete = new EventEmitter<number>();
-
+  @Input() isBanned: boolean = false;
   @Input() user = {
     userId: 0,
     userName: '',

@@ -29,7 +29,7 @@ export class BannedUsersComponent implements OnInit {
     this.headers = this.headers.append('Accept', 'application/json');
 
     this.response$ = this.http.get(
-      this.path + GlobalVariables.UsersPath + '/disabled',
+      this.path + GlobalVariables.UsersPath + 'disabled',
       {
         headers: this.headers,
       },
