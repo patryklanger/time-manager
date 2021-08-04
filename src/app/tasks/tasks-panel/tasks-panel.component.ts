@@ -56,6 +56,10 @@ export class TasksPanelComponent implements OnInit {
     const newTasksArray = this.tasks.filter((task) => {
       return task.taskId != taskId;
     });
+    const newManagerTasksArray = this.managerTasks.filter((task) => {
+      return task.taskId != taskId;
+    });
+    this.managerTasks = newManagerTasksArray;
     console.log(newTasksArray);
     this.tasks = newTasksArray;
   }

@@ -12,16 +12,14 @@ export class AllBucketsComponent implements OnInit {
   title = 'All buckets';
   subtitle = 'Here you can find all buckets created with Time Manager';
   dataFetched = false;
-  buckets = [
-    {
-      bucketId: -1,
-      owner: '',
-      name: '',
-      description: '',
-      maxTaskCount: '',
-      createdTime: '',
-    },
-  ];
+  buckets: {
+    bucketId: -1;
+    owner: '';
+    name: '';
+    description: '';
+    maxTaskCount: '';
+    createdTime: '';
+  }[] = [];
   headers = new HttpHeaders();
   path = GlobalVariables.GlobalServerPath;
   subscription = new Subscription();

@@ -1,0 +1,17 @@
+<app-custom-modal>
+  <h1>{{ name }} task details</h1>
+  <div class="description--element">
+    <strong>Description</strong>
+    <p>{{ description }}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="description--element">
+    <strong>Created at</strong>
+    <p>{{ taskCreationTime | dateToString }}</p>
+  </div>
+  <div class="button--container">
+    <button mat-raised-button color="primary" (click)="onCloseClick()">
+      Close
+    </button>
+  </div>
+</app-custom-modal>

@@ -13,7 +13,9 @@ export class DateToStringPipe implements PipeTransform {
     let day =
       time.getDate() < 10 ? ', 0' + time.getDate() : ', ' + time.getDate();
     let month =
-      time.getMonth() < 10 ? '.0' + time.getMonth() : '.' + time.getMonth();
+      time.getMonth() + 1 < 10
+        ? '.0' + (time.getMonth() + 1)
+        : '.' + (time.getMonth() + 1);
     return hours + minutes + day + month + '.' + time.getFullYear();
   }
 }

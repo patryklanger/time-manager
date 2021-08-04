@@ -1,3 +1,4 @@
+import { trigger } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import {
   Component,
@@ -5,7 +6,6 @@ import {
   Input,
   OnInit,
   Output,
-  Renderer2,
   EventEmitter,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
@@ -29,9 +29,24 @@ export class TaskCardComponent implements OnInit {
   deleteTaskResponse$ = new Observable<any>();
   deleteTaskSubscription = new Subscription();
 
-  showEditTask = false;
+  getUsersResponse$ = new Observable<any>();
+  getUsersSubscription = new Subscription();
 
+  addUsersResponse$ = new Observable<any>();
+  addUsersSubscription = new Subscription();
+
+  subscribeMailsResponse$ = new Observable<any>();
+  subscribeMailsSubscription = new Subscription();
+
+  changeStateResponse$ = new Observable<any>();
+  changeStateSubscription = new Subscription();
+
+  showEditTask = false;
   showDetails = false;
+  showAddMembers = false;
+  isSuspended = false;
+  isFinished = false;
+
   @Input() task: {
     taskId: number;
     bucketName: string;
@@ -64,10 +79,17 @@ export class TaskCardComponent implements OnInit {
   taskStateToDisplay = '';
   deadline = new Date();
   intervalId = -1;
+
   startTime = '';
   timeLeft = '';
+
   playPauseState = 'PLAY';
+  creationTimeDate = new Date();
   time = new Date();
+  members: string[] = [];
+
+  playPauseAvaiable = true;
+  stopAvaiable = true;
 
   @Input() managerCard = true;
   normalCard = false;
@@ -77,9 +99,7 @@ export class TaskCardComponent implements OnInit {
     medium: '#BABD10',
     high: '#B52920',
   };
-  constructor(private http: HttpClient) {
-    clearInterval(this.intervalId);
-  }
+  constructor(private http: HttpClient) {}
   getColor() {
     if (this.managerCard) {
       if (this.task.taskPriority == 1) this.color = this.priorityColor.low;
@@ -138,7 +158,7 @@ export class TaskCardComponent implements OnInit {
     this.showEditTask = true;
   }
   startTimer() {
-    if (this.task.timerState !== null || this.task.timerState === 'NaN') {
+    if (this.task.timerState !== null && this.task.timerState !== 'NaN') {
       this.startTimerResponse$ = this.http.patch(
         GlobalVariables.GlobalServerPath +
           GlobalVariables.TasksPath +
@@ -149,12 +169,13 @@ export class TaskCardComponent implements OnInit {
 
       this.startTimerSubscription = this.startTimerResponse$.subscribe(
         (res) => {
+          this.task.timerState = res.state;
+          this.task.totalTimeOfTimer = res.totalTime;
           console.log(res);
           this.startTimerSubscription.unsubscribe();
         },
       );
     } else {
-      console.log('start timer');
       this.startTimerResponse$ = this.http.post(
         GlobalVariables.GlobalServerPath +
           GlobalVariables.TasksPath +
@@ -164,22 +185,25 @@ export class TaskCardComponent implements OnInit {
       );
       this.startTimerSubscription = this.startTimerResponse$.subscribe(
         (res) => {
-          console.log(res);
-
+          this.task.taskState = res.state;
+          this.task.timerState = res.state;
+          this.task.totalTimeOfTimer = res.totalTime;
+          console.log(this.task);
+          this.getTaskState();
           this.startTimerSubscription.unsubscribe();
         },
       );
     }
-
+    console.log(this.intervalId);
     if (this.intervalId != -1) {
       clearInterval(this.intervalId);
-      this.intervalId = -1;
-      this.playPauseState = 'PLAY';
+      this.turnOffTimer();
     } else {
       this.intervalId = window.setInterval(() => {
         this.increamentTimer();
       }, 1000);
       this.playPauseState = 'PAUSE';
+      this.updateTaskInfo();
     }
   }
   checkTimer() {
@@ -192,16 +216,49 @@ export class TaskCardComponent implements OnInit {
     }
   }
   getTaskState() {
-    if (this.task.taskState == 'NEW') this.taskStateToDisplay = 'New';
-    else if (this.task.taskState == 'IN_PROGRESS')
+    if (this.task.taskState == 'NEW') {
+      this.taskStateToDisplay = 'New';
+      this.enablePlayStopButtons();
+      this.isSuspended = false;
+      this.isFinished = false;
+    } else if (this.task.taskState == 'IN_PROGRESS') {
       this.taskStateToDisplay = 'In progress';
-    else if (this.task.taskState == 'SUSPENDED')
+      this.isSuspended = false;
+      this.isFinished = false;
+      this.enablePlayStopButtons();
+    } else if (this.task.taskState == 'SUSPENDED') {
       this.taskStateToDisplay = 'Suspended';
-    else this.taskStateToDisplay = 'Finished';
+      this.isSuspended = true;
+      this.isFinished = false;
+      this.disablePlayStopButtons();
+    } else if (this.task.taskState == 'FINISHED') {
+      this.taskStateToDisplay = 'Finished';
+      this.isSuspended = false;
+      this.isFinished = true;
+      this.disablePlayStopButtons();
+    } else {
+      this.taskStateToDisplay = 'Unknown';
+      this.disablePlayStopButtons();
+    }
+  }
+  turnOffTimer() {
+    this.playPauseState = 'PLAY';
+    clearInterval(this.intervalId);
+    console.log('INTERVAL CLEARED');
+    this.intervalId = -1;
+  }
+  disablePlayStopButtons() {
+    this.playPauseAvaiable = false;
+    this.stopAvaiable = false;
+  }
+  enablePlayStopButtons() {
+    this.playPauseAvaiable = true;
+    this.stopAvaiable = true;
   }
   stopTimer() {
     this.task.totalTimeOfTimer = 0;
     this.task.timerState = 'NaN';
+    this.turnOffTimer();
     this.timerResponse$ = this.http.delete(
       GlobalVariables.GlobalServerPath +
         GlobalVariables.TasksPath +
@@ -209,8 +266,19 @@ export class TaskCardComponent implements OnInit {
         GlobalVariables.TimerPath,
     );
     this.timerSubscription = this.timerResponse$.subscribe((res) => {
-      console.log(res);
       this.timerSubscription.unsubscribe();
+    });
+  }
+  onEditUsersClick() {
+    this.getUsersResponse$ = this.http.get(
+      GlobalVariables.GlobalServerPath +
+        GlobalVariables.TasksPath +
+        this.task.taskId +
+        '/shares',
+    );
+    this.getUsersSubscription = this.getUsersResponse$.subscribe((res) => {
+      this.members = res;
+      this.showAddMembers = true;
     });
   }
   onEditTaskClose() {
@@ -228,13 +296,123 @@ export class TaskCardComponent implements OnInit {
     });
     this.delete.emit(this.task.taskId);
   }
-  ngOnInit(): void {
-    console.log(this.task.timerState === null);
+  onShowMembersClick() {
+    this.onEditUsersClick();
+  }
+  onShowMembersClose() {
+    this.showAddMembers = false;
+  }
+  onShowDetailsToggle() {
+    this.showDetails = !this.showDetails;
+  }
+  onMembersChanged(members: any) {
+    const userIdArray: number[] = [];
+    members.UserInDB.forEach(
+      (e: {
+        email: string;
+        firstName: string;
+        lastName: string;
+        position: string;
+        role: string;
+        userId: number;
+        userName: string;
+      }) => {
+        userIdArray.push(e.userId);
+      },
+    );
+    this.addUsersResponse$ = this.http.post(
+      GlobalVariables.GlobalServerPath +
+        GlobalVariables.TasksPath +
+        this.task.taskId +
+        '/shares',
+      userIdArray,
+    );
+    this.addUsersSubscription = this.addUsersResponse$.subscribe((res) => {
+      console.log(res);
+      this.addUsersSubscription.unsubscribe();
+    });
+    let usersToSubscribe: string[] = [];
+    usersToSubscribe = members.UserNoInDB;
+    this.subscribeMailsResponse$ = this.http.post(
+      GlobalVariables.GlobalServerPath +
+        GlobalVariables.TasksPath +
+        this.task.taskId +
+        '/subscriptions',
+      usersToSubscribe,
+    );
+    this.subscribeMailsSubscription = this.subscribeMailsResponse$.subscribe(
+      (res) => {
+        console.log(res);
+        this.subscribeMailsSubscription.unsubscribe();
+      },
+    );
+    this.showAddMembers = false;
+  }
+  onSuspendClick() {
+    this.changeStateResponse$ = this.http.patch(
+      GlobalVariables.GlobalServerPath +
+        GlobalVariables.TasksPath +
+        this.task.taskId,
+      'SUSPENDED',
+    );
+    this.changeStateSubscription = this.changeStateResponse$.subscribe(
+      (res) => {
+        console.log(res);
+        // const newTask = res;
+        // this.task = newTask;
+        this.task = { ...res };
+        this.turnOffTimer();
+        this.updateTaskInfo();
+        this.changeStateSubscription.unsubscribe();
+      },
+    );
+  }
+  onUnsuspendClick() {
+    this.changeStateResponse$ = this.http.patch(
+      GlobalVariables.GlobalServerPath +
+        GlobalVariables.TasksPath +
+        this.task.taskId,
+      'IN_PROGRESS',
+    );
+    this.changeStateSubscription = this.changeStateResponse$.subscribe(
+      (res) => {
+        console.log(res);
+        this.task = { ...res };
+        this.turnOffTimer();
+        this.updateTaskInfo();
+        this.changeStateSubscription.unsubscribe();
+      },
+    );
+  }
+  onFinishClick() {
+    this.changeStateResponse$ = this.http.patch(
+      GlobalVariables.GlobalServerPath +
+        GlobalVariables.TasksPath +
+        this.task.taskId,
+      'FINISHED',
+    );
+    this.changeStateSubscription = this.changeStateResponse$.subscribe(
+      (res) => {
+        // console.log(res);
+        // const newTask = res;
+        this.task = { ...res };
+        this.turnOffTimer();
+        this.updateTaskInfo();
+        this.changeStateSubscription.unsubscribe();
+      },
+    );
+  }
+  updateTaskInfo() {
     this.normalCard = !this.managerCard;
+    this.creationTimeDate = new Date(this.task.taskCreationTime);
     this.getTaskState();
     this.checkTimer();
     this.timeConversion();
     this.getColor();
+  }
+  ngOnInit(): void {
+    console.log(this.task.timerState === null);
+    this.updateTaskInfo();
   }
   ngOnDestroy() {}
 }

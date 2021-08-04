@@ -5,7 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DateToServerStringPipe implements PipeTransform {
   transform(inDate: Date): string {
-    console.log('XD');
     let date = [inDate.getFullYear()];
     date.push(inDate.getMonth() + 1);
     date.push(inDate.getDate());
@@ -24,7 +23,6 @@ export class DateToServerStringPipe implements PipeTransform {
     else timeString += ':' + date[4];
     if (date[5] < 10) timeString += ':0' + date[5];
     else timeString += ':' + date[5];
-    console.log(timeString);
     return timeString;
   }
 }

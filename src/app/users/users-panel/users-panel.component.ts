@@ -12,17 +12,15 @@ export class UsersPanelComponent implements OnInit {
   title = 'Users';
   subTitle = 'Here you can edit and delete users profiles';
   dataFetched = false;
-  users = [
-    {
-      userId: -1,
-      userName: '',
-      firstName: '',
-      lastName: '',
-      position: '',
-      eMail: '',
-      role: '',
-    },
-  ];
+  users: {
+    userId: number;
+    userName: string;
+    firstName: string;
+    lastName: string;
+    position: string;
+    email: string;
+    role: string;
+  }[] = [];
   headers = new HttpHeaders();
   path = GlobalVariables.GlobalServerPath;
   subscription = new Subscription();
@@ -35,6 +33,12 @@ export class UsersPanelComponent implements OnInit {
       headers: this.headers,
     });
   }
+
+  onUserDelete(userId: number) {
+    const newUsersArray = this.users.filter((user) => user.userId != userId);
+    this.users = newUsersArray;
+  }
+
   ngOnInit(): void {
     this.subscription = this.response$.subscribe((res) => {
       this.users = [...res];

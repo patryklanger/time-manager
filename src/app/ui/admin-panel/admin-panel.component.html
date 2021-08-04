@@ -7,6 +7,12 @@
     (click)="onBucketsClicked()"
   ></app-panel-card
   ><app-panel-card
+    name="Unassigned buckets"
+    description="Here you can find all unassigned buckets"
+    imgSource="../../assets/_bucket_card_img.png"
+    (click)="onUnassignedBucketsClicked()"
+  ></app-panel-card
+  ><app-panel-card
     name="Tasks"
     description="Here you can find all tasks"
     imgSource="../../assets/_mybuckets_card_img.png"
@@ -14,6 +20,12 @@
   ></app-panel-card
   ><app-panel-card
     name="Users"
+    description="Here you can find all users"
+    imgSource="../../assets/_users_card_img.png"
+    (click)="onUsersClicked()"
+  ></app-panel-card>
+  ><app-panel-card
+    name="Banned users"
     description="Here you can find all users"
     imgSource="../../assets/_users_card_img.png"
     (click)="onUsersClicked()"

@@ -14,6 +14,8 @@ import { AllBucketsComponent } from './buckets/all-buckets/all-buckets.component
 import { AllTasksComponent } from './tasks/all-tasks/all-tasks.component';
 import { AuthGuard } from './guard/auth.guard';
 import { RegistrationPanelComponent } from './ui/registration-panel/registration-panel.component';
+import { UnassignedBucketsComponent } from './buckets/unassigned-buckets/unassigned-buckets.component';
+import { BannedUsersComponent } from './users/banned-users/banned-users.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user-panel', pathMatch: 'full' },
@@ -59,6 +61,14 @@ const routes: Routes = [
     },
   },
   {
+    path: 'admin-panel/users/banned',
+    component: BannedUsersComponent,
+    canActivate: [AuthGuard],
+    data: {
+      requiredRoles: ['ADMIN'],
+    },
+  },
+  {
     path: 'admin-panel/tasks',
     component: AllTasksComponent,
     canActivate: [AuthGuard],
@@ -69,6 +79,14 @@ const routes: Routes = [
   {
     path: 'admin-panel/buckets',
     component: AllBucketsComponent,
+    canActivate: [AuthGuard],
+    data: {
+      requiredRoles: ['ADMIN'],
+    },
+  },
+  {
+    path: 'admin-panel/buckets/unassigned',
+    component: UnassignedBucketsComponent,
     canActivate: [AuthGuard],
     data: {
       requiredRoles: ['ADMIN'],

@@ -17,5 +17,8 @@ export class AdminPanelComponent implements OnInit {
   onTasksClicked() {
     this.router.navigateByUrl('admin-panel/tasks');
   }
+  onUnassignedBucketsClicked() {
+    this.router.navigateByUrl('admin-panel/buckets/unassigned');
+  }
   ngOnInit(): void {}
 }

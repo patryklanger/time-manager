@@ -81,16 +81,16 @@
         </select> -->
       <mat-form-field appearance="fill">
         <mat-label>Priority</mat-label>
-        <select
+        <mat-select
           matNativeControl
           required
           [formControl]="priorityValidation"
           [errorStateMatcher]="matcher"
         >
-          <option value="1">Low</option>
-          <option value="2">Medium</option>
-          <option value="3">High</option>
-        </select>
+          <mat-option value="1">Low</mat-option>
+          <mat-option value="2">Medium</mat-option>
+          <mat-option value="3">High</mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
     <div class="flex--center--button">

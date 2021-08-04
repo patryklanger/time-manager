@@ -71,11 +71,6 @@ export class BucketCardComponent implements OnInit {
         title: 'You are deleting bucket',
         message: 'Are you sure you want to delete this bucket?',
       },
-      // KUPA
-
-      // KUPA
-
-      // KUPA
     });
     dialogAnchor.afterClosed().subscribe((e) => {
       if (!e) return;

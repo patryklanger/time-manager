@@ -53,6 +53,9 @@ import { EditTaskComponent } from './tasks/edit-task/edit-task.component';
 import { DateToStringPipe } from './pipes/date-to-string.pipe';
 import { DateToTimeStringPipe } from './pipes/date-to-time-string.pipe';
 import { DateToServerStringPipe } from './pipes/date-to-server-string.pipe';
+import { TaskDetailsComponent } from './tasks/task-details/task-details.component';
+import { UnassignedBucketsComponent } from './buckets/unassigned-buckets/unassigned-buckets.component';
+import { BannedUsersComponent } from './users/banned-users/banned-users.component';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -104,6 +107,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     DateToStringPipe,
     DateToTimeStringPipe,
     DateToServerStringPipe,
+    TaskDetailsComponent,
+    UnassignedBucketsComponent,
+    BannedUsersComponent,
   ],
   imports: [
     MatMomentDateModule,

@@ -124,15 +124,22 @@
     </div>
   </mat-card-content>
   <mat-card-actions class="mat--actions">
-    <button mat-stroked-button color="primary">{{ playPauseState }}</button>
-    <button mat-stroked-button color="primary" (click)="stopTimer()">
+    <button mat-stroked-button color="primary" [disabled]="!playPauseAvaiable">
+      {{ playPauseState }}
+    </button>
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="stopTimer()"
+      [disabled]="!stopAvaiable"
+    >
       STOP
     </button>
     <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
       MORE
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+      <button mat-menu-item (click)="onShowDetailsToggle()">
         <mat-icon>info</mat-icon>
         <span>Task's details</span>
       </button>
@@ -182,23 +189,50 @@
     </div>
   </mat-card-content>
   <mat-card-actions class="mat--actions">
-    <button mat-stroked-button (click)="startTimer()" color="primary">
+    <button
+      mat-stroked-button
+      (click)="startTimer()"
+      color="primary"
+      [disabled]="!playPauseAvaiable"
+    >
       {{ playPauseState }}
     </button>
-    <button mat-stroked-button color="primary" (click)="stopTimer()">
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="stopTimer()"
+      [disabled]="!stopAvaiable"
+    >
       STOP
     </button>
     <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
       MORE
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+      <button mat-menu-item (click)="onShowMembersClick()">
         <mat-icon>group</mat-icon>
         <span>Task's users</span>
       </button>
-      <button mat-menu-item>
+      <button mat-menu-item (click)="onShowDetailsToggle()">
         <mat-icon>info</mat-icon>
         <span>Task's details</span>
+      </button>
+      <button
+        mat-menu-item
+        (click)="onSuspendClick()"
+        *ngIf="!isSuspended"
+        [disabled]="isFinished"
+      >
+        <mat-icon>remove_circle</mat-icon>
+        <span>Suspend task</span>
+      </button>
+      <button mat-menu-item (click)="onUnsuspendClick()" *ngIf="isSuspended">
+        <mat-icon>toggle_on</mat-icon>
+        <span>Unsuspend task</span>
+      </button>
+      <button mat-menu-item (click)="onFinishClick()" [disabled]="isFinished">
+        <mat-icon>done</mat-icon>
+        <span>Finish task</span>
       </button>
       <button mat-menu-item (click)="onEditTaskClick()">
         <mat-icon>info</mat-icon>
@@ -217,3 +251,16 @@
   (close)="onEditTaskClose()"
   (taskEditted)="onTaskEditted($event)"
 ></app-edit-task>
+<app-task-details
+  [name]="task.taskName"
+  [description]="task.taskDescription"
+  [taskCreationTime]="creationTimeDate"
+  *ngIf="showDetails"
+  (close)="onShowDetailsToggle()"
+></app-task-details>
+<app-add-members-modal
+  *ngIf="showAddMembers"
+  (cancel)="onShowMembersClose()"
+  (value)="onMembersChanged($event)"
+  [membersEmails]="members"
+></app-add-members-modal>
