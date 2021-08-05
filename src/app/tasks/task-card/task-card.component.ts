@@ -164,7 +164,7 @@ export class TaskCardComponent implements OnInit {
           GlobalVariables.TasksPath +
           this.task.taskId +
           GlobalVariables.TimerPath +
-          '/toggle',
+          'toggle',
         null,
       );
 
@@ -173,6 +173,16 @@ export class TaskCardComponent implements OnInit {
           this.task.timerState = res.state;
           this.task.totalTimeOfTimer = res.totalTime;
           this.startTimerSubscription.unsubscribe();
+          if (this.intervalId != -1) {
+            clearInterval(this.intervalId);
+            this.turnOffTimer();
+          } else {
+            this.intervalId = window.setInterval(() => {
+              this.increamentTimer();
+            }, 1000);
+            this.playPauseState = 'PAUSE';
+            this.updateTaskInfo();
+          }
         },
       );
     } else {
@@ -190,18 +200,18 @@ export class TaskCardComponent implements OnInit {
           this.task.totalTimeOfTimer = res.totalTime;
           this.getTaskState();
           this.startTimerSubscription.unsubscribe();
+          if (this.intervalId != -1) {
+            clearInterval(this.intervalId);
+            this.turnOffTimer();
+          } else {
+            this.intervalId = window.setInterval(() => {
+              this.increamentTimer();
+            }, 1000);
+            this.playPauseState = 'PAUSE';
+            this.updateTaskInfo();
+          }
         },
       );
-    }
-    if (this.intervalId != -1) {
-      clearInterval(this.intervalId);
-      this.turnOffTimer();
-    } else {
-      this.intervalId = window.setInterval(() => {
-        this.increamentTimer();
-      }, 1000);
-      this.playPauseState = 'PAUSE';
-      this.updateTaskInfo();
     }
   }
   checkTimer() {
@@ -263,7 +273,7 @@ export class TaskCardComponent implements OnInit {
         GlobalVariables.TasksPath +
         this.task.taskId +
         GlobalVariables.TimerPath +
-        '/stop',
+        'stop',
       null,
     );
     this.timerSubscription = this.timerResponse$.subscribe((res) => {
