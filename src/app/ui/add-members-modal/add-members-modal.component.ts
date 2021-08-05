@@ -15,7 +15,6 @@ import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { map, startWith } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
 import { EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-add-members-modal',

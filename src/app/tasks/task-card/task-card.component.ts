@@ -8,6 +8,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import * as GlobalVariables from '../../globals';
 
@@ -99,7 +100,7 @@ export class TaskCardComponent implements OnInit {
     medium: '#BABD10',
     high: '#B52920',
   };
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
   getColor() {
     if (this.managerCard) {
       if (this.task.taskPriority == 1) this.color = this.priorityColor.low;
@@ -146,7 +147,6 @@ export class TaskCardComponent implements OnInit {
     this.task.totalTimeOfTimer++;
   }
   onTaskEditted(task: any) {
-    console.log(task);
     this.task = task;
     this.getTaskState();
     this.checkTimer();
@@ -163,7 +163,8 @@ export class TaskCardComponent implements OnInit {
         GlobalVariables.GlobalServerPath +
           GlobalVariables.TasksPath +
           this.task.taskId +
-          GlobalVariables.TimerPath,
+          GlobalVariables.TimerPath +
+          '/toggle',
         null,
       );
 
@@ -171,7 +172,6 @@ export class TaskCardComponent implements OnInit {
         (res) => {
           this.task.timerState = res.state;
           this.task.totalTimeOfTimer = res.totalTime;
-          console.log(res);
           this.startTimerSubscription.unsubscribe();
         },
       );
@@ -188,13 +188,11 @@ export class TaskCardComponent implements OnInit {
           this.task.taskState = res.state;
           this.task.timerState = res.state;
           this.task.totalTimeOfTimer = res.totalTime;
-          console.log(this.task);
           this.getTaskState();
           this.startTimerSubscription.unsubscribe();
         },
       );
     }
-    console.log(this.intervalId);
     if (this.intervalId != -1) {
       clearInterval(this.intervalId);
       this.turnOffTimer();
@@ -208,12 +206,14 @@ export class TaskCardComponent implements OnInit {
   }
   checkTimer() {
     if (this.task.timerState == 'IN_PROGRESS') {
-      console.log('IN PROGRESS');
       this.intervalId = window.setInterval(() => {
         this.increamentTimer();
       }, 1000);
       this.playPauseState = 'PAUSE';
     }
+  }
+  onShowTimersClick() {
+    this.router.navigateByUrl('timers/tasks/' + this.task.taskId);
   }
   getTaskState() {
     if (this.task.taskState == 'NEW') {
@@ -244,7 +244,6 @@ export class TaskCardComponent implements OnInit {
   turnOffTimer() {
     this.playPauseState = 'PLAY';
     clearInterval(this.intervalId);
-    console.log('INTERVAL CLEARED');
     this.intervalId = -1;
   }
   disablePlayStopButtons() {
@@ -259,11 +258,13 @@ export class TaskCardComponent implements OnInit {
     this.task.totalTimeOfTimer = 0;
     this.task.timerState = 'NaN';
     this.turnOffTimer();
-    this.timerResponse$ = this.http.delete(
+    this.timerResponse$ = this.http.patch(
       GlobalVariables.GlobalServerPath +
         GlobalVariables.TasksPath +
         this.task.taskId +
-        GlobalVariables.TimerPath,
+        GlobalVariables.TimerPath +
+        '/stop',
+      null,
     );
     this.timerSubscription = this.timerResponse$.subscribe((res) => {
       this.timerSubscription.unsubscribe();
@@ -291,7 +292,6 @@ export class TaskCardComponent implements OnInit {
         this.task.taskId,
     );
     this.deleteTaskSubscription = this.deleteTaskResponse$.subscribe((res) => {
-      console.log(res);
       this.deleteTaskSubscription.unsubscribe();
     });
     this.delete.emit(this.task.taskId);
@@ -328,7 +328,6 @@ export class TaskCardComponent implements OnInit {
       userIdArray,
     );
     this.addUsersSubscription = this.addUsersResponse$.subscribe((res) => {
-      console.log(res);
       this.addUsersSubscription.unsubscribe();
     });
     let usersToSubscribe: string[] = [];
@@ -342,7 +341,6 @@ export class TaskCardComponent implements OnInit {
     );
     this.subscribeMailsSubscription = this.subscribeMailsResponse$.subscribe(
       (res) => {
-        console.log(res);
         this.subscribeMailsSubscription.unsubscribe();
       },
     );
@@ -357,7 +355,6 @@ export class TaskCardComponent implements OnInit {
     );
     this.changeStateSubscription = this.changeStateResponse$.subscribe(
       (res) => {
-        console.log(res);
         // const newTask = res;
         // this.task = newTask;
         this.task = { ...res };
@@ -376,7 +373,6 @@ export class TaskCardComponent implements OnInit {
     );
     this.changeStateSubscription = this.changeStateResponse$.subscribe(
       (res) => {
-        console.log(res);
         this.task = { ...res };
         this.turnOffTimer();
         this.updateTaskInfo();
@@ -393,7 +389,6 @@ export class TaskCardComponent implements OnInit {
     );
     this.changeStateSubscription = this.changeStateResponse$.subscribe(
       (res) => {
-        // console.log(res);
         // const newTask = res;
         this.task = { ...res };
         this.turnOffTimer();
@@ -411,8 +406,8 @@ export class TaskCardComponent implements OnInit {
     this.getColor();
   }
   ngOnInit(): void {
-    console.log(this.task.timerState === null);
     this.updateTaskInfo();
+    console.log('do it');
   }
   ngOnDestroy() {}
 }

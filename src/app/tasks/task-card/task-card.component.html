@@ -124,7 +124,12 @@
     </div>
   </mat-card-content>
   <mat-card-actions class="mat--actions">
-    <button mat-stroked-button color="primary" [disabled]="!playPauseAvaiable">
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="startTimer()"
+      [disabled]="!playPauseAvaiable"
+    >
       {{ playPauseState }}
     </button>
     <button
@@ -146,6 +151,13 @@
     </mat-menu>
   </mat-card-actions>
 </mat-card>
+
+<!-- 
+8888
+MANAGER CARD
+8888
+ -->
+
 <mat-card *ngIf="managerCard" class="card"
   ><div class="priority" [style.background]="color"></div>
   <mat-card-header>
@@ -241,6 +253,10 @@
       <button mat-menu-item (click)="onDeleteTaskClick()">
         <mat-icon>clear</mat-icon>
         <span>Delete task</span>
+      </button>
+      <button mat-menu-item (click)="onShowTimersClick()">
+        <mat-icon>clear</mat-icon>
+        <span>Show timers</span>
       </button>
     </mat-menu>
   </mat-card-actions>

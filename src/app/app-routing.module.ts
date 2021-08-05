@@ -16,6 +16,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { RegistrationPanelComponent } from './ui/registration-panel/registration-panel.component';
 import { UnassignedBucketsComponent } from './buckets/unassigned-buckets/unassigned-buckets.component';
 import { BannedUsersComponent } from './users/banned-users/banned-users.component';
+import { TimersPanelComponent } from './timers/timers-panel/timers-panel.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user-panel', pathMatch: 'full' },
@@ -105,6 +106,12 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegistrationPanelComponent,
+  },
+  {
+    path: 'timers/tasks/:id',
+    component: TimersPanelComponent,
+    canActivate: [AuthGuard],
+    pathMatch: 'full',
   },
 ];
 @NgModule({

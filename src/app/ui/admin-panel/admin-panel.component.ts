@@ -20,5 +20,9 @@ export class AdminPanelComponent implements OnInit {
   onUnassignedBucketsClicked() {
     this.router.navigateByUrl('admin-panel/buckets/unassigned');
   }
+  onUnbannedClicked() {
+    this.router.navigateByUrl('admin-panel/users/banned');
+  }
+
   ngOnInit(): void {}
 }

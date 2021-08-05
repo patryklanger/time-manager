@@ -20,7 +20,7 @@
     </p>
   </mat-card-content>
   <mat-divider></mat-divider>
-  <mat-card-actions class="buttons">
+  <mat-card-actions class="buttons" *ngIf="!isUnassigned">
     <button mat-icon-button color="basic" (click)="onEditBucketClick()">
       <mat-icon>edit</mat-icon>
     </button>
@@ -32,6 +32,14 @@
     </button>
     <button mat-icon-button color="warn" (click)="onDeleteBucketClicked()">
       <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-actions>
+  <mat-card-actions class="buttons" *ngIf="isUnassigned">
+    <button mat-raised-button color="basic" (click)="onAssignBucketClick()">
+      Assign
+    </button>
+    <button mat-raised-button color="warn" (click)="onDeleteBucketClicked()">
+      Delete
     </button>
   </mat-card-actions>
 </mat-card>
@@ -46,3 +54,7 @@
   *ngIf="showAddTask"
   (closeEmitter)="onAddTaskClose()"
 ></app-add-task>
+<app-select-user-by-email
+  *ngIf="showAssignBucket"
+  (close)="selectUserClosed($event)"
+></app-select-user-by-email>

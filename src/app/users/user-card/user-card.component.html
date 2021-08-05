@@ -45,9 +45,13 @@
         <mat-icon>edit</mat-icon>
         <span>Edit user</span>
       </button>
-      <button mat-menu-item (click)="onBanUserClick()">
+      <button mat-menu-item (click)="onBanUserClick()" *ngIf="!isBanned">
         <mat-icon>remove_circle</mat-icon>
         <span>Ban user</span>
+      </button>
+      <button mat-menu-item (click)="onUnbanUserClick()" *ngIf="isBanned">
+        <mat-icon>remove_circle</mat-icon>
+        <span>Unban user</span>
       </button>
       <button mat-menu-item (click)="onDeleteUserClick()">
         <mat-icon>delete</mat-icon>

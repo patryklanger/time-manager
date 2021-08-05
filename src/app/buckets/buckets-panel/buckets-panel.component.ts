@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class BucketsPanelComponent implements OnInit {
   showBuckets = false;
+  @Input() isUnassigned = false;
   @Input() buckets = [
     {
       bucketId: -1,

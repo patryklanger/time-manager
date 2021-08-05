@@ -1,0 +1,61 @@
+<mat-card class="card"
+  ><div class="priority" [style.background]="color"></div>
+  <mat-card-header>
+    <mat-card-title></mat-card-title>
+    <mat-card-subtitle></mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="inner--element">
+      <p class="label deadline--label">User's name:</p>
+      <p class="value deadline--value">{{ timer.userFullName }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label deadline--label">User's name:</p>
+      <p class="value deadline--value">{{ timer.taskName }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label timeleft--label">Total time:</p>
+      <p class="value timeleft--value">
+        {{ timer.totalTime | numberToHhmmss }}
+      </p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label editors--label">State:</p>
+      <p class="value editors--value">{{ timerStateToDisplay }}</p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="mat--actions">
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="onPlayPauseClicked()"
+      [disabled]="isStopped"
+    >
+      {{ playPauseState }}
+    </button>
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="onStopTimerClick()"
+      [disabled]="isStopped"
+    >
+      STOP
+    </button>
+    <button mat-stroked-button (click)="onDeleteClick()" color="warn">
+      Delete
+    </button>
+    <!-- <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
+      MORE
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onShowDetailsToggle()">
+        <mat-icon>info</mat-icon>
+        <span>Task's details</span>
+      </button>
+    </mat-menu> -->
+  </mat-card-actions>
+</mat-card>

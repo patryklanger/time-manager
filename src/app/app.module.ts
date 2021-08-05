@@ -56,6 +56,9 @@ import { DateToServerStringPipe } from './pipes/date-to-server-string.pipe';
 import { TaskDetailsComponent } from './tasks/task-details/task-details.component';
 import { UnassignedBucketsComponent } from './buckets/unassigned-buckets/unassigned-buckets.component';
 import { BannedUsersComponent } from './users/banned-users/banned-users.component';
+import { SelectUserByEmailComponent } from './ui/select-user-by-email/select-user-by-email.component';
+import { TimerCardComponent } from './timers/timer-card/timer-card.component';
+import { TimersPanelComponent } from './timers/timers-panel/timers-panel.component';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -110,6 +113,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     TaskDetailsComponent,
     UnassignedBucketsComponent,
     BannedUsersComponent,
+    SelectUserByEmailComponent,
+    TimerCardComponent,
+    TimersPanelComponent,
   ],
   imports: [
     MatMomentDateModule,

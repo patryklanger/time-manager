@@ -20,6 +20,9 @@ export class BucketCardComponent implements OnInit {
 
   showEditBucket = false;
   showAddTask = false;
+  showAssignBucket = false;
+
+  @Input() isUnassigned = false;
 
   @Input() bucket = {
     bucketId: -1,
@@ -31,8 +34,13 @@ export class BucketCardComponent implements OnInit {
   };
   response$ = new Observable<any>();
   subscription = new Subscription();
+
+  assignRresponse$ = new Observable<any>();
+  assignSubscription = new Subscription();
+
   path = GlobalVariables.GlobalServerPath;
   headers = new HttpHeaders();
+
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -54,6 +62,9 @@ export class BucketCardComponent implements OnInit {
   onEditBucketClose() {
     this.showEditBucket = false;
   }
+  onAssignBucketClick() {
+    this.showAssignBucket = true;
+  }
   onBucketEditted(bucket: any) {
     console.log(bucket);
     this.bucket = bucket;
@@ -61,6 +72,24 @@ export class BucketCardComponent implements OnInit {
   }
   onAddTaskClick() {
     this.showAddTask = true;
+  }
+  selectUserClosed(userId: number) {
+    this.showAssignBucket = false;
+    if (userId != -1) {
+      this.assignRresponse$ = this.http.put(
+        GlobalVariables.GlobalServerPath +
+          GlobalVariables.BucketsPath +
+          'unowned/' +
+          userId +
+          '/' +
+          this.bucket.bucketId,
+        null,
+      );
+      this.assignSubscription = this.assignRresponse$.subscribe((res) => {
+        console.log(res);
+        this.delete.emit(this.bucket.bucketId);
+      });
+    }
   }
   onAddTaskClose() {
     this.showAddTask = false;

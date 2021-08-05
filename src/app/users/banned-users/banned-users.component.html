@@ -6,6 +6,8 @@
     <app-user-card
       [user]="user"
       (delete)="onUserDelete($event)"
+      (unbanned)="onUserDelete($event)"
+      [isBanned]="isBanned"
     ></app-user-card>
   </ng-template>
 </div>

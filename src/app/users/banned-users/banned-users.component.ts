@@ -10,6 +10,7 @@ import * as GlobalVariables from '../../globals';
 })
 export class BannedUsersComponent implements OnInit {
   dataFetched = false;
+  isBanned = true;
 
   users: {
     userId: number;
@@ -35,7 +36,10 @@ export class BannedUsersComponent implements OnInit {
       },
     );
   }
-  onUserDelete(userId: number) {}
+  onUserDelete(userId: number) {
+    const newUsersArray = this.users.filter((user) => user.userId != userId);
+    this.users = newUsersArray;
+  }
   ngOnInit(): void {
     this.subscription = this.response$.subscribe((res) => {
       this.users = [...res];

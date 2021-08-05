@@ -64,6 +64,7 @@ export class TasksPanelComponent implements OnInit {
     this.tasks = newTasksArray;
   }
   ngOnInit(): void {
+    console.log('do it');
     this.normalTask = !this.managerTask;
   }
 }

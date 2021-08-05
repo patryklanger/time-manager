@@ -11,6 +11,8 @@ export class UnassignedBucketsComponent implements OnInit {
   title = 'Unassigned buckets';
   subtitle = "Here you can find all buckets, that aren't assigned to any user";
 
+  unassigned = true;
+
   fetchedBuckets: {
     bucketId: number;
     name: string;

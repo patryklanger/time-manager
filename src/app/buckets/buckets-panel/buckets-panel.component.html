@@ -18,6 +18,7 @@
       [bucket]="bucket"
       *ngIf="showBuckets"
       (delete)="onBucketDeleted($event)"
+      [isUnassigned]="isUnassigned"
     ></app-bucket-card>
     <h3 *ngIf="!showBuckets">No buckets</h3>
   </ng-template>

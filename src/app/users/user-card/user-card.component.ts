@@ -20,6 +20,7 @@ export class UserCardComponent implements OnInit {
 
   headers = new HttpHeaders();
 
+  @Output() unbanned = new EventEmitter<number>();
   @Output() delete = new EventEmitter<number>();
   @Input() isBanned: boolean = false;
   @Input() user = {
@@ -65,6 +66,39 @@ export class UserCardComponent implements OnInit {
       );
     });
   }
+  onUnbanUserClick() {
+    const dialogAnchor = this.dialog.open(SureDialogComponentComponent, {
+      data: {
+        title: 'You are unbanning user',
+        message: 'Are you sure you want to unban this user?',
+      },
+    });
+    dialogAnchor.afterClosed().subscribe((e) => {
+      if (!e) return;
+      let deletePath =
+        GlobalVariables.GlobalServerPath +
+        GlobalVariables.UsersPath +
+        this.user.userId;
+      this.response$ = this.http.patch(
+        GlobalVariables.GlobalServerPath +
+          GlobalVariables.UsersPath +
+          'disabled/' +
+          this.user.userId,
+        { headers: this.headers },
+      );
+      this.subscription = this.response$.subscribe(
+        (res) => {
+          console.log(res);
+          this.unbanned.emit(this.user.userId);
+          this.subscription.unsubscribe();
+        },
+        (err) => {
+          console.log(err);
+          this.subscription.unsubscribe();
+        },
+      );
+    });
+  }
   onDeleteUserClick() {
     const dialogAnchor = this.dialog.open(SureDialogComponentComponent, {
       data: {
@@ -93,5 +127,7 @@ export class UserCardComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.isBanned);
+  }
 }
