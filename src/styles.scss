@@ -145,6 +145,21 @@ h3 {
 .my-input:focus {
   outline: none;
 }
+.center--on--page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loading--spinner {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.loading--spinner p {
+  margin-top: 20px;
+}
 
 html,
 body {

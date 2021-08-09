@@ -4,13 +4,9 @@ import { Observable, Subscription } from 'rxjs';
 import * as GlobalVariables from '../../globals';
 import { MyErrorStateMatcher } from '../../utility/MyErrorStateMatcher';
 import {
-  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
-  NgForm,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';

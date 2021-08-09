@@ -5,3 +5,9 @@
   [subTitle]="subTitle"
   [tasks]="tasks"
 ></app-tasks-panel>
+<div class="center--on--page" *ngIf="!dataFetched">
+  <div class="loading--spinner">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    <p>Loading...</p>
+  </div>
+</div>

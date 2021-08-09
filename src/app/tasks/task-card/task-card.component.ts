@@ -173,16 +173,12 @@ export class TaskCardComponent implements OnInit {
           this.task.timerState = res.state;
           this.task.totalTimeOfTimer = res.totalTime;
           this.startTimerSubscription.unsubscribe();
-          if (this.intervalId != -1) {
-            clearInterval(this.intervalId);
+          if (this.task.timerState == 'PAUSED') {
             this.turnOffTimer();
           } else {
-            this.intervalId = window.setInterval(() => {
-              this.increamentTimer();
-            }, 1000);
             this.playPauseState = 'PAUSE';
-            this.updateTaskInfo();
           }
+          this.updateTaskInfo();
         },
       );
     } else {
@@ -195,21 +191,11 @@ export class TaskCardComponent implements OnInit {
       );
       this.startTimerSubscription = this.startTimerResponse$.subscribe(
         (res) => {
-          this.task.taskState = res.state;
+          this.task.taskState = 'IN_PROGRESS';
           this.task.timerState = res.state;
           this.task.totalTimeOfTimer = res.totalTime;
-          this.getTaskState();
+          this.updateTaskInfo();
           this.startTimerSubscription.unsubscribe();
-          if (this.intervalId != -1) {
-            clearInterval(this.intervalId);
-            this.turnOffTimer();
-          } else {
-            this.intervalId = window.setInterval(() => {
-              this.increamentTimer();
-            }, 1000);
-            this.playPauseState = 'PAUSE';
-            this.updateTaskInfo();
-          }
         },
       );
     }
@@ -416,6 +402,7 @@ export class TaskCardComponent implements OnInit {
     this.getColor();
   }
   ngOnInit(): void {
+    console.log(this.task.totalTimeOfTimer);
     this.updateTaskInfo();
     console.log('do it');
   }

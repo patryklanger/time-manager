@@ -20,6 +20,7 @@ export class AllBucketsComponent implements OnInit {
     maxTaskCount: '';
     createdTime: '';
   }[] = [];
+
   headers = new HttpHeaders();
   path = GlobalVariables.GlobalServerPath;
   subscription = new Subscription();

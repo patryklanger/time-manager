@@ -1,11 +1,19 @@
-<h1>Timers of {{ taskname }} task</h1>
-<h3>Here you can find all timers of {{ taskname }} task</h3>
+<div *ngIf="dataFetched">
+  <h1>Timers of {{ taskname }} task</h1>
+  <h3>Here you can find all timers of {{ taskname }} task</h3>
 
-<div class="tasks--cards--container">
-  <ng-template ngFor let-timer [ngForOf]="timers">
-    <app-timer-card
-      [timer]="timer"
-      (delete)="onTimerDelete($event)"
-    ></app-timer-card>
-  </ng-template>
+  <div class="tasks--cards--container">
+    <ng-template ngFor let-timer [ngForOf]="timers">
+      <app-timer-card
+        [timer]="timer"
+        (delete)="onTimerDelete($event)"
+      ></app-timer-card>
+    </ng-template>
+  </div>
+</div>
+<div class="center--on--page" *ngIf="!dataFetched">
+  <div class="loading--spinner">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    <p>Loading...</p>
+  </div>
 </div>

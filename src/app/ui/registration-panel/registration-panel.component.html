@@ -3,7 +3,7 @@
     <h1>{{ title }}</h1>
 
     <form
-      class="form--class"
+      class="form--class form--div"
       ngForm="formValidation"
       (submit)="onSubmitClick()"
       ngFormModel="formValidator"
@@ -16,7 +16,7 @@
             placeholder="Choose your username"
             [formControl]="userNameValidation"
             [errorStateMatcher]="matcher"
-            requiredS
+            required
           />
           <mat-error *ngIf="userNameValidation.hasError('minlength')">
             Username must be at least <strong>5 characters long</strong>
@@ -67,7 +67,6 @@
             placeholder="Type in your email address"
             [formControl]="emailValidation"
             [errorStateMatcher]="matcher"
-            required
           />
           <mat-error *ngIf="emailValidation.hasError('required')">
             This field is <strong>required</strong>

@@ -18,6 +18,7 @@ export class TimersPanelComponent implements OnInit {
   timersResponse$ = new Observable<any>();
   timersSubscription = new Subscription();
 
+  dataFetched = false;
   @Input() taskname = '';
   @Input() timers: {
     timerId: number;
@@ -59,6 +60,7 @@ export class TimersPanelComponent implements OnInit {
       console.log(res);
       this.timers = res;
       this.timersSubscription.unsubscribe();
+      this.dataFetched = true;
     });
   }
 }

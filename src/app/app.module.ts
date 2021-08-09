@@ -59,6 +59,7 @@ import { BannedUsersComponent } from './users/banned-users/banned-users.componen
 import { SelectUserByEmailComponent } from './ui/select-user-by-email/select-user-by-email.component';
 import { TimerCardComponent } from './timers/timer-card/timer-card.component';
 import { TimersPanelComponent } from './timers/timers-panel/timers-panel.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -118,6 +119,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     TimersPanelComponent,
   ],
   imports: [
+    MatProgressSpinnerModule,
     MatMomentDateModule,
     MatDialogModule,
     MatAutocompleteModule,

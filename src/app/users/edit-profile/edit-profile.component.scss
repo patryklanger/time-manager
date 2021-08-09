@@ -1,25 +1,20 @@
-input {
-  display: block;
-  width: 281px;
-  height: 40px;
-  background: #f7f7fa;
-  border: 0;
-  padding: 6px 12px;
-  border-radius: 3px;
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 18px;
-  line-height: 27px;
-  /* identical to box height */
-
-  color: rgba(0, 0, 0, 1);
+.full-width-input {
+  width: 100%;
+  max-width: 600px;
 }
-input::placeholder {
-  color: rgba(0, 0, 0, 0.5);
+.error-margin {
+  margin-top: 20px;
 }
-input:focus {
-  outline: none;
+.form--class {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.form--class div {
+  width: 100%;
+}
+.form--div {
+  margin-top: 50px !important;
 }
 p {
   margin-top: 16px;
@@ -40,12 +35,15 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 400px;
 }
 .button--container {
-  margin-top: 50px;
-  width: 269px;
+  margin-top: 20px;
+  width: 269px !important;
   display: flex;
   justify-content: space-around;
+  justify-self: center;
+  align-self: center;
 }
 a {
   margin-top: 27px;
@@ -67,13 +65,6 @@ a {
 .radio--element {
   display: flex;
   align-items: center;
-}
-.radio--element input {
-  height: 40px;
-  width: 40px;
-}
-.radio--element:nth-of-type(2) {
-  margin-left: 60px;
 }
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 16px;
