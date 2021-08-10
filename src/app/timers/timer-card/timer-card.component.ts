@@ -1,5 +1,5 @@
 import * as GlobalVariables from '../../globals';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
@@ -9,6 +9,8 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./timer-card.component.scss'],
 })
 export class TimerCardComponent implements OnInit {
+  editTotalTimeShow = false;
+
   @Input() timer: {
     timerId: number;
     userFullName: string;
@@ -23,6 +25,8 @@ export class TimerCardComponent implements OnInit {
     state: '',
   };
 
+  @Input() isAdmin = false;
+
   @Output() delete = new EventEmitter<number>();
 
   color = '#727272';
@@ -35,12 +39,16 @@ export class TimerCardComponent implements OnInit {
   isPlayed = false;
   isPaused = false;
   isStopped = false;
+  isFinished = false;
 
   playPauseResponse$ = new Observable<any>();
   playPauseSubscription = new Subscription();
 
   stopResponse$ = new Observable<any>();
   stopSubscription = new Subscription();
+
+  editTotalTimeResponse$ = new Observable<any>();
+  editTotalTimeSubscription = new Subscription();
 
   deleteResponse$ = new Observable<any>();
   deleteSubscription = new Subscription();
@@ -53,6 +61,7 @@ export class TimerCardComponent implements OnInit {
       this.isPlayed = false;
       this.isPaused = false;
       this.isStopped = false;
+      this.isFinished = false;
 
       this.playPauseState = 'PLAY';
 
@@ -64,6 +73,7 @@ export class TimerCardComponent implements OnInit {
       this.isPlayed = false;
       this.isPaused = true;
       this.isStopped = false;
+      this.isFinished = false;
 
       this.playPauseState = 'PLAY';
 
@@ -75,6 +85,7 @@ export class TimerCardComponent implements OnInit {
       this.isPlayed = true;
       this.isPaused = false;
       this.isStopped = false;
+      this.isFinished = false;
 
       this.playPauseState = 'PAUSE';
 
@@ -87,6 +98,7 @@ export class TimerCardComponent implements OnInit {
       this.isPlayed = false;
       this.isPaused = false;
       this.isStopped = true;
+      this.isFinished = true;
 
       this.playPauseState = 'PLAY';
 
@@ -98,11 +110,35 @@ export class TimerCardComponent implements OnInit {
       this.isPlayed = false;
       this.isPaused = false;
       this.isStopped = false;
+      this.isFinished = false;
 
       clearInterval(this.intervalId);
       this.intervalId = -1;
     }
   }
+
+  onEditTotalTimeToggle() {
+    this.editTotalTimeShow = !this.editTotalTimeShow;
+  }
+  onTotalTimeChange(newTotalTime: number) {
+    let params = new HttpParams();
+    params = params.append('totalTime', newTotalTime);
+    this.editTotalTimeResponse$ = this.http.put(
+      GlobalVariables.GlobalServerPath +
+        GlobalVariables.TimerPath +
+        this.timer.timerId,
+      params,
+    );
+
+    this.playPauseSubscription = this.editTotalTimeResponse$.subscribe(
+      (res) => {
+        console.log(res);
+        this.timer.totalTime = newTotalTime;
+      },
+    );
+    this.onEditTotalTimeToggle();
+  }
+
   onDeleteClick() {
     this.deleteResponse$ = this.http.delete(
       GlobalVariables.GlobalServerPath +

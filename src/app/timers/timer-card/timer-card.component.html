@@ -28,7 +28,7 @@
       <p class="value editors--value">{{ timerStateToDisplay }}</p>
     </div>
   </mat-card-content>
-  <mat-card-actions class="mat--actions">
+  <mat-card-actions class="mat--actions" *ngIf="!isAdmin">
     <button
       mat-stroked-button
       color="primary"
@@ -58,4 +58,44 @@
       </button>
     </mat-menu> -->
   </mat-card-actions>
+  <mat-card-actions class="mat--actions" *ngIf="isAdmin">
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="onPlayPauseClicked()"
+      [disabled]="isStopped"
+    >
+      {{ playPauseState }}
+    </button>
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="onStopTimerClick()"
+      [disabled]="isStopped"
+    >
+      STOP
+    </button>
+    <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
+      MORE
+    </button>
+    <mat-menu #menu="matMenu">
+      <button
+        mat-menu-item
+        (click)="onEditTotalTimeToggle()"
+        [disabled]="isFinished"
+      >
+        <mat-icon>info</mat-icon>
+        <span>Edit total time</span>
+      </button>
+      <button mat-stroked-button (click)="onDeleteClick()" color="warn">
+        Delete
+      </button>
+    </mat-menu>
+  </mat-card-actions>
 </mat-card>
+<app-edit-total-time
+  *ngIf="editTotalTimeShow"
+  [totalTime]="timer.totalTime"
+  (close)="onEditTotalTimeToggle()"
+  (changed)="onTotalTimeChange($event)"
+></app-edit-total-time>

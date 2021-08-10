@@ -1,0 +1,27 @@
+<app-custom-modal>
+  <h1>Edit total time</h1>
+  <mat-form-field class="full-width-input" appearance="fill">
+    <mat-label>Total time</mat-label>
+    <input
+      type="number"
+      matInput
+      placeholder="Enter new total time"
+      [formControl]="inputValidation"
+      [errorStateMatcher]="matcher"
+    />
+    <mat-error *ngIf="inputValidation.hasError('required')">
+      This field is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="inputValidation.hasError('min')">
+      Value cannot be lower than 0
+    </mat-error>
+  </mat-form-field>
+  <div class="buttons--container">
+    <button mat-raised-button color="primary" (click)="onSubmitClick()">
+      Submit
+    </button>
+    <button mat-raised-button color="primary" (click)="onCancelClick()">
+      Cancel
+    </button>
+  </div>
+</app-custom-modal>

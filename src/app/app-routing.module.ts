@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserPanelMainComponent } from './ui/user-panel-main/user-panel-main.component';
-import { BucketsPanelComponent } from './buckets/buckets-panel/buckets-panel.component';
 import { AdminPanelComponent } from './ui/admin-panel/admin-panel.component';
 import { TasksPanelComponent } from './tasks/tasks-panel/tasks-panel.component';
 import { MyBucketsComponent } from './buckets/my-buckets/my-buckets.component';
@@ -16,7 +15,11 @@ import { AuthGuard } from './guard/auth.guard';
 import { RegistrationPanelComponent } from './ui/registration-panel/registration-panel.component';
 import { UnassignedBucketsComponent } from './buckets/unassigned-buckets/unassigned-buckets.component';
 import { BannedUsersComponent } from './users/banned-users/banned-users.component';
-import { TimersPanelComponent } from './timers/timers-panel/timers-panel.component';
+import { GuestsPanelComponent } from './guests/guests-panel/guests-panel.component';
+import { AllSubscriptionsComponent } from './subscriptions/all-subscriptions/all-subscriptions.component';
+import { SubscriptionsForGuestComponent } from './subscriptions/subscriptions-for-guest/subscriptions-for-guest.component';
+import { TimersForTaskComponent } from './timers/timers-for-task/timers-for-task.component';
+import { TimersForAdminComponent } from './timers/timers-for-admin/timers-for-admin.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user-panel', pathMatch: 'full' },
@@ -78,6 +81,14 @@ const routes: Routes = [
     },
   },
   {
+    path: 'admin-panel/timers',
+    component: TimersForAdminComponent,
+    canActivate: [AuthGuard],
+    data: {
+      requiredRoles: ['ADMIN'],
+    },
+  },
+  {
     path: 'admin-panel/buckets',
     component: AllBucketsComponent,
     canActivate: [AuthGuard],
@@ -88,6 +99,30 @@ const routes: Routes = [
   {
     path: 'admin-panel/buckets/unassigned',
     component: UnassignedBucketsComponent,
+    canActivate: [AuthGuard],
+    data: {
+      requiredRoles: ['ADMIN'],
+    },
+  },
+  {
+    path: 'admin-panel/guests',
+    component: GuestsPanelComponent,
+    canActivate: [AuthGuard],
+    data: {
+      requiredRoles: ['ADMIN'],
+    },
+  },
+  {
+    path: 'admin-panel/subscriptions/all',
+    component: AllSubscriptionsComponent,
+    canActivate: [AuthGuard],
+    data: {
+      requiredRoles: ['ADMIN'],
+    },
+  },
+  {
+    path: 'admin-panel/subscriptions/guest/:id',
+    component: SubscriptionsForGuestComponent,
     canActivate: [AuthGuard],
     data: {
       requiredRoles: ['ADMIN'],
@@ -109,7 +144,7 @@ const routes: Routes = [
   },
   {
     path: 'timers/tasks/:id',
-    component: TimersPanelComponent,
+    component: TimersForTaskComponent,
     canActivate: [AuthGuard],
     pathMatch: 'full',
   },

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { SureDialogComponentComponent } from 'src/app/ui/sure-dialog-component/sure-dialog-component.component';
+import { MyErrorHandler } from 'src/app/utility/error-handler';
 import * as GlobalVariables from '../../globals';
 
 @Component({
@@ -12,6 +13,7 @@ import * as GlobalVariables from '../../globals';
   styleUrls: ['./bucket-card.component.scss'],
 })
 export class BucketCardComponent implements OnInit {
+  errorHandler = new MyErrorHandler(this.dialog);
   // @Input() owner = '';
   // @Input() name = '';
   // @Input() description = '';
@@ -49,10 +51,6 @@ export class BucketCardComponent implements OnInit {
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers = this.headers.append('Accept', 'application/json');
   }
-  errorHandler = (err: any) => {
-    alert(err.message);
-    console.log(err);
-  };
   onShowTasksClick() {
     this.router.navigateByUrl('tasks/bucket/' + this.bucket.bucketId);
   }
@@ -85,10 +83,13 @@ export class BucketCardComponent implements OnInit {
           this.bucket.bucketId,
         null,
       );
-      this.assignSubscription = this.assignRresponse$.subscribe((res) => {
-        console.log(res);
-        this.delete.emit(this.bucket.bucketId);
-      });
+      this.assignSubscription = this.assignRresponse$.subscribe(
+        (res) => {
+          console.log(res);
+          this.delete.emit(this.bucket.bucketId);
+        },
+        (err) => this.errorHandler.handleError(err),
+      );
     }
   }
   onAddTaskClose() {
@@ -111,7 +112,7 @@ export class BucketCardComponent implements OnInit {
           console.log(res);
           this.delete.emit(this.bucket.bucketId);
         },
-        (err) => console.log(err),
+        (err) => this.errorHandler.handleError(err),
       );
     });
   }

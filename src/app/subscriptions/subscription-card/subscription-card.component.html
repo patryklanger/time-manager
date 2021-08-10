@@ -1,0 +1,28 @@
+<mat-card class="card"
+  ><div class="priority" [style.background]="color"></div>
+  <mat-card-header>
+    <mat-card-title>{{ sub.guestEmail }}</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="inner--element">
+      <p class="label deadline--label">Bucket name:</p>
+      <p class="value deadline--value">{{ sub.bucketName }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label state--label">Task name:</p>
+      <p class="value state--value">{{ sub.taskName }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label timeleft--label">Subscription since:</p>
+      <p class="value timeleft--value">
+        {{ subscriptionDate | dateToString }}
+      </p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="mat--actions" (click)="onSubDelete()">
+    <button mat-stroked-button color="warn">Delete</button>
+  </mat-card-actions>
+</mat-card>

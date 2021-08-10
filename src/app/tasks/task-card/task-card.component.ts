@@ -61,7 +61,7 @@ export class TaskCardComponent implements OnInit {
     taskState: string;
     editorsCount: number;
     totalTimeOfTimer: number;
-    timerState?: string;
+    timerState?: string | undefined | null;
   } = {
     taskId: 0,
     bucketName: '',
@@ -149,7 +149,7 @@ export class TaskCardComponent implements OnInit {
   onTaskEditted(task: any) {
     this.task = task;
     this.getTaskState();
-    this.checkTimer();
+    this.getTimerState();
     this.timeConversion();
     this.getColor();
     this.showEditTask = false;
@@ -158,7 +158,7 @@ export class TaskCardComponent implements OnInit {
     this.showEditTask = true;
   }
   startTimer() {
-    if (this.task.timerState !== null && this.task.timerState !== 'NaN') {
+    if (this.task.timerState !== null) {
       this.startTimerResponse$ = this.http.patch(
         GlobalVariables.GlobalServerPath +
           GlobalVariables.TasksPath +
@@ -172,13 +172,8 @@ export class TaskCardComponent implements OnInit {
         (res) => {
           this.task.timerState = res.state;
           this.task.totalTimeOfTimer = res.totalTime;
-          this.startTimerSubscription.unsubscribe();
-          if (this.task.timerState == 'PAUSED') {
-            this.turnOffTimer();
-          } else {
-            this.playPauseState = 'PAUSE';
-          }
           this.updateTaskInfo();
+          this.startTimerSubscription.unsubscribe();
         },
       );
     } else {
@@ -198,14 +193,6 @@ export class TaskCardComponent implements OnInit {
           this.startTimerSubscription.unsubscribe();
         },
       );
-    }
-  }
-  checkTimer() {
-    if (this.task.timerState == 'IN_PROGRESS') {
-      this.intervalId = window.setInterval(() => {
-        this.increamentTimer();
-      }, 1000);
-      this.playPauseState = 'PAUSE';
     }
   }
   onShowTimersClick() {
@@ -237,10 +224,29 @@ export class TaskCardComponent implements OnInit {
       this.disablePlayStopButtons();
     }
   }
-  turnOffTimer() {
-    this.playPauseState = 'PLAY';
-    clearInterval(this.intervalId);
-    this.intervalId = -1;
+  getTimerState() {
+    if (this.task.timerState == 'NEW') {
+      this.playPauseState = 'PLAY';
+      clearInterval(this.intervalId);
+      this.intervalId = -1;
+    } else if (this.task.timerState == 'PAUSED') {
+      this.playPauseState = 'PLAY';
+      clearInterval(this.intervalId);
+      this.intervalId = -1;
+    } else if (this.task.timerState == 'IN_PROGRESS') {
+      this.playPauseState = 'PAUSE';
+      this.intervalId = window.setInterval(() => {
+        this.task.totalTimeOfTimer++;
+      }, 1000);
+    } else if (this.task.timerState == 'FINISHED') {
+      this.playPauseState = 'PLAY';
+      clearInterval(this.intervalId);
+      this.intervalId = -1;
+    } else {
+      this.playPauseState = 'PLAY';
+      clearInterval(this.intervalId);
+      this.intervalId = -1;
+    }
   }
   disablePlayStopButtons() {
     this.playPauseAvaiable = false;
@@ -251,9 +257,6 @@ export class TaskCardComponent implements OnInit {
     this.stopAvaiable = true;
   }
   stopTimer() {
-    this.task.totalTimeOfTimer = 0;
-    this.task.timerState = 'NaN';
-    this.turnOffTimer();
     this.timerResponse$ = this.http.patch(
       GlobalVariables.GlobalServerPath +
         GlobalVariables.TasksPath +
@@ -263,6 +266,10 @@ export class TaskCardComponent implements OnInit {
       null,
     );
     this.timerSubscription = this.timerResponse$.subscribe((res) => {
+      this.task.timerState = null;
+      this.task.totalTimeOfTimer = 0;
+      console.log(this.task);
+      this.updateTaskInfo();
       this.timerSubscription.unsubscribe();
     });
   }
@@ -354,7 +361,6 @@ export class TaskCardComponent implements OnInit {
         // const newTask = res;
         // this.task = newTask;
         this.task = { ...res };
-        this.turnOffTimer();
         this.updateTaskInfo();
         this.changeStateSubscription.unsubscribe();
       },
@@ -370,7 +376,6 @@ export class TaskCardComponent implements OnInit {
     this.changeStateSubscription = this.changeStateResponse$.subscribe(
       (res) => {
         this.task = { ...res };
-        this.turnOffTimer();
         this.updateTaskInfo();
         this.changeStateSubscription.unsubscribe();
       },
@@ -387,7 +392,6 @@ export class TaskCardComponent implements OnInit {
       (res) => {
         // const newTask = res;
         this.task = { ...res };
-        this.turnOffTimer();
         this.updateTaskInfo();
         this.changeStateSubscription.unsubscribe();
       },
@@ -397,14 +401,20 @@ export class TaskCardComponent implements OnInit {
     this.normalCard = !this.managerCard;
     this.creationTimeDate = new Date(this.task.taskCreationTime);
     this.getTaskState();
-    this.checkTimer();
+    this.getTimerState();
     this.timeConversion();
     this.getColor();
   }
   ngOnInit(): void {
-    console.log(this.task.totalTimeOfTimer);
     this.updateTaskInfo();
-    console.log('do it');
   }
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.timerSubscription.unsubscribe();
+    this.changeStateSubscription.unsubscribe();
+    this.subscribeMailsSubscription.unsubscribe();
+    this.addUsersSubscription.unsubscribe();
+    this.getUsersSubscription.unsubscribe();
+    this.deleteTaskSubscription.unsubscribe();
+    this.startTimerSubscription.unsubscribe();
+  }
 }

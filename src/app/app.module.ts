@@ -60,6 +60,15 @@ import { SelectUserByEmailComponent } from './ui/select-user-by-email/select-use
 import { TimerCardComponent } from './timers/timer-card/timer-card.component';
 import { TimersPanelComponent } from './timers/timers-panel/timers-panel.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { GuestCardComponent } from './guests/guest-card/guest-card.component';
+import { GuestsPanelComponent } from './guests/guests-panel/guests-panel.component';
+import { SubscriptionCardComponent } from './subscriptions/subscription-card/subscription-card.component';
+import { SubscriptionsPanelComponent } from './subscriptions/subscriptions-panel/subscriptions-panel.component';
+import { AllSubscriptionsComponent } from './subscriptions/all-subscriptions/all-subscriptions.component';
+import { SubscriptionsForGuestComponent } from './subscriptions/subscriptions-for-guest/subscriptions-for-guest.component';
+import { TimersForTaskComponent } from './timers/timers-for-task/timers-for-task.component';
+import { TimersForAdminComponent } from './timers/timers-for-admin/timers-for-admin.component';
+import { EditTotalTimeComponent } from './timers/edit-total-time/edit-total-time.component';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -117,6 +126,15 @@ function initializeKeycloak(keycloak: KeycloakService) {
     SelectUserByEmailComponent,
     TimerCardComponent,
     TimersPanelComponent,
+    GuestCardComponent,
+    GuestsPanelComponent,
+    SubscriptionCardComponent,
+    SubscriptionsPanelComponent,
+    AllSubscriptionsComponent,
+    SubscriptionsForGuestComponent,
+    TimersForTaskComponent,
+    TimersForAdminComponent,
+    EditTotalTimeComponent,
   ],
   imports: [
     MatProgressSpinnerModule,

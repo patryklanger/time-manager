@@ -1,11 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import * as GlobalVariables from '../../globals';
-import {
-  HttpClient,
-  HttpClientModule,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MyErrorHandler } from 'src/app/utility/error-handler';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-my-buckets',
@@ -13,6 +11,7 @@ import {
   styleUrls: ['./my-buckets.component.scss'],
 })
 export class MyBucketsComponent implements OnInit {
+  errorHandler = new MyErrorHandler(this.dialog);
   @Input() title = '';
   @Input() subtitle = '';
   @Input() buckets = [
@@ -30,7 +29,7 @@ export class MyBucketsComponent implements OnInit {
   path = GlobalVariables.GlobalServerPath;
   subscription = new Subscription();
   response$ = new Observable<any>();
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dialog: MatDialog) {
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers = this.headers.append('Accept', 'application/json');
 
@@ -44,11 +43,13 @@ export class MyBucketsComponent implements OnInit {
   ngOnInit(): void {
     this.title = 'Buckets managed by you';
     this.subtitle = 'Here you can find all buckets managed by you';
-    this.subscription = this.response$.subscribe((res) => {
-      this.buckets = [...res];
-      this.dataFetched = true;
-      console.log(this.buckets);
-    });
+    this.subscription = this.response$.subscribe(
+      (res) => {
+        this.buckets = [...res];
+        this.dataFetched = true;
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
   }
   ngOnDestroy(): void {
     if (this.subscription) {

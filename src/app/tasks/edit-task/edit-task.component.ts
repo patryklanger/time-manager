@@ -26,7 +26,7 @@ export class EditTaskComponent implements OnInit {
     taskState: string;
     editorsCount: number;
     totalTimeOfTimer: number;
-    timerState?: string;
+    timerState?: string | null | undefined;
   }>();
   @Output() close = new EventEmitter<boolean>();
 
@@ -43,7 +43,7 @@ export class EditTaskComponent implements OnInit {
     taskState: string;
     editorsCount: number;
     totalTimeOfTimer: number;
-    timerState?: string;
+    timerState?: string | null | undefined;
   } = {
     taskId: 0,
     bucketName: '',

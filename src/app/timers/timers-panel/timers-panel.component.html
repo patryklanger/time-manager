@@ -6,6 +6,7 @@
     <ng-template ngFor let-timer [ngForOf]="timers">
       <app-timer-card
         [timer]="timer"
+        [isAdmin]="isAdmin"
         (delete)="onTimerDelete($event)"
       ></app-timer-card>
     </ng-template>

@@ -1,0 +1,50 @@
+<!-- <mat-card class="card"
+  ><div class="priority" [style.background]="color"></div>
+  <mat-card-header>
+    <mat-card-title>{{ guest.guestEmail }}</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="inner--element">
+      <p class="label deadline--label">Bucket name:</p>
+      <p class="value deadline--value">{{ guest.bucketName }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label state--label">Task name:</p>
+      <p class="value state--value">{{ guest.taskName }}</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="inner--element">
+      <p class="label timeleft--label">Subscription since:</p>
+      <p class="value timeleft--value">
+        {{ subscriptionDate | dateToString }}
+      </p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="mat--actions">
+    <button mat-stroked-button color="warn">Delete</button>
+  </mat-card-actions>
+</mat-card> -->
+<mat-card class="card"
+  ><div class="priority" [style.background]="color"></div>
+
+  <mat-card-content
+    ><div class="content">
+      <p>{{ guest.guestEmail }}</p>
+      <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
+        MORE
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="onDeleteClick()">
+          <mat-icon>group</mat-icon>
+          <span>Delete</span>
+        </button>
+        <button mat-menu-item (click)="onSubsClick()">
+          <mat-icon>info</mat-icon>
+          <span>Subscriptions</span>
+        </button>
+      </mat-menu>
+    </div>
+  </mat-card-content>
+</mat-card>

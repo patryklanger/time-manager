@@ -1,15 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  ComponentFactoryResolver,
-} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 import { DialogBoxMessageComponent } from 'src/app/ui/dialog-box-message/dialog-box-message.component';
+import { MyErrorHandler } from 'src/app/utility/error-handler';
 import * as GlobalVariables from '../../globals';
 
 @Component({
@@ -18,6 +12,7 @@ import * as GlobalVariables from '../../globals';
   styleUrls: ['./edit-bucket.component.scss'],
 })
 export class EditBucketComponent implements OnInit {
+  errorHandler = new MyErrorHandler(this.dialog);
   @Input() bucketId = -1;
 
   @Output() close = new EventEmitter<boolean>();
@@ -66,10 +61,6 @@ export class EditBucketComponent implements OnInit {
     this.headers = this.headers.append('Accept', 'application/json');
     this.membersEmails = [];
   }
-  errorHandler = (err: any) => {
-    alert(err.message);
-    console.log(err);
-  };
   putBucket() {
     let putPath = this.path + GlobalVariables.BucketsPath + this.bucketId;
     let messageBucket = {
@@ -81,11 +72,14 @@ export class EditBucketComponent implements OnInit {
     this.editBucketResponse$ = this.http.put(putPath, message, {
       headers: this.headers,
     });
-    this.editBucketSubscription = this.editBucketResponse$.subscribe((res) => {
-      console.log('this is response: ');
-      console.log(res);
-      this.bucketEditted.emit(this.editBucket);
-    }, this.errorHandler);
+    this.editBucketSubscription = this.editBucketResponse$.subscribe(
+      (res) => {
+        console.log('this is response: ');
+        console.log(res);
+        this.bucketEditted.emit(this.editBucket);
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
   }
 
   onNameAdded(name: string) {
@@ -140,8 +134,10 @@ export class EditBucketComponent implements OnInit {
       });
     }
     this.patchBucketMembersSubscription =
-      this.patchBucketMembersResponse$.subscribe((res) => console.log(res));
-    this.onSuccessfullyAdded();
+      this.patchBucketMembersResponse$.subscribe(
+        (res) => this.onSuccessfullyAdded(),
+        (err) => this.errorHandler.handleError(err),
+      );
   }
   onCancelClick() {
     this.modals.name = true;
@@ -167,10 +163,13 @@ export class EditBucketComponent implements OnInit {
     this.getBucketMembersResponse$ = this.http.get(path, {
       headers: this.headers,
     });
-    this.bucketsSubscription = this.getBucketResponse$.subscribe((res) => {
-      this.editBucket = res;
-      this.dataFetched = true;
-    });
+    this.bucketsSubscription = this.getBucketResponse$.subscribe(
+      (res) => {
+        this.editBucket = res;
+        this.dataFetched = true;
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
     this.bucketMembersSubscription = this.getBucketMembersResponse$.subscribe(
       (members) => {
         members.forEach(
@@ -187,7 +186,7 @@ export class EditBucketComponent implements OnInit {
           },
         );
       },
-      this.errorHandler,
+      (err) => this.errorHandler.handleError(err),
     );
   }
   ngOnDestroy() {

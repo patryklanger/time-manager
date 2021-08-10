@@ -18,7 +18,13 @@ export class TimersPanelComponent implements OnInit {
   timersResponse$ = new Observable<any>();
   timersSubscription = new Subscription();
 
-  dataFetched = false;
+  @Input() dataFetched = false;
+
+  @Input() isAdmin = false;
+
+  @Input() header = '';
+  @Input() subheader = '';
+
   @Input() taskname = '';
   @Input() timers: {
     timerId: number;
@@ -27,40 +33,12 @@ export class TimersPanelComponent implements OnInit {
     totalTime: number;
     state: string;
   }[] = [];
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+  constructor() {}
   onTimerDelete(timerId: number) {
     const newTimersArray = this.timers.filter(
       (timer) => timer.timerId != timerId,
     );
     this.timers = newTimersArray;
   }
-  ngOnInit(): void {
-    console.log('active');
-
-    if (this.route.snapshot.paramMap.get('id'))
-      this.taskId = Number(this.route.snapshot.paramMap.get('id'));
-    this.taskResponse$ = this.http.get(
-      GlobalVariables.GlobalServerPath +
-        GlobalVariables.TasksPath +
-        this.taskId,
-    );
-    this.taskSubscription = this.taskResponse$.subscribe((res) => {
-      this.taskname = res.taskName;
-      this.taskSubscription.unsubscribe();
-    });
-
-    this.timersResponse$ = this.http.get(
-      GlobalVariables.GlobalServerPath +
-        GlobalVariables.TasksPath +
-        this.taskId +
-        GlobalVariables.TimerPath +
-        'all',
-    );
-    this.timersSubscription = this.timersResponse$.subscribe((res) => {
-      console.log(res);
-      this.timers = res;
-      this.timersSubscription.unsubscribe();
-      this.dataFetched = true;
-    });
-  }
+  ngOnInit(): void {}
 }

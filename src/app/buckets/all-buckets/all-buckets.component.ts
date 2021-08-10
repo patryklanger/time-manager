@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
+import { MyErrorHandler } from 'src/app/utility/error-handler';
 import * as GlobalVariables from '../../globals';
 
 @Component({
@@ -9,6 +11,7 @@ import * as GlobalVariables from '../../globals';
   styleUrls: ['./all-buckets.component.scss'],
 })
 export class AllBucketsComponent implements OnInit {
+  errorHandler = new MyErrorHandler(this.dialog);
   title = 'All buckets';
   subtitle = 'Here you can find all buckets created with Time Manager';
   dataFetched = false;
@@ -25,7 +28,7 @@ export class AllBucketsComponent implements OnInit {
   path = GlobalVariables.GlobalServerPath;
   subscription = new Subscription();
   response$ = new Observable<any>();
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dialog: MatDialog) {
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers = this.headers.append('Accept', 'application/json');
 
@@ -37,13 +40,14 @@ export class AllBucketsComponent implements OnInit {
     );
   }
   ngOnInit(): void {
-    this.subscription = this.response$.subscribe((res) => {
-      this.buckets = [...res];
-
-      this.dataFetched = true;
-      console.log(this.buckets);
-      console.log(this.dataFetched);
-    });
+    this.subscription = this.response$.subscribe(
+      (res) => {
+        this.buckets = [...res];
+        this.dataFetched = true;
+        this.subscription.unsubscribe();
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
   }
   ngOnDestroy(): void {
     if (this.subscription) {

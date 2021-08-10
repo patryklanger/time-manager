@@ -2,6 +2,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import * as GlobalVariables from '../../globals';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MyErrorHandler } from 'src/app/utility/error-handler';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-bucket',
@@ -9,6 +11,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./add-bucket.component.scss'],
 })
 export class AddBucketComponent implements OnInit {
+  errorHandler = new MyErrorHandler(this.dialog);
   @Output() closeEmitter = new EventEmitter<boolean>();
   @Output() bucketAdded = new EventEmitter<{
     bucketId: number;
@@ -42,13 +45,10 @@ export class AddBucketComponent implements OnInit {
   path = GlobalVariables.GlobalServerPath;
   subscription = new Subscription();
   response$ = new Observable<any>();
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dialog: MatDialog) {
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers = this.headers.append('Accept', 'application/json');
   }
-  errorHandler = (err: any) => {
-    console.log(err);
-  };
   onNameAdded(name: string) {
     this.newBucket.name = name;
     this.modals.name = false;
@@ -87,16 +87,19 @@ export class AddBucketComponent implements OnInit {
         headers: this.headers,
       },
     );
-    this.subscription = this.response$.subscribe((res) => {
-      console.log(res);
-      this.responseBucket = res;
-      this.bucketAdded.emit(this.responseBucket);
+    this.subscription = this.response$.subscribe(
+      (res) => {
+        console.log(res);
+        this.responseBucket = res;
+        this.bucketAdded.emit(this.responseBucket);
 
-      this.modals.name = true;
-      this.modals.description = false;
-      this.modals.maxTask = false;
-      this.modals.team = false;
-    }, this.errorHandler);
+        this.modals.name = true;
+        this.modals.description = false;
+        this.modals.maxTask = false;
+        this.modals.team = false;
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
   }
   ngOnInit(): void {}
   ngOnDestroy() {

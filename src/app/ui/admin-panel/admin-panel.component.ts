@@ -23,6 +23,14 @@ export class AdminPanelComponent implements OnInit {
   onUnbannedClicked() {
     this.router.navigateByUrl('admin-panel/users/banned');
   }
-
+  onGuestsClicked() {
+    this.router.navigateByUrl('admin-panel/guests');
+  }
+  onSubscriptionsClicked() {
+    this.router.navigateByUrl('admin-panel/subscriptions/all');
+  }
+  onTimersClicked() {
+    this.router.navigateByUrl('admin-panel/timers');
+  }
   ngOnInit(): void {}
 }

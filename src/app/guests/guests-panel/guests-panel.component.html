@@ -1,0 +1,10 @@
+<h1>Guests</h1>
+<h3>Here you can delete guests</h3>
+<div class="users--cards--container">
+  <ng-template ngFor let-sub [ngForOf]="guests">
+    <app-guest-card
+      [guest]="sub"
+      (delete)="onGuestDelete($event)"
+    ></app-guest-card>
+  </ng-template>
+</div>
