@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import * as GlobalVariables from '../../globals';
 import { Observable, Subscription } from 'rxjs';
 import { SureDialogComponentComponent } from 'src/app/ui/sure-dialog-component/sure-dialog-component.component';
+import { MyErrorHandler } from 'src/app/utility/error-handler';
 
 @Component({
   selector: 'app-user-card',
@@ -11,6 +12,7 @@ import { SureDialogComponentComponent } from 'src/app/ui/sure-dialog-component/s
   styleUrls: ['./user-card.component.scss'],
 })
 export class UserCardComponent implements OnInit {
+  errorHandler = new MyErrorHandler(this.dialog);
   showEditProfile = false;
   dataFetched = false;
   color = '#727272';
@@ -55,14 +57,10 @@ export class UserCardComponent implements OnInit {
       this.response$ = this.http.patch(deletePath, { headers: this.headers });
       this.subscription = this.response$.subscribe(
         (res) => {
-          console.log(res);
           this.delete.emit(this.user.userId);
           this.subscription.unsubscribe();
         },
-        (err) => {
-          console.log(err);
-          this.subscription.unsubscribe();
-        },
+        (err) => this.errorHandler.handleError(err),
       );
     });
   }
@@ -92,10 +90,7 @@ export class UserCardComponent implements OnInit {
           this.unbanned.emit(this.user.userId);
           this.subscription.unsubscribe();
         },
-        (err) => {
-          console.log(err);
-          this.subscription.unsubscribe();
-        },
+        (err) => this.errorHandler.handleError(err),
       );
     });
   }
@@ -119,15 +114,13 @@ export class UserCardComponent implements OnInit {
           this.delete.emit(this.user.userId);
           this.subscription.unsubscribe();
         },
-        (err) => {
-          console.log(err);
-          this.subscription.unsubscribe();
-        },
+        (err) => this.errorHandler.handleError(err),
       );
     });
   }
 
-  ngOnInit(): void {
-    console.log(this.isBanned);
+  ngOnInit(): void {}
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

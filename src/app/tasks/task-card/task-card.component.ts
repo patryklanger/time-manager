@@ -10,7 +10,9 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { MyErrorHandler } from 'src/app/utility/error-handler';
 import * as GlobalVariables from '../../globals';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-task-card',
@@ -18,6 +20,7 @@ import * as GlobalVariables from '../../globals';
   styleUrls: ['./task-card.component.scss'],
 })
 export class TaskCardComponent implements OnInit {
+  errorHandler = new MyErrorHandler(this.dialog);
   color = '';
   @Output() delete = new EventEmitter<number>();
 
@@ -100,7 +103,11 @@ export class TaskCardComponent implements OnInit {
     medium: '#BABD10',
     high: '#B52920',
   };
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private dialog: MatDialog,
+  ) {}
   getColor() {
     if (this.managerCard) {
       if (this.task.taskPriority == 1) this.color = this.priorityColor.low;
@@ -175,6 +182,7 @@ export class TaskCardComponent implements OnInit {
           this.updateTaskInfo();
           this.startTimerSubscription.unsubscribe();
         },
+        (err) => this.errorHandler.handleError(err),
       );
     } else {
       this.startTimerResponse$ = this.http.post(
@@ -192,6 +200,7 @@ export class TaskCardComponent implements OnInit {
           this.updateTaskInfo();
           this.startTimerSubscription.unsubscribe();
         },
+        (err) => this.errorHandler.handleError(err),
       );
     }
   }
@@ -265,13 +274,16 @@ export class TaskCardComponent implements OnInit {
         'stop',
       null,
     );
-    this.timerSubscription = this.timerResponse$.subscribe((res) => {
-      this.task.timerState = null;
-      this.task.totalTimeOfTimer = 0;
-      console.log(this.task);
-      this.updateTaskInfo();
-      this.timerSubscription.unsubscribe();
-    });
+    this.timerSubscription = this.timerResponse$.subscribe(
+      (res) => {
+        this.task.timerState = null;
+        this.task.totalTimeOfTimer = 0;
+        console.log(this.task);
+        this.updateTaskInfo();
+        this.timerSubscription.unsubscribe();
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
   }
   onEditUsersClick() {
     this.getUsersResponse$ = this.http.get(
@@ -294,9 +306,12 @@ export class TaskCardComponent implements OnInit {
         GlobalVariables.TasksPath +
         this.task.taskId,
     );
-    this.deleteTaskSubscription = this.deleteTaskResponse$.subscribe((res) => {
-      this.deleteTaskSubscription.unsubscribe();
-    });
+    this.deleteTaskSubscription = this.deleteTaskResponse$.subscribe(
+      (res) => {
+        this.deleteTaskSubscription.unsubscribe();
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
     this.delete.emit(this.task.taskId);
   }
   onShowMembersClick() {
@@ -330,9 +345,12 @@ export class TaskCardComponent implements OnInit {
         '/shares',
       userIdArray,
     );
-    this.addUsersSubscription = this.addUsersResponse$.subscribe((res) => {
-      this.addUsersSubscription.unsubscribe();
-    });
+    this.addUsersSubscription = this.addUsersResponse$.subscribe(
+      (res) => {
+        this.addUsersSubscription.unsubscribe();
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
     let usersToSubscribe: string[] = [];
     usersToSubscribe = members.UserNoInDB;
     this.subscribeMailsResponse$ = this.http.post(
@@ -346,6 +364,7 @@ export class TaskCardComponent implements OnInit {
       (res) => {
         this.subscribeMailsSubscription.unsubscribe();
       },
+      (err) => this.errorHandler.handleError(err),
     );
     this.showAddMembers = false;
   }
@@ -364,6 +383,7 @@ export class TaskCardComponent implements OnInit {
         this.updateTaskInfo();
         this.changeStateSubscription.unsubscribe();
       },
+      (err) => this.errorHandler.handleError(err),
     );
   }
   onUnsuspendClick() {
@@ -379,6 +399,7 @@ export class TaskCardComponent implements OnInit {
         this.updateTaskInfo();
         this.changeStateSubscription.unsubscribe();
       },
+      (err) => this.errorHandler.handleError(err),
     );
   }
   onFinishClick() {
@@ -395,6 +416,7 @@ export class TaskCardComponent implements OnInit {
         this.updateTaskInfo();
         this.changeStateSubscription.unsubscribe();
       },
+      (err) => this.errorHandler.handleError(err),
     );
   }
   updateTaskInfo() {

@@ -60,8 +60,12 @@ export class TasksOfBucketComponent implements OnInit {
         console.log(res);
         this.tasks = res;
         this.dataFetched = true;
+        this.subscription.unsubscribe();
       },
       (err) => this.errorHandler.handleError(err),
     );
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

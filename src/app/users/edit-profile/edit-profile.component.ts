@@ -10,7 +10,6 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  ValidationErrors,
   Validators,
 } from '@angular/forms';
 
@@ -22,12 +21,15 @@ const match: ValidatorFn = (fg: AbstractControl) => {
 };
 
 import { MyErrorStateMatcher } from 'src/app/utility/MyErrorStateMatcher';
+import { MyErrorHandler } from 'src/app/utility/error-handler';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.scss'],
 })
 export class EditProfileComponent implements OnInit {
+  errorHandler = new MyErrorHandler(this.dialog);
   @Input() userId = -1;
   @Input() title = 'Edit profile';
   @Input() subTitle =
@@ -114,6 +116,7 @@ export class EditProfileComponent implements OnInit {
     private http: HttpClient,
     private builder: FormBuilder,
     private readonly keycloak: KeycloakService,
+    private dialog: MatDialog,
   ) {
     this.formValidation = new FormGroup({
       firstname: this.firstNameValidation,
@@ -157,6 +160,7 @@ export class EditProfileComponent implements OnInit {
         console.log(res);
         this.editProfileSubscription.unsubscribe();
       },
+      (err) => this.errorHandler.handleError(err),
     );
   }
   onCancelClick() {
@@ -196,6 +200,7 @@ export class EditProfileComponent implements OnInit {
         console.log(res);
         this.editPasswordSubscription.unsubscribe();
       },
+      (err) => this.errorHandler.handleError(err),
     );
   }
   onDeleteAccountClick() {
@@ -208,11 +213,14 @@ export class EditProfileComponent implements OnInit {
       GlobalVariables.GlobalServerPath + '/profile',
       options,
     );
-    this.deleteAccSubscription = this.deleteAccResponse$.subscribe((res) => {
-      console.log(res);
-      this.deleteAccSubscription.unsubscribe();
-      this.keycloak.logout();
-    });
+    this.deleteAccSubscription = this.deleteAccResponse$.subscribe(
+      (res) => {
+        console.log(res);
+        this.deleteAccSubscription.unsubscribe();
+        this.keycloak.logout();
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
   }
   onPasswordChange() {}
   onAccountActionConfirm() {}
@@ -222,19 +230,32 @@ export class EditProfileComponent implements OnInit {
       headers: this.headers,
     });
     console.log(this.currentUser.role);
-    this.getProfileSubscription = this.getProfileResponse$.subscribe((res) => {
-      this.currentUser = res;
-      this.formValidation.get('username')?.setValue(this.currentUser.userName);
-      this.formValidation.get('lastname')?.setValue(this.currentUser.lastName);
-      this.formValidation
-        .get('firstname')
-        ?.setValue(this.currentUser.firstName);
-      this.formValidation.get('email')?.setValue(this.currentUser.email);
-      this.formValidation.get('position')?.setValue(this.currentUser.position);
-      if (this.currentUser.role == 'ADMIN') this.isAdmin = true;
-      this.formValidation.get('role')?.setValue(this.currentUser.role);
-      console.log(this.currentUser.role);
-    });
+    this.getProfileSubscription = this.getProfileResponse$.subscribe(
+      (res) => {
+        this.currentUser = res;
+        this.formValidation
+          .get('username')
+          ?.setValue(this.currentUser.userName);
+        this.formValidation
+          .get('lastname')
+          ?.setValue(this.currentUser.lastName);
+        this.formValidation
+          .get('firstname')
+          ?.setValue(this.currentUser.firstName);
+        this.formValidation.get('email')?.setValue(this.currentUser.email);
+        this.formValidation
+          .get('position')
+          ?.setValue(this.currentUser.position);
+        if (this.currentUser.role == 'ADMIN') this.isAdmin = true;
+        this.formValidation.get('role')?.setValue(this.currentUser.role);
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
   }
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.getProfileSubscription.unsubscribe();
+    this.deleteAccSubscription.unsubscribe();
+    this.editProfileSubscription.unsubscribe();
+    this.editPasswordSubscription.unsubscribe();
+  }
 }

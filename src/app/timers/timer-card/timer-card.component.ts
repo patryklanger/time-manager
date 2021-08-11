@@ -2,6 +2,8 @@ import * as GlobalVariables from '../../globals';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { MyErrorHandler } from 'src/app/utility/error-handler';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-timer-card',
@@ -9,6 +11,7 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./timer-card.component.scss'],
 })
 export class TimerCardComponent implements OnInit {
+  errorHandler = new MyErrorHandler(this.dialog);
   editTotalTimeShow = false;
 
   @Input() timer: {
@@ -53,7 +56,7 @@ export class TimerCardComponent implements OnInit {
   deleteResponse$ = new Observable<any>();
   deleteSubscription = new Subscription();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private dialog: MatDialog) {}
   setTimerState() {
     if (this.timer.state == 'NEW') {
       this.timerStateToDisplay = 'New';
@@ -134,7 +137,9 @@ export class TimerCardComponent implements OnInit {
       (res) => {
         console.log(res);
         this.timer.totalTime = newTotalTime;
+        this.playPauseSubscription.unsubscribe();
       },
+      (err) => this.errorHandler.handleError(err),
     );
     this.onEditTotalTimeToggle();
   }
@@ -145,11 +150,14 @@ export class TimerCardComponent implements OnInit {
         GlobalVariables.TimerPath +
         this.timer.timerId,
     );
-    this.deleteSubscription = this.deleteResponse$.subscribe((res) => {
-      console.log(res);
-      this.deleteSubscription.unsubscribe();
-      this.delete.emit(this.timer.timerId);
-    });
+    this.deleteSubscription = this.deleteResponse$.subscribe(
+      (res) => {
+        console.log(res);
+        this.delete.emit(this.timer.timerId);
+        this.deleteSubscription.unsubscribe();
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
   }
   onPlayPauseClicked() {
     this.playPauseResponse$ = this.http.patch(
@@ -159,16 +167,18 @@ export class TimerCardComponent implements OnInit {
         '/toggle',
       null,
     );
-    this.playPauseSubscription = this.playPauseResponse$.subscribe((res) => {
-      console.log(res);
-      this.playPauseSubscription.unsubscribe();
-      if (this.intervalId == -1) {
-        this.timer.state = 'IN_PROGRESS';
-      } else {
-        this.timer.state = 'PAUSED';
-      }
-      this.setTimerState();
-    });
+    this.playPauseSubscription = this.playPauseResponse$.subscribe(
+      (res) => {
+        if (this.intervalId == -1) {
+          this.timer.state = 'IN_PROGRESS';
+        } else {
+          this.timer.state = 'PAUSED';
+        }
+        this.setTimerState();
+        this.playPauseSubscription.unsubscribe();
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
   }
   onStopTimerClick() {
     this.stopResponse$ = this.http.patch(
@@ -178,16 +188,24 @@ export class TimerCardComponent implements OnInit {
         '/stop',
       null,
     );
-    this.stopSubscription = this.stopResponse$.subscribe((res) => {
-      console.log(res);
-      this.stopSubscription.unsubscribe();
-      this.timer.state = 'FINISHED';
-      this.setTimerState();
-    });
+    this.stopSubscription = this.stopResponse$.subscribe(
+      (res) => {
+        console.log(res);
+        this.timer.state = 'FINISHED';
+        this.setTimerState();
+        this.stopSubscription.unsubscribe();
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
   }
 
   ngOnInit(): void {
     this.setTimerState();
-    console.log(this.timer);
+  }
+  ngOnDestroy() {
+    this.editTotalTimeSubscription.unsubscribe();
+    this.playPauseSubscription.unsubscribe();
+    this.stopSubscription.unsubscribe();
+    this.deleteSubscription.unsubscribe();
   }
 }

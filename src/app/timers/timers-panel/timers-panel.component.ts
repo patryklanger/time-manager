@@ -1,8 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import * as GlobalVariables from '../../globals';
 
 @Component({
   selector: 'app-timers-panel',
@@ -11,12 +8,6 @@ import * as GlobalVariables from '../../globals';
 })
 export class TimersPanelComponent implements OnInit {
   taskId = -1;
-
-  taskResponse$ = new Observable<any>();
-  taskSubscription = new Subscription();
-
-  timersResponse$ = new Observable<any>();
-  timersSubscription = new Subscription();
 
   @Input() dataFetched = false;
 

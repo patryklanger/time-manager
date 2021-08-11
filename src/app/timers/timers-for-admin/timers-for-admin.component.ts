@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { MyErrorHandler } from 'src/app/utility/error-handler';
 import * as GlobalVariables from '../../globals';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-timers-for-admin',
@@ -9,6 +11,7 @@ import * as GlobalVariables from '../../globals';
   styleUrls: ['./timers-for-admin.component.scss'],
 })
 export class TimersForAdminComponent implements OnInit {
+  errorHandler = new MyErrorHandler(this.dialog);
   timersResponse$ = new Observable<any>();
   timersSubscription = new Subscription();
 
@@ -25,15 +28,18 @@ export class TimersForAdminComponent implements OnInit {
     state: string;
   }[] = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dialog: MatDialog) {
     this.timersResponse$ = this.http.get(
       GlobalVariables.GlobalServerPath + GlobalVariables.TimerPath + 'all',
     );
-    this.timersSubscription = this.timersResponse$.subscribe((res) => {
-      this.timers = res;
-      this.dataFetched = true;
-      this.timersSubscription.unsubscribe();
-    });
+    this.timersSubscription = this.timersResponse$.subscribe(
+      (res) => {
+        this.timers = res;
+        this.dataFetched = true;
+        this.timersSubscription.unsubscribe();
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
   }
 
   ngOnInit(): void {}

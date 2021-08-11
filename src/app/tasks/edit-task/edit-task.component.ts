@@ -4,8 +4,10 @@ import { FormControl, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
 import { DateToServerStringPipe } from 'src/app/pipes/date-to-server-string.pipe';
+import { MyErrorHandler } from 'src/app/utility/error-handler';
 import * as GlobalVariables from '../../globals';
 import { MyErrorStateMatcher } from '../../utility/MyErrorStateMatcher';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-task',
@@ -13,6 +15,7 @@ import { MyErrorStateMatcher } from '../../utility/MyErrorStateMatcher';
   styleUrls: ['./edit-task.component.scss'],
 })
 export class EditTaskComponent implements OnInit {
+  errorHandler = new MyErrorHandler(this.dialog);
   @Output() taskEditted = new EventEmitter<{
     taskId: number;
     bucketName: string;
@@ -83,7 +86,7 @@ export class EditTaskComponent implements OnInit {
 
   expectedTimeValidation = new FormControl('', [Validators.min(1)]);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private dialog: MatDialog) {}
   onSubmitEditing() {
     this.task.taskName = this.nameValidation.value;
     this.task.taskDescription = this.descriptionValidation.value;
@@ -105,10 +108,13 @@ export class EditTaskComponent implements OnInit {
         this.task.taskId,
       editBucket,
     );
-    this.subscription = this.editResponse$.subscribe((res) => {
-      console.log(res);
-      this.subscription.unsubscribe();
-    });
+    this.subscription = this.editResponse$.subscribe(
+      (res) => {
+        console.log(res);
+        this.subscription.unsubscribe();
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
     this.taskEditted.emit(this.task);
   }
   onCancelClick() {
@@ -126,5 +132,8 @@ export class EditTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.setValidatorsValues();
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

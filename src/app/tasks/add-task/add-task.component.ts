@@ -5,6 +5,8 @@ import { MyErrorStateMatcher } from '../../utility/MyErrorStateMatcher';
 import { Observable, Subscription } from 'rxjs';
 import * as GlobalVariables from '../../globals';
 import { DateToServerStringPipe } from 'src/app/pipes/date-to-server-string.pipe';
+import { MyErrorHandler } from 'src/app/utility/error-handler';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-task',
@@ -12,6 +14,7 @@ import { DateToServerStringPipe } from 'src/app/pipes/date-to-server-string.pipe
   styleUrls: ['./add-task.component.scss'],
 })
 export class AddTaskComponent implements OnInit {
+  errorHandler = new MyErrorHandler(this.dialog);
   @Output() closeEmitter = new EventEmitter<boolean>();
   @Input() bucketId = -1;
   today = new Date();
@@ -39,7 +42,7 @@ export class AddTaskComponent implements OnInit {
   path = GlobalVariables.GlobalServerPath;
   subscription = new Subscription();
   response$ = new Observable<any>();
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dialog: MatDialog) {
     this.headers = this.headers.append('Content-Type', 'appliaction/json');
     this.headers = this.headers.append('Accept', 'application/json');
   }
@@ -81,10 +84,9 @@ export class AddTaskComponent implements OnInit {
         console.log(res);
         this.modals.name = true;
         this.closeEmitter.emit(true);
+        this.subscription.unsubscribe();
       },
-      (err) => {
-        console.log(err);
-      },
+      (err) => this.errorHandler.handleError(err),
     );
   }
   onCancelClick() {
