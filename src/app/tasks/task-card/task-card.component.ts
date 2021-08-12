@@ -1,14 +1,6 @@
-import { trigger } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  Output,
-  EventEmitter,
-} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { MyErrorHandler } from 'src/app/utility/error-handler';
 import * as GlobalVariables from '../../globals';
@@ -84,6 +76,8 @@ export class TaskCardComponent implements OnInit {
   deadline = new Date();
   intervalId = -1;
 
+  @Input() idAdmin = false;
+
   startTime = '';
   timeLeft = '';
 
@@ -97,6 +91,8 @@ export class TaskCardComponent implements OnInit {
 
   @Input() managerCard = true;
   normalCard = false;
+
+  @Input() isAdmin = false;
 
   priorityColor = {
     low: '#1F9C00',
@@ -138,7 +134,9 @@ export class TaskCardComponent implements OnInit {
 
     return dDisplay + hDisplay + mDisplay;
   }
-
+  onShowLogsClick() {
+    this.router.navigateByUrl('admin-panel/logs/tasks/' + this.task.taskId);
+  }
   timeConversion() {
     if (!this.managerCard) var time = new Date(this.task.taskDeadline);
     else var time = new Date(this.task.taskDeadline);
@@ -278,7 +276,6 @@ export class TaskCardComponent implements OnInit {
       (res) => {
         this.task.timerState = null;
         this.task.totalTimeOfTimer = 0;
-        console.log(this.task);
         this.updateTaskInfo();
         this.timerSubscription.unsubscribe();
       },

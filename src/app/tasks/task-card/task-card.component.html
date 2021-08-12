@@ -258,6 +258,10 @@ MANAGER CARD
         <mat-icon>clear</mat-icon>
         <span>Show timers</span>
       </button>
+      <button mat-menu-item (click)="onShowLogsClick()" *ngIf="isAdmin">
+        <mat-icon>clear</mat-icon>
+        <span>Show logs</span>
+      </button>
     </mat-menu>
   </mat-card-actions>
 </mat-card>

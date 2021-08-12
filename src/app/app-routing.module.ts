@@ -20,6 +20,7 @@ import { AllSubscriptionsComponent } from './subscriptions/all-subscriptions/all
 import { SubscriptionsForGuestComponent } from './subscriptions/subscriptions-for-guest/subscriptions-for-guest.component';
 import { TimersForTaskComponent } from './timers/timers-for-task/timers-for-task.component';
 import { TimersForAdminComponent } from './timers/timers-for-admin/timers-for-admin.component';
+import { LogsOfTaskComponent } from './logs/logs-of-task/logs-of-task.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user-panel', pathMatch: 'full' },
@@ -59,6 +60,14 @@ const routes: Routes = [
   {
     path: 'admin-panel/users',
     component: UsersPanelComponent,
+    canActivate: [AuthGuard],
+    data: {
+      requiredRoles: ['ADMIN'],
+    },
+  },
+  {
+    path: 'admin-panel/logs/:type/:id',
+    component: LogsOfTaskComponent,
     canActivate: [AuthGuard],
     data: {
       requiredRoles: ['ADMIN'],

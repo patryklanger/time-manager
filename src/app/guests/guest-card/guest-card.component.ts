@@ -26,6 +26,9 @@ export class GuestCardComponent implements OnInit {
   };
 
   constructor(private http: HttpClient, private router: Router) {}
+  onLogsClick() {
+    this.router.navigateByUrl('admin-panel/logs/guests/' + this.guest.guestId);
+  }
   onSubsClick() {
     this.router.navigateByUrl(
       'admin-panel/subscriptions/guest/' + this.guest.guestId,

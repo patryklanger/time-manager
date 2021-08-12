@@ -97,7 +97,10 @@ export class AddMembersModalComponent implements OnInit {
     );
     this.subscription = this.response$.subscribe(
       (res) => {
-        this.allEmails = res;
+        this.allEmails = res.filter(
+          (x: string) => !this.addedUsers.includes(x),
+        );
+        this.subscription.unsubscribe();
       },
       (err) => console.log(err.error),
     );

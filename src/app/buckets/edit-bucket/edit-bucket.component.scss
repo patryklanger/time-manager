@@ -1,0 +1,23 @@
+.modal--flex {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+}
+.full-width-input {
+  width: 100%;
+}
+h3 {
+  font-size: 30px;
+  font-weight: 600;
+  margin: 20px 0;
+}
+.textarea--input {
+  height: 200px;
+  resize: none;
+}
+.buttons-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}

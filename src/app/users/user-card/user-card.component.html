@@ -36,7 +36,9 @@
     </div>
   </mat-card-content>
   <mat-card-actions class="mat--actions">
-    <button mat-stroked-button color="primary">Show logs</button>
+    <button mat-stroked-button color="primary" (click)="onShowLogsClick()">
+      Show logs
+    </button>
     <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
       More
     </button>

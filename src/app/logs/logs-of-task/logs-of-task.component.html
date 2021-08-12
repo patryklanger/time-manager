@@ -1,11 +1,8 @@
-<app-tasks-panel
+<app-logs-panel
   *ngIf="dataFetched"
-  [managerTask]="true"
-  [title]="title"
-  [subTitle]="subTitle"
-  [managerTasks]="tasks"
-  [isAdmin]="true"
-></app-tasks-panel>
+  [logs]="logs"
+  [dataFetched]="dataFetched"
+></app-logs-panel>
 <div class="center--on--page" *ngIf="!dataFetched">
   <div class="loading--spinner">
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>

@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class PanelCardComponent implements OnInit {
   @Input() name = '';
   @Input() description = '';
-  @Input() imgSource = '';
+  @Input() iconName = '';
   constructor() {}
 
   ngOnInit(): void {}

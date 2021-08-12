@@ -6,6 +6,7 @@
     <app-task-card
       [task]="task"
       (delete)="onTaskDelete($event)"
+      [isAdmin]="isAdmin"
     ></app-task-card>
   </ng-template>
   <ng-template ngFor let-task *ngIf="normalTask" [ngForOf]="tasks">
@@ -13,6 +14,7 @@
       [task]="task"
       [managerCard]="managerTask"
       (delete)="onTaskDelete($event)"
+      [isAdmin]="isAdmin"
     ></app-task-card>
   </ng-template>
 </div>

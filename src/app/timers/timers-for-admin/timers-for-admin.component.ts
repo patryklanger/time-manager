@@ -17,7 +17,7 @@ export class TimersForAdminComponent implements OnInit {
 
   header = 'All timers';
   subheader = 'Here you can find all timers';
-
+  isAdmin = true;
   dataFetched = false;
 
   timers: {

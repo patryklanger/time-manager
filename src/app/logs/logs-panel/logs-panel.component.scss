@@ -1,0 +1,45 @@
+h1 {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 54px;
+  /* identical to box height */
+
+  color: #212121;
+  text-align: center;
+  margin-top: 41px;
+}
+h3 {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 27px;
+  /* identical to box height */
+
+  color: #212121;
+  text-align: center;
+}
+
+.buckets--container {
+  width: 100vw;
+  display: grid;
+  grid-row-gap: 41px;
+  grid-column-gap: 93px;
+  grid-template-columns: repeat(auto-fit, 375px);
+  margin: 0 auto;
+  padding: 50px;
+  justify-content: center;
+}
+.flex--center {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+.button {
+  margin-top: 69px;
+  margin-bottom: 28px;
+}

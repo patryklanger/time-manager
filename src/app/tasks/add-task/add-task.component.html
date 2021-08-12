@@ -40,16 +40,19 @@
         matInput
         class="mat-input-class"
         [min]="today"
-        [matDatepicker]="picker"
+        [ngxMatDatetimePicker]="picker"
         [formControl]="dateValidation"
         [errorStateMatcher]="matcher"
       />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="$any(picker)"
+      ></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker
         #picker
         startView="month"
         [startAt]="today"
-      ></mat-datepicker>
+      ></ngx-mat-datetime-picker>
       <mat-error *ngIf="dateValidation.hasError('required')">
         You must set deadline date
       </mat-error>

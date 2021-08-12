@@ -1,9 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 import { DialogBoxMessageComponent } from 'src/app/ui/dialog-box-message/dialog-box-message.component';
 import { MyErrorHandler } from 'src/app/utility/error-handler';
+import { MyErrorStateMatcher } from 'src/app/utility/MyErrorStateMatcher';
 import * as GlobalVariables from '../../globals';
 
 @Component({
@@ -15,6 +17,10 @@ export class EditBucketComponent implements OnInit {
   errorHandler = new MyErrorHandler(this.dialog);
   @Input() bucketId = -1;
 
+  matcher = new MyErrorStateMatcher();
+
+  formValidation: FormGroup;
+
   @Output() close = new EventEmitter<boolean>();
   @Output() bucketEditted = new EventEmitter<{
     bucketId: number;
@@ -24,14 +30,10 @@ export class EditBucketComponent implements OnInit {
     maxTaskCount: string;
     createdTime: string;
   }>();
-  modals = {
-    name: true,
-    description: false,
-    maxTask: false,
-    team: false,
-  };
   dataFetched = false;
+  emailsFetched = false;
 
+  showAddMembers = false;
   membersEmails: string[];
 
   editBucket = {
@@ -56,13 +58,30 @@ export class EditBucketComponent implements OnInit {
   editBucketResponse$ = new Observable<any>();
   patchBucketMembersResponse$ = new Observable<any>();
 
-  constructor(private http: HttpClient, private dialog: MatDialog) {
+  constructor(
+    private http: HttpClient,
+    private dialog: MatDialog,
+    private fb: FormBuilder,
+  ) {
+    this.formValidation = this.fb.group({
+      name: ['', [Validators.required, Validators.maxLength(50)]],
+      description: ['', [Validators.required, Validators.maxLength(255)]],
+      maxTask: [
+        0,
+        [Validators.required, Validators.min(0), Validators.max(200)],
+      ],
+    });
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers = this.headers.append('Accept', 'application/json');
     this.membersEmails = [];
   }
   putBucket() {
     let putPath = this.path + GlobalVariables.BucketsPath + this.bucketId;
+
+    this.editBucket.name = this.formValidation.get('name')?.value;
+    this.editBucket.description = this.formValidation.get('description')?.value;
+    this.editBucket.maxTaskCount = this.formValidation.get('maxTask')?.value;
+
     let messageBucket = {
       name: this.editBucket.name,
       description: this.editBucket.description,
@@ -76,26 +95,14 @@ export class EditBucketComponent implements OnInit {
       (res) => {
         console.log('this is response: ');
         console.log(res);
+        this.editBucketSubscription.unsubscribe();
         this.bucketEditted.emit(this.editBucket);
       },
       (err) => this.errorHandler.handleError(err),
     );
   }
-
-  onNameAdded(name: string) {
-    this.editBucket.name = name;
-    this.modals.name = false;
-    this.modals.description = true;
-  }
-  onDescriptionAdded(description: string) {
-    this.editBucket.description = description;
-    this.modals.description = false;
-    this.modals.maxTask = true;
-  }
-  onMaxTaskAdded(maxTask: string) {
-    this.editBucket.maxTaskCount = maxTask;
-    this.modals.maxTask = false;
-    this.modals.team = true;
+  onCancelAddingMembersClick() {
+    this.showAddMembers = false;
   }
   onMembersAdded(members: any) {
     let arrayOfExistingUsersId: number[] = [];
@@ -140,19 +147,20 @@ export class EditBucketComponent implements OnInit {
       );
   }
   onCancelClick() {
-    this.modals.name = true;
-    this.modals.description = false;
-    this.modals.maxTask = false;
-    this.modals.team = false;
     this.close.emit(false);
   }
   onSuccessfullyAdded() {
-    this.modals.name = true;
-    this.modals.description = false;
-    this.modals.maxTask = false;
-    this.modals.team = false;
-
     this.putBucket();
+  }
+  showEditMember() {
+    this.showAddMembers = true;
+  }
+  setValues() {
+    this.formValidation.get('name')?.setValue(this.editBucket.name);
+    this.formValidation
+      .get('description')
+      ?.setValue(this.editBucket.description);
+    this.formValidation.get('maxTask')?.setValue(this.editBucket.maxTaskCount);
   }
   ngOnInit(): void {
     let path = this.path + GlobalVariables.BucketsPath + this.bucketId;
@@ -167,6 +175,8 @@ export class EditBucketComponent implements OnInit {
       (res) => {
         this.editBucket = res;
         this.dataFetched = true;
+        this.setValues();
+        this.bucketsSubscription.unsubscribe();
       },
       (err) => this.errorHandler.handleError(err),
     );
@@ -185,6 +195,7 @@ export class EditBucketComponent implements OnInit {
             this.membersEmails.push(e.email);
           },
         );
+        this.emailsFetched = true;
       },
       (err) => this.errorHandler.handleError(err),
     );

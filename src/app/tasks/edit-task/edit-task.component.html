@@ -51,7 +51,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <!-- <mat-form-field appearance="fill">
         <mat-label>Choose a deadline date</mat-label>
         <input
           matInput
@@ -69,6 +69,29 @@
         ></mat-datepicker>
         <mat-error *ngIf="taskDeadlineValidation.hasError('required')">
           You must set <strong>deadline date</strong>
+        </mat-error>
+      </mat-form-field> -->
+      <mat-form-field appearance="fill">
+        <mat-label>Choose a deadline date</mat-label>
+        <input
+          matInput
+          class="mat-input-class"
+          [min]="minDeadlineDate"
+          [ngxMatDatetimePicker]="picker"
+          [formControl]="taskDeadlineValidation"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="$any(picker)"
+        ></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker
+          #picker
+          startView="month"
+          [startAt]="minDeadlineDate"
+        ></ngx-mat-datetime-picker>
+        <mat-error *ngIf="taskDeadlineValidation.hasError('required')">
+          You must set deadline date
         </mat-error>
       </mat-form-field>
 

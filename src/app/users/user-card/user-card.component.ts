@@ -5,6 +5,7 @@ import * as GlobalVariables from '../../globals';
 import { Observable, Subscription } from 'rxjs';
 import { SureDialogComponentComponent } from 'src/app/ui/sure-dialog-component/sure-dialog-component.component';
 import { MyErrorHandler } from 'src/app/utility/error-handler';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-card',
@@ -34,7 +35,11 @@ export class UserCardComponent implements OnInit {
     email: '',
     role: '',
   };
-  constructor(private http: HttpClient, private dialog: MatDialog) {
+  constructor(
+    private http: HttpClient,
+    private dialog: MatDialog,
+    private router: Router,
+  ) {
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers = this.headers.append('Accept', 'application/json');
   }
@@ -63,6 +68,9 @@ export class UserCardComponent implements OnInit {
         (err) => this.errorHandler.handleError(err),
       );
     });
+  }
+  onShowLogsClick() {
+    this.router.navigateByUrl('admin-panel/logs/users/' + this.user.userId);
   }
   onUnbanUserClick() {
     const dialogAnchor = this.dialog.open(SureDialogComponentComponent, {

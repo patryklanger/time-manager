@@ -9,6 +9,7 @@ export class TasksPanelComponent implements OnInit {
   @Input() managerTask = true;
   normalTask = false;
   @Input() title = '';
+  @Input() isAdmin = false;
   @Input() subTitle = '';
   @Input() managerTasks: {
     taskId: number;

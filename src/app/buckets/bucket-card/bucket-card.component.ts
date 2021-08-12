@@ -24,6 +24,8 @@ export class BucketCardComponent implements OnInit {
   showAddTask = false;
   showAssignBucket = false;
 
+  @Input() isAdmin = false;
+
   @Input() isUnassigned = false;
 
   @Input() bucket = {
@@ -55,6 +57,7 @@ export class BucketCardComponent implements OnInit {
     this.router.navigateByUrl('tasks/bucket/' + this.bucket.bucketId);
   }
   onEditBucketClick() {
+    console.log('Edit bucket');
     this.showEditBucket = true;
   }
   onEditBucketClose() {
@@ -70,6 +73,11 @@ export class BucketCardComponent implements OnInit {
   }
   onAddTaskClick() {
     this.showAddTask = true;
+  }
+  onShowLogsClick() {
+    this.router.navigateByUrl(
+      'admin-panel/logs/buckets/' + this.bucket.bucketId,
+    );
   }
   selectUserClosed(userId: number) {
     this.showAssignBucket = false;

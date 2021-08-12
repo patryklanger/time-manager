@@ -1,4 +1,4 @@
-<app-modal-text-insertion
+<!-- <app-modal-text-insertion
   name="Edit bucket's name"
   label="Bucket name"
   placeholder="Type in new bucket name"
@@ -29,10 +29,80 @@
   (cancel)="onCancelClick()"
   (value)="onMaxTaskAdded($event)"
   *ngIf="modals.maxTask && dataFetched"
-></app-modal-text-insertion>
+></app-modal-text-insertion> -->
+<app-custom-modal *ngIf="dataFetched">
+  <strong><h3>Edit bucket</h3></strong>
+  <form [formGroup]="formValidation">
+    <div class="modal--flex">
+      <mat-form-field class="full-width-input" appearance="fill">
+        <mat-label>Bucket name</mat-label>
+        <input
+          matInput
+          placeholder="Type in new bucket name"
+          formControlName="name"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-error *ngIf="formValidation.get('name')?.hasError('maxlength')">
+          This field has max length of 50
+        </mat-error>
+        <mat-error *ngIf="formValidation.get('name')?.hasError('required')">
+          This field is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input" appearance="fill">
+        <mat-label>Bucket description</mat-label>
+        <textarea
+          matInput
+          class="textarea--input"
+          placeholder="Type in new backet description"
+          formControlName="description"
+          [errorStateMatcher]="matcher"
+        ></textarea>
+        <mat-error
+          *ngIf="formValidation.get('description')?.hasError('maxlength')"
+        >
+          This field has max length of 255
+        </mat-error>
+        <mat-error
+          *ngIf="formValidation.get('description')?.hasError('required')"
+        >
+          This field is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input" appearance="fill">
+        <mat-label>Maximal tasks amount</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="Type in new maximal tasks amount"
+          formControlName="maxTask"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-error *ngIf="formValidation.get('maxTask')?.hasError('required')">
+          This field is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="formValidation.get('maxTask')?.hasError('min')">
+          Minimal value for this field is 0
+        </mat-error>
+        <mat-error *ngIf="formValidation.get('maxTask')?.hasError('max')">
+          Maximal value for this field is 200
+        </mat-error>
+      </mat-form-field>
+      <div class="buttons-container">
+        <button mat-raised-button (click)="onSuccessfullyAdded()">
+          Accept
+        </button>
+        <button mat-raised-button (click)="showEditMember()">Edit team</button>
+        <button mat-raised-button color="warn" (click)="onCancelClick()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</app-custom-modal>
 <app-add-members-modal
-  *ngIf="modals.team && dataFetched"
-  (cancel)="onCancelClick()"
+  *ngIf="emailsFetched && showAddMembers"
+  (cancel)="onCancelAddingMembersClick()"
   (value)="onMembersAdded($event)"
   [membersEmails]="membersEmails"
 >

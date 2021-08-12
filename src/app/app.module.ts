@@ -69,6 +69,14 @@ import { SubscriptionsForGuestComponent } from './subscriptions/subscriptions-fo
 import { TimersForTaskComponent } from './timers/timers-for-task/timers-for-task.component';
 import { TimersForAdminComponent } from './timers/timers-for-admin/timers-for-admin.component';
 import { EditTotalTimeComponent } from './timers/edit-total-time/edit-total-time.component';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatTimepickerModule,
+} from '@angular-material-components/datetime-picker';
+import { LogCardComponent } from './logs/log-card/log-card.component';
+import { LogsPanelComponent } from './logs/logs-panel/logs-panel.component';
+import { LogsOfTaskComponent } from './logs/logs-of-task/logs-of-task.component';
+import { MatListModule } from '@angular/material/list';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -135,8 +143,14 @@ function initializeKeycloak(keycloak: KeycloakService) {
     TimersForTaskComponent,
     TimersForAdminComponent,
     EditTotalTimeComponent,
+    LogCardComponent,
+    LogsPanelComponent,
+    LogsOfTaskComponent,
   ],
   imports: [
+    MatListModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
     MatProgressSpinnerModule,
     MatMomentDateModule,
     MatDialogModule,

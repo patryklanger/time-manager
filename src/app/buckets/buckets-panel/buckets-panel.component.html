@@ -16,6 +16,7 @@
   <ng-template ngFor let-bucket [ngForOf]="buckets">
     <app-bucket-card
       [bucket]="bucket"
+      [isAdmin]="isAdmin"
       *ngIf="showBuckets"
       (delete)="onBucketDeleted($event)"
       [isUnassigned]="isUnassigned"

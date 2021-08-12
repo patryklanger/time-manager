@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 import { MyErrorHandler } from 'src/app/utility/error-handler';
@@ -15,6 +15,7 @@ export class AllBucketsComponent implements OnInit {
   title = 'All buckets';
   subtitle = 'Here you can find all buckets created with Time Manager';
   dataFetched = false;
+  isAdmin = true;
   buckets: {
     bucketId: -1;
     owner: '';

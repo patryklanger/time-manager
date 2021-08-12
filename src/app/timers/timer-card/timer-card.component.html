@@ -87,8 +87,16 @@
         <mat-icon>info</mat-icon>
         <span>Edit total time</span>
       </button>
-      <button mat-stroked-button (click)="onDeleteClick()" color="warn">
+      <button mat-menu-item (click)="onDeleteClick()" color="warn">
         Delete
+      </button>
+      <button
+        mat-menu-item
+        (click)="onLogsClick()"
+        *ngIf="isAdmin"
+        color="warn"
+      >
+        Show logs
       </button>
     </mat-menu>
   </mat-card-actions>

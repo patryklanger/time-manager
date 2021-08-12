@@ -1,0 +1,7 @@
+<div class="buckets--container">
+  <mat-list>
+    <ng-template ngFor let-log [ngForOf]="logs">
+      <app-log-card [log]="log" *ngIf="dataFetched"></app-log-card>
+    </ng-template>
+  </mat-list>
+</div>

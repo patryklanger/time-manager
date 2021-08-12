@@ -4,6 +4,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { MyErrorHandler } from 'src/app/utility/error-handler';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-timer-card',
@@ -13,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class TimerCardComponent implements OnInit {
   errorHandler = new MyErrorHandler(this.dialog);
   editTotalTimeShow = false;
+  @Input() isAdmin = false;
 
   @Input() timer: {
     timerId: number;
@@ -27,8 +29,6 @@ export class TimerCardComponent implements OnInit {
     totalTime: -1,
     state: '',
   };
-
-  @Input() isAdmin = false;
 
   @Output() delete = new EventEmitter<number>();
 
@@ -56,7 +56,14 @@ export class TimerCardComponent implements OnInit {
   deleteResponse$ = new Observable<any>();
   deleteSubscription = new Subscription();
 
-  constructor(private http: HttpClient, private dialog: MatDialog) {}
+  constructor(
+    private http: HttpClient,
+    private dialog: MatDialog,
+    private router: Router,
+  ) {}
+  onLogsClick() {
+    this.router.navigateByUrl('admin-panel/logs/timers/' + this.timer.timerId);
+  }
   setTimerState() {
     if (this.timer.state == 'NEW') {
       this.timerStateToDisplay = 'New';
