@@ -6,6 +6,8 @@ import { Observable, Subscription } from 'rxjs';
 import { SureDialogComponentComponent } from 'src/app/ui/sure-dialog-component/sure-dialog-component.component';
 import { MyErrorHandler } from 'src/app/utility/error-handler';
 import { Router } from '@angular/router';
+import { MyErrorStateMatcher } from 'src/app/utility/MyErrorStateMatcher';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-card',
@@ -18,8 +20,26 @@ export class UserCardComponent implements OnInit {
   dataFetched = false;
   color = '#727272';
 
+  editUser = false;
+  matcher = new MyErrorStateMatcher();
+
+  userNameValidation = new FormControl('', [
+    Validators.required,
+    Validators.minLength(4),
+  ]);
+  firstNameValidation = new FormControl('', [Validators.required]);
+  lastNameValidation = new FormControl('', [Validators.required]);
+  emailValidation = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+  positionValidation = new FormControl('INTERN', []);
+  roleValidation = new FormControl('MEMBER', []);
+
   response$ = new Observable<any>();
   subscription = new Subscription();
+
+  formValidation: FormGroup;
 
   headers = new HttpHeaders();
 
@@ -35,6 +55,7 @@ export class UserCardComponent implements OnInit {
     email: '',
     role: '',
   };
+
   constructor(
     private http: HttpClient,
     private dialog: MatDialog,
@@ -42,6 +63,15 @@ export class UserCardComponent implements OnInit {
   ) {
     this.headers = this.headers.append('Content-Type', 'application/json');
     this.headers = this.headers.append('Accept', 'application/json');
+
+    this.formValidation = new FormGroup({
+      firstname: this.firstNameValidation,
+      lastname: this.lastNameValidation,
+      email: this.emailValidation,
+      username: this.userNameValidation,
+      position: this.positionValidation,
+      role: this.roleValidation,
+    });
   }
   onEditToggle() {
     this.showEditProfile = !this.showEditProfile;
@@ -69,6 +99,11 @@ export class UserCardComponent implements OnInit {
       );
     });
   }
+  onEditUserClick() {
+    this.firstNameValidation.setValue(this.user.firstName);
+    this.editUser = true;
+  }
+  onSubmitClick() {}
   onShowLogsClick() {
     this.router.navigateByUrl('admin-panel/logs/users/' + this.user.userId);
   }

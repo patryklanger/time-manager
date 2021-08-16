@@ -1,5 +1,6 @@
 <h1>Guests</h1>
 <h3>Here you can delete guests</h3>
+<p *ngIf="isEmpty" class="isEmpty">There are no guests to show</p>
 <div class="users--cards--container">
   <ng-template ngFor let-sub [ngForOf]="guests">
     <app-guest-card

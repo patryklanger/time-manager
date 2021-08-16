@@ -5,7 +5,6 @@ import { DialogBoxMessageComponent } from '../ui/dialog-box-message/dialog-box-m
 export class MyErrorHandler {
   constructor(private dialog: MatDialog) {}
   public handleError(err: HttpErrorResponse) {
-    console.log(err);
     var message: string;
     if (typeof err.error === 'string') message = err.error;
     else message = err.statusText;
@@ -16,5 +15,6 @@ export class MyErrorHandler {
         message: message,
       },
     });
+    dialogAnchor.afterClosed().subscribe(() => location.reload());
   }
 }

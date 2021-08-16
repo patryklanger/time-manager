@@ -79,6 +79,8 @@ export class EditProfileComponent implements OnInit {
     Validators.required,
     Validators.email,
   ]);
+  positionValidation = new FormControl('INTERN', []);
+  roleValidation = new FormControl('MEMBER', []);
   passwordValidation = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
@@ -95,8 +97,6 @@ export class EditProfileComponent implements OnInit {
     Validators.required,
     Validators.minLength(6),
   ]);
-  positionValidation = new FormControl('INTERN', []);
-  roleValidation = new FormControl('MEMBER', []);
 
   path = GlobalVariables.GlobalServerPath;
 

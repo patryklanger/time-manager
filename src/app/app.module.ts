@@ -81,7 +81,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        url: 'http://10.1.17.45:8080/auth',
+        url: 'http://localhost:8080/auth',
         realm: 'test-realm',
         clientId: 'front-end-client',
       },

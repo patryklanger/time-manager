@@ -11,7 +11,7 @@ import * as GlobalVariables from 'src/app/globals';
 export class GuestsPanelComponent implements OnInit {
   response$ = new Observable<any>();
   subscription = new Subscription();
-
+  isEmpty = false;
   dataFetched = false;
 
   guests: {
@@ -30,6 +30,7 @@ export class GuestsPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.guests.length == 0) this.isEmpty = true;
     this.subscription = this.response$.subscribe((res) => {
       console.log(res);
       this.guests = res;

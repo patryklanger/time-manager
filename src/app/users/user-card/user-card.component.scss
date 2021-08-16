@@ -133,3 +133,74 @@ button {
   width: 100%;
   justify-content: space-around;
 }
+.full-width-input {
+  width: 100%;
+  max-width: 600px;
+}
+.error-margin {
+  margin-top: 20px;
+}
+.form--class {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.form--class div {
+  width: 100%;
+}
+.form--div {
+  margin-top: 50px !important;
+}
+p {
+  margin-top: 16px;
+  margin-bottom: 4px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  /* or 133% */
+
+  display: flex;
+  align-self: flex-start;
+
+  color: rgba(0, 0, 0, 0.75);
+}
+.center--flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 400px;
+}
+.button--container {
+  margin-top: 20px;
+  width: 269px !important;
+  display: flex;
+  justify-content: space-around;
+  justify-self: center;
+  align-self: center;
+}
+a {
+  margin-top: 27px;
+  text-decoration-line: underline;
+
+  color: #000000;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 24px;
+}
+.radio--container {
+  //   display: flex;
+  margin-top: 50px;
+  margin-bottom: 35px;
+  //   margin-bottom: 25px;
+}
+.radio--element {
+  display: flex;
+  align-items: center;
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}

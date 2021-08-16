@@ -20,7 +20,7 @@ export class RegistrationPanelComponent implements OnInit {
   emailExists = false;
   loginExists = false;
 
-  title = 'Resitration';
+  title = 'Registration';
   submittedCheck = false;
   registrated = false;
   formValidator: FormGroup;
@@ -86,6 +86,7 @@ export class RegistrationPanelComponent implements OnInit {
       lastName: this.formValidator.get('lastname')?.value,
       position: this.formValidator.get('position')?.value,
     };
+    this.submittedCheck = false;
 
     console.log(newUser);
     this.response$ = this.http.post(this.path + '/register', newUser, {
@@ -98,9 +99,15 @@ export class RegistrationPanelComponent implements OnInit {
         this.registrated = true;
       },
       (err) => {
-        console.log(err.error);
-        if (err.error.userName === 'exists') this.loginExists = true;
-        if (err.error.email === 'exists') this.emailExists = true;
+        if (err.error.userNameExist === 'exists') {
+          this.loginExists = true;
+          this.formValidator.get('userName')?.markAsDirty();
+        }
+        if (err.error.emailExist === 'exists') {
+          this.emailExists = true;
+          this.formValidator.get('email')?.markAsDirty();
+        }
+        console.log(this.emailExists, this.loginExists);
       },
     );
   }

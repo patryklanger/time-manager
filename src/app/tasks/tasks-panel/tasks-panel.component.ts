@@ -43,6 +43,9 @@ export class TasksPanelComponent implements OnInit {
     totalTimeOfTimer: number;
     timerState: string;
   }[] = [];
+
+  isEmpty = false;
+
   constructor() {}
   addTaskShow = false;
 
@@ -61,10 +64,18 @@ export class TasksPanelComponent implements OnInit {
       return task.taskId != taskId;
     });
     this.managerTasks = newManagerTasksArray;
-    console.log(newTasksArray);
     this.tasks = newTasksArray;
+    this.checkIfEmpty();
+  }
+  checkIfEmpty() {
+    if (
+      (this.tasks.length == 0 && !this.managerTask) ||
+      (this.managerTasks.length == 0 && this.managerTask)
+    )
+      this.isEmpty = true;
   }
   ngOnInit(): void {
+    this.checkIfEmpty();
     console.log('do it');
     this.normalTask = !this.managerTask;
   }

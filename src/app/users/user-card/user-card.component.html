@@ -51,9 +51,13 @@
         <mat-icon>remove_circle</mat-icon>
         <span>Ban user</span>
       </button>
+
       <button mat-menu-item (click)="onUnbanUserClick()" *ngIf="isBanned">
         <mat-icon>remove_circle</mat-icon>
-        <span>Unban user</span>
+        <span>Unban user</span></button
+      ><button mat-menu-item (click)="onEditUserClick()">
+        <mat-icon>remove_circle</mat-icon>
+        <span>Edit user</span>
       </button>
       <button mat-menu-item (click)="onDeleteUserClick()">
         <mat-icon>delete</mat-icon>
@@ -62,3 +66,104 @@
     </mat-menu>
   </mat-card-actions>
 </mat-card>
+<app-custom-modal *ngIf="editUser">
+  <form
+    class="form--class"
+    ngForm="formValidation"
+    (submit)="onSubmitClick()"
+    ngFormModel="formValidator"
+  >
+    <div class="input--container">
+      <mat-form-field class="full-width-input" appearance="fill">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          placeholder="Your username"
+          [formControl]="userNameValidation"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-error *ngIf="userNameValidation.hasError('minlength')">
+          Username must be at least <strong>5 characters long</strong>
+        </mat-error>
+        <mat-error *ngIf="userNameValidation.hasError('required')">
+          This field is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input--container">
+      <mat-form-field class="full-width-input" appearance="fill">
+        <mat-label>First name</mat-label>
+        <input
+          matInput
+          [formControl]="firstNameValidation"
+          [errorStateMatcher]="matcher"
+          placeholder="Your first name"
+        />
+        <mat-error *ngIf="firstNameValidation.hasError('required')">
+          This field is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input--container">
+      <mat-form-field class="full-width-input" appearance="fill">
+        <mat-label>Last name</mat-label>
+        <input
+          matInput
+          [formControl]="lastNameValidation"
+          [errorStateMatcher]="matcher"
+          placeholder="Your last name"
+        />
+        <mat-error *ngIf="lastNameValidation.hasError('required')">
+          This field is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width-input">
+        <mat-label>Position</mat-label>
+        <mat-select
+          required
+          [formControl]="positionValidation"
+          [errorStateMatcher]="matcher"
+        >
+          <mat-option value="INTERN">Intern</mat-option>
+          <mat-option value="JUNIOR">Junior</mat-option>
+          <mat-option value="MID">Mid</mat-option>
+          <mat-option value="SENIOR">Senior</mat-option>
+          <mat-option value="CEO">CEO</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width-input">
+        <mat-label>Role</mat-label>
+        <mat-select
+          required
+          [formControl]="roleValidation"
+          [errorStateMatcher]="matcher"
+        >
+          <mat-option value="MEMBER">Member</mat-option>
+          <mat-option value="TEAM_MANAGER">Team manager</mat-option>
+          <mat-option value="ADMIN">Admin</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="input--container">
+      <mat-form-field class="full-width-input" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          placeholder="Your email address"
+          [formControl]="emailValidation"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-error *ngIf="emailValidation.hasError('required')">
+          This field is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="emailValidation.hasError('email')">
+          Type in <strong>valid e-mail address</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="button--container">
+      <button mat-raised-button color="primary" type="submit">Confirm</button>
+      <button mat-raised-button color="warn">Cancel</button>
+    </div>
+  </form>
+</app-custom-modal>

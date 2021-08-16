@@ -145,7 +145,7 @@
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="onShowDetailsToggle()">
-        <mat-icon>info</mat-icon>
+        <mat-icon>edit</mat-icon>
         <span>Task's details</span>
       </button>
     </mat-menu>
@@ -247,19 +247,19 @@ MANAGER CARD
         <span>Finish task</span>
       </button>
       <button mat-menu-item (click)="onEditTaskClick()">
-        <mat-icon>info</mat-icon>
+        <mat-icon>edit</mat-icon>
         <span>Edit task</span>
       </button>
       <button mat-menu-item (click)="onDeleteTaskClick()">
-        <mat-icon>clear</mat-icon>
+        <mat-icon>delete</mat-icon>
         <span>Delete task</span>
       </button>
       <button mat-menu-item (click)="onShowTimersClick()">
-        <mat-icon>clear</mat-icon>
+        <mat-icon>timer</mat-icon>
         <span>Show timers</span>
       </button>
       <button mat-menu-item (click)="onShowLogsClick()" *ngIf="isAdmin">
-        <mat-icon>clear</mat-icon>
+        <mat-icon>app_registration</mat-icon>
         <span>Show logs</span>
       </button>
     </mat-menu>

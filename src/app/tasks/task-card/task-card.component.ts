@@ -298,6 +298,7 @@ export class TaskCardComponent implements OnInit {
     this.showEditTask = false;
   }
   onDeleteTaskClick() {
+    console.log('delete');
     this.deleteTaskResponse$ = this.http.delete(
       GlobalVariables.GlobalServerPath +
         GlobalVariables.TasksPath +
@@ -305,11 +306,12 @@ export class TaskCardComponent implements OnInit {
     );
     this.deleteTaskSubscription = this.deleteTaskResponse$.subscribe(
       (res) => {
+        console.log(res);
         this.deleteTaskSubscription.unsubscribe();
+        this.delete.emit(this.task.taskId);
       },
       (err) => this.errorHandler.handleError(err),
     );
-    this.delete.emit(this.task.taskId);
   }
   onShowMembersClick() {
     this.onEditUsersClick();

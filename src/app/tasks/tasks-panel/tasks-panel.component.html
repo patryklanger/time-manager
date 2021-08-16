@@ -1,6 +1,8 @@
 <h1>{{ title }}</h1>
 <h3>{{ subTitle }}</h3>
 
+<p *ngIf="isEmpty" class="isEmpty">There are no tasks to show</p>
+
 <div class="tasks--cards--container">
   <ng-template ngFor let-task *ngIf="managerTask" [ngForOf]="managerTasks">
     <app-task-card

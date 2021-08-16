@@ -12,7 +12,7 @@
     </div>
     <mat-divider></mat-divider>
     <div class="inner--element">
-      <p class="label deadline--label">Timer's name:</p>
+      <p class="label deadline--label">Task's name:</p>
       <p class="value deadline--value">{{ timer.taskName }}</p>
     </div>
     <mat-divider></mat-divider>
@@ -88,7 +88,8 @@
         <span>Edit total time</span>
       </button>
       <button mat-menu-item (click)="onDeleteClick()" color="warn">
-        Delete
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
       </button>
       <button
         mat-menu-item
@@ -96,7 +97,8 @@
         *ngIf="isAdmin"
         color="warn"
       >
-        Show logs
+        <mat-icon>app_registration</mat-icon>
+        <span>Show logs</span>
       </button>
     </mat-menu>
   </mat-card-actions>

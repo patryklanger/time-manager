@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SubscriptionsPanelComponent implements OnInit {
   @Input() dataFetched = false;
-
+  isEmpty = false;
   @Input() subs: {
     subscriptionId: number;
     bucketName: string;
@@ -22,5 +22,10 @@ export class SubscriptionsPanelComponent implements OnInit {
     this.subs = this.subs.filter((el) => el.subscriptionId != subId);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.subs.length == 0) {
+      this.isEmpty = true;
+      console.log(this.subs);
+    }
+  }
 }
