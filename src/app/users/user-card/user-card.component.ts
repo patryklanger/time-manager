@@ -8,6 +8,7 @@ import { MyErrorHandler } from 'src/app/utility/error-handler';
 import { Router } from '@angular/router';
 import { MyErrorStateMatcher } from 'src/app/utility/MyErrorStateMatcher';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { P } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-user-card',
@@ -38,6 +39,9 @@ export class UserCardComponent implements OnInit {
 
   response$ = new Observable<any>();
   subscription = new Subscription();
+
+  editResponse$ = new Observable<any>();
+  editSubscription = new Subscription();
 
   formValidation: FormGroup;
 
@@ -101,9 +105,39 @@ export class UserCardComponent implements OnInit {
   }
   onEditUserClick() {
     this.firstNameValidation.setValue(this.user.firstName);
+    this.userNameValidation.setValue(this.user.userName);
+    this.lastNameValidation.setValue(this.user.lastName);
+    this.positionValidation.setValue(this.user.position);
+    this.roleValidation.setValue(this.user.role);
+    this.emailValidation.setValue(this.user.email);
     this.editUser = true;
   }
-  onSubmitClick() {}
+  onCancelEdittingClick() {
+    this.editUser = false;
+  }
+  onSubmitClick() {
+    if (!this.formValidation.valid) return;
+    let user = {
+      userName: this.userNameValidation.value,
+      firstName: this.firstNameValidation.value,
+      lastName: this.lastNameValidation.value,
+      email: this.emailValidation.value,
+      position: this.positionValidation.value,
+      role: this.roleValidation.value,
+    };
+    this.editResponse$ = this.http.put(
+      GlobalVariables.GlobalServerPath +
+        GlobalVariables.UsersPath +
+        this.user.userId,
+      user,
+    );
+    this.editSubscription = this.editResponse$.subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
+  }
   onShowLogsClick() {
     this.router.navigateByUrl('admin-panel/logs/users/' + this.user.userId);
   }

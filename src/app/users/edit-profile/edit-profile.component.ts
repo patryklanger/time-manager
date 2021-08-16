@@ -180,6 +180,8 @@ export class EditProfileComponent implements OnInit {
   }
   onPasswordSubmitClick() {
     if (!this.passwordGroupValidation.valid) return;
+    console.log('edit');
+
     let params = new HttpParams();
     params = params.append(
       'password',
