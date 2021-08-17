@@ -27,6 +27,7 @@ export class EditTaskComponent implements OnInit {
     taskCreationTime: string;
     owner: string;
     taskState: string;
+    taskTotalTime: number;
     editorsCount: number;
     totalTimeOfTimer: number;
     timerState?: string | null | undefined;
@@ -44,6 +45,7 @@ export class EditTaskComponent implements OnInit {
     taskCreationTime: string;
     owner: string;
     taskState: string;
+    taskTotalTime: number;
     editorsCount: number;
     totalTimeOfTimer: number;
     timerState?: string | null | undefined;
@@ -57,6 +59,7 @@ export class EditTaskComponent implements OnInit {
     taskDeadline: '',
     taskCreationTime: '',
     owner: '',
+    taskTotalTime: 0,
     taskState: '',
     editorsCount: -1,
     totalTimeOfTimer: -1,

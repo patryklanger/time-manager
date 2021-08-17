@@ -18,6 +18,7 @@ export class BucketCardComponent implements OnInit {
   // @Input() name = '';
   // @Input() description = '';
   // @Input() maxTaskCount = '';
+  @Input() isOwner = false;
   @Output() delete = new EventEmitter<number>();
 
   showEditBucket = false;

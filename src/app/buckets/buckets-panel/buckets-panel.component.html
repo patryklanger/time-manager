@@ -2,7 +2,7 @@
 <h1>{{ title }}</h1>
 <h3>{{ subTitle }}</h3>
 
-<p *ngIf="isEmpty" class="isEmpty">There are no tasks to show</p>
+<p *ngIf="isEmpty" class="isEmpty">There are no buckets to show</p>
 
 <div class="flex--center">
   <button
@@ -19,6 +19,7 @@
     <app-bucket-card
       [bucket]="bucket"
       [isAdmin]="isAdmin"
+      [isOwner]="isOwner"
       *ngIf="showBuckets"
       (delete)="onBucketDeleted($event)"
       [isUnassigned]="isUnassigned"

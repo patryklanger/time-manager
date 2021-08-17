@@ -15,6 +15,7 @@ export class AllSubscriptionsComponent implements OnInit {
   response$ = new Observable<any>();
   subscription = new Subscription();
   dataFetched = false;
+  isEmpty = true;
 
   @Input() subs: {
     subscriptionId: number;
@@ -34,6 +35,7 @@ export class AllSubscriptionsComponent implements OnInit {
       (res) => {
         this.subs = res;
         this.dataFetched = true;
+        if (this.subs.length > 0) this.isEmpty = false;
         this.subscription.unsubscribe();
       },
       (err) => this.errorHandler.handleError(err),

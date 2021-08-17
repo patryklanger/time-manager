@@ -1,6 +1,8 @@
 <h1>Subscriptions</h1>
 <h3>Here you can delete subscription</h3>
-<p *ngIf="isEmpty" class="isEmpty">There are no subscriptions to show</p>
+<p *ngIf="isEmpty" class="isEmpty">
+  There are no subscriptions to show
+</p>
 <div class="users--cards--container" *ngIf="dataFetched">
   <ng-template ngFor let-sub [ngForOf]="subs">
     <app-subscription-card

@@ -9,6 +9,7 @@ export class TaskDetailsComponent implements OnInit {
   @Input() name = '';
   @Input() description = '';
   @Input() taskCreationTime = new Date();
+  @Input() taskTotalTime = 0;
   @Output() close = new EventEmitter<boolean>();
 
   onCloseClick() {

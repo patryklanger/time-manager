@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class BucketsPanelComponent implements OnInit {
   showBuckets = false;
   isEmpty = false;
+  @Input() isOwner = false;
   @Input() isAdmin = false;
   @Input() isUnassigned = false;
   @Input() buckets = [
@@ -45,15 +46,23 @@ export class BucketsPanelComponent implements OnInit {
     this.buckets.unshift(bucket);
     if (!this.showBuckets) this.showBuckets = true;
     this.addBucketShow = false;
+    this.checkIfEmpty();
   }
   onBucketDeleted(bucketId: number) {
     const buckets = this.buckets.filter((el) => el.bucketId != bucketId);
     this.buckets = buckets;
+    this.checkIfEmpty();
+  }
+  checkIfEmpty() {
+    if (this.buckets.length > 0) {
+      if (this.buckets[0].bucketId !== -1) {
+        this.showBuckets = true;
+        this.isEmpty = false;
+      }
+    } else this.isEmpty = true;
   }
   ngOnInit(): void {
-    if (this.buckets.length > 0) {
-      if (this.buckets[0].bucketId !== -1) this.showBuckets = true;
-    } else this.isEmpty = true;
+    this.checkIfEmpty();
     console.log(this.showBuckets);
   }
 }

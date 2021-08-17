@@ -21,10 +21,20 @@
   </mat-card-content>
   <mat-divider></mat-divider>
   <mat-card-actions class="buttons" *ngIf="!isUnassigned">
-    <button mat-icon-button color="basic" (click)="onEditBucketClick()">
+    <button
+      mat-icon-button
+      color="basic"
+      (click)="onEditBucketClick()"
+      *ngIf="isOwner || isAdmin"
+    >
       <mat-icon>edit</mat-icon>
     </button>
-    <button mat-icon-button color="basic" (click)="onAddTaskClick()">
+    <button
+      mat-icon-button
+      color="basic"
+      (click)="onAddTaskClick()"
+      *ngIf="isOwner || isAdmin"
+    >
       <mat-icon>note_add</mat-icon>
     </button>
     <button mat-icon-button color="basic" (click)="onShowTasksClick()">
@@ -38,7 +48,12 @@
     >
       <mat-icon>app_registration</mat-icon>
     </button>
-    <button mat-icon-button color="warn" (click)="onDeleteBucketClicked()">
+    <button
+      mat-icon-button
+      color="warn"
+      (click)="onDeleteBucketClicked()"
+      *ngIf="isOwner || isAdmin"
+    >
       <mat-icon>delete</mat-icon>
     </button>
   </mat-card-actions>

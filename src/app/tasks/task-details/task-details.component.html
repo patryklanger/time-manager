@@ -9,6 +9,11 @@
     <strong>Created at</strong>
     <p>{{ taskCreationTime | dateToString }}</p>
   </div>
+  <mat-divider></mat-divider>
+  <div class="description--element">
+    <strong>Task's total time</strong>
+    <p>{{ taskTotalTime | numberToHhmmss }}</p>
+  </div>
   <div class="button--container">
     <button mat-raised-button color="primary" (click)="onCloseClick()">
       Close

@@ -52,6 +52,7 @@ export class TaskCardComponent implements OnInit {
     taskExpectedTime: number;
     taskDeadline: string;
     taskCreationTime: string;
+    taskTotalTime: number;
     owner: string;
     taskState: string;
     editorsCount: number;
@@ -66,6 +67,7 @@ export class TaskCardComponent implements OnInit {
     taskExpectedTime: -1,
     taskDeadline: '',
     taskCreationTime: '',
+    taskTotalTime: 0,
     owner: '',
     taskState: '',
     editorsCount: -1,
@@ -244,6 +246,7 @@ export class TaskCardComponent implements OnInit {
       this.playPauseState = 'PAUSE';
       this.intervalId = window.setInterval(() => {
         this.task.totalTimeOfTimer++;
+        this.task.taskTotalTime++;
       }, 1000);
     } else if (this.task.timerState == 'FINISHED') {
       this.playPauseState = 'PLAY';

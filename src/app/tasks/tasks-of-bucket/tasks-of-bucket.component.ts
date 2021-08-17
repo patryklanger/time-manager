@@ -29,6 +29,7 @@ export class TasksOfBucketComponent implements OnInit {
     taskEditorsCount: number;
     taskCreationTime: string;
     taskExpectedTime: number;
+    taskTotalTime: number;
     editorsCount: number;
     totalTimeOfTimer: number;
     timerState: string;

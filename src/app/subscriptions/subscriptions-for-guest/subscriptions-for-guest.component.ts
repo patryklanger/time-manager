@@ -19,6 +19,8 @@ export class SubscriptionsForGuestComponent implements OnInit {
   subscription = new Subscription();
   dataFetched = false;
 
+  isEmpty = true;
+
   @Input() subs: {
     subscriptionId: number;
     bucketName: string;
@@ -45,7 +47,7 @@ export class SubscriptionsForGuestComponent implements OnInit {
       (res) => {
         this.subs = res;
         this.dataFetched = true;
-        console.log(res);
+        if (this.subs.length > 0) this.isEmpty = false;
         this.subscription.unsubscribe();
       },
       (err) => this.errorHandler.handleError(err),

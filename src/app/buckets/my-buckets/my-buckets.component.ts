@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class MyBucketsComponent implements OnInit {
   errorHandler = new MyErrorHandler(this.dialog);
   @Input() title = '';
+  @Input() isOwner = true;
   @Input() subtitle = '';
   @Input() buckets = [
     {

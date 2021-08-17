@@ -275,6 +275,7 @@ MANAGER CARD
   [name]="task.taskName"
   [description]="task.taskDescription"
   [taskCreationTime]="creationTimeDate"
+  [taskTotalTime]="task.taskTotalTime"
   *ngIf="showDetails"
   (close)="onShowDetailsToggle()"
 ></app-task-details>

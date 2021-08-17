@@ -26,6 +26,7 @@ export class AllTasksForUserComponent implements OnInit {
     taskState: string;
     taskEditorsCount: number;
     taskCreationTime: string;
+    taskTotalTime: number;
     taskExpectedTime: number;
     editorsCount: number;
     totalTimeOfTimer: number;
