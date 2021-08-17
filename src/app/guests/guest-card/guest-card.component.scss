@@ -3,8 +3,9 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
 p {
-  width: 100%;
+  overflow-x: hidden;
   align-self: center;
   font-size: 15px;
   font-weight: 600;
