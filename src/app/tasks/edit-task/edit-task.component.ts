@@ -97,7 +97,9 @@ export class EditTaskComponent implements OnInit {
     const deadline = new Date(this.taskDeadlineValidation.value);
     this.task.taskDeadline = dateToStringPipe.transform(deadline);
     this.task.taskPriority = Number(this.priorityValidation.value);
-    this.task.taskExpectedTime = this.expectedTimeValidation.value;
+    this.task.taskExpectedTime = Number(
+      this.expectedTimeValidation.value * 3600,
+    );
     const editBucket = {
       taskName: this.task.taskName,
       taskDescription: this.task.taskDescription,
@@ -115,22 +117,25 @@ export class EditTaskComponent implements OnInit {
       (res) => {
         console.log(res);
         this.subscription.unsubscribe();
+        this.taskEditted.emit(this.task);
       },
       (err) => this.errorHandler.handleError(err),
     );
-    this.taskEditted.emit(this.task);
   }
   onCancelClick() {
     this.close.emit(true);
   }
   setValidatorsValues() {
+    console.log;
     this.nameValidation.setValue(this.task.taskName);
     this.descriptionValidation.setValue(this.task.taskDescription);
 
     this.deadlineDate = new Date(this.task.taskDeadline);
-    this.taskDeadlineValidation.setValue(moment(this.deadlineDate));
+    this.taskDeadlineValidation.setValue(this.deadlineDate);
     this.priorityValidation.setValue(this.task.taskPriority.toString());
-    this.expectedTimeValidation.setValue(this.task.taskExpectedTime);
+    this.expectedTimeValidation.setValue(
+      Number(this.task.taskExpectedTime) / 3600,
+    );
   }
 
   ngOnInit(): void {
