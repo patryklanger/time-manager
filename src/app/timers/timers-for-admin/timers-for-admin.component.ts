@@ -14,7 +14,7 @@ export class TimersForAdminComponent implements OnInit {
   errorHandler = new MyErrorHandler(this.dialog);
   timersResponse$ = new Observable<any>();
   timersSubscription = new Subscription();
-
+  isEmpty = true;
   header = 'All timers';
   subheader = 'Here you can find all timers';
   isAdmin = true;
@@ -36,6 +36,7 @@ export class TimersForAdminComponent implements OnInit {
       (res) => {
         this.timers = res;
         this.dataFetched = true;
+        if (this.timers.length > 0) this.isEmpty = false;
         this.timersSubscription.unsubscribe();
       },
       (err) => this.errorHandler.handleError(err),

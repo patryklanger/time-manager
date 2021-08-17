@@ -23,7 +23,7 @@ export class TimersForTaskComponent implements OnInit {
 
   header = '';
   subheader = 'Here you can find all timers of that task';
-
+  isEmpty = true;
   dataFetched = false;
 
   timers: {
@@ -68,6 +68,7 @@ export class TimersForTaskComponent implements OnInit {
       (res) => {
         console.log(res);
         this.timers = res;
+        if (this.timers.length > 0) this.isEmpty = false;
         this.dataFetched = true;
         this.timersSubscription.unsubscribe();
       },

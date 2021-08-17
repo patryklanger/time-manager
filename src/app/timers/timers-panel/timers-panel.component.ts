@@ -8,7 +8,7 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class TimersPanelComponent implements OnInit {
   taskId = -1;
-
+  @Input() isEmpty = true;
   @Input() dataFetched = false;
 
   @Input() isAdmin = false;

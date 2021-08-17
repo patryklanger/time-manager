@@ -20,7 +20,7 @@
     </p>
   </mat-card-content>
   <mat-divider></mat-divider>
-  <mat-card-actions class="buttons" *ngIf="!isUnassigned">
+  <mat-card-actions class="buttons" *ngIf="isOwner || isAdmin">
     <button
       mat-icon-button
       color="basic"
@@ -55,6 +55,15 @@
       *ngIf="isOwner || isAdmin"
     >
       <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-actions>
+  <mat-card-actions
+    class="buttons"
+    *ngIf="!isOwner && !isAdmin && !isUnassigned"
+  >
+    <button mat-button (click)="onShowTasksClick()">
+      <mat-icon>tasks</mat-icon>
+      <span> Show tasks</span>
     </button>
   </mat-card-actions>
   <mat-card-actions class="buttons" *ngIf="isUnassigned">
