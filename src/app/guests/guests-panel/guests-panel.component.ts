@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import * as GlobalVariables from 'src/app/globals';
 
 @Component({
@@ -11,7 +11,7 @@ import * as GlobalVariables from 'src/app/globals';
 export class GuestsPanelComponent implements OnInit {
   response$ = new Observable<any>();
   subscription = new Subscription();
-  isEmpty = false;
+  isEmpty = true;
   dataFetched = false;
 
   guests: {
@@ -30,11 +30,11 @@ export class GuestsPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.guests.length == 0) this.isEmpty = true;
     this.subscription = this.response$.subscribe((res) => {
       console.log(res);
       this.guests = res;
       this.dataFetched = true;
+      if (this.guests.length > 0) this.isEmpty = false;
       this.subscription.unsubscribe();
     });
   }

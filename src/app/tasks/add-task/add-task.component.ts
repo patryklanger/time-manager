@@ -57,7 +57,7 @@ export class AddTaskComponent implements OnInit {
     this.modals.estDuration = true;
   }
   onEstDurAdded(time: string) {
-    this.newTask.taskExpectedTime = time;
+    this.newTask.taskExpectedTime = String(Number(time) * 60 * 60);
     this.modals.estDuration = false;
     this.modals.deadline = true;
   }
