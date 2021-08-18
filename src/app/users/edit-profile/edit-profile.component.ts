@@ -23,6 +23,7 @@ const match: ValidatorFn = (fg: AbstractControl) => {
 import { MyErrorStateMatcher } from 'src/app/utility/MyErrorStateMatcher';
 import { MyErrorHandler } from 'src/app/utility/error-handler';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogBoxMessageComponent } from 'src/app/ui/dialog-box-message/dialog-box-message.component';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
@@ -64,6 +65,8 @@ export class EditProfileComponent implements OnInit {
   formValidation: FormGroup;
   passwordGroupValidation: FormGroup;
 
+  dataFetched = false;
+
   matcher = new MyErrorStateMatcher();
 
   showEditProfile = true;
@@ -83,10 +86,7 @@ export class EditProfileComponent implements OnInit {
   ]);
   positionValidation = new FormControl('INTERN', []);
   roleValidation = new FormControl('MEMBER', []);
-  passwordValidation = new FormControl('', [
-    Validators.required,
-    Validators.minLength(6),
-  ]);
+  passwordValidation = new FormControl('', [Validators.required]);
   passwordDeleteValidation = new FormControl('', [
     Validators.required,
     Validators.minLength(6),
@@ -208,8 +208,14 @@ export class EditProfileComponent implements OnInit {
     );
     this.editProfileSubscription = this.editPasswordResponse$.subscribe(
       (res) => {
-        console.log(res);
         this.editPasswordSubscription.unsubscribe();
+        const dialogAnchor = this.dialog.open(DialogBoxMessageComponent, {
+          data: {
+            title: 'You did it!',
+            message: 'You have changed your password!',
+          },
+        });
+        dialogAnchor.afterClosed().subscribe(() => this.close.emit());
       },
       (err) => this.errorHandler.handleError(err),
     );
@@ -259,6 +265,7 @@ export class EditProfileComponent implements OnInit {
           ?.setValue(this.currentUser.position);
         if (this.currentUser.role == 'ADMIN') this.isAdmin = true;
         this.formValidation.get('role')?.setValue(this.currentUser.role);
+        this.dataFetched = true;
       },
       (err) => this.errorHandler.handleError(err),
     );

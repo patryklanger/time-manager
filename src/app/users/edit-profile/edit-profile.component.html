@@ -3,11 +3,18 @@
     <h1>{{ title }}</h1>
     <h3 [innerHTML]="subTitle"></h3>
     <div class="form--class" style="margin-top: 30px" *ngIf="!passwordChange">
+      <div class="center--on--page--edit--profile" *ngIf="!dataFetched">
+        <div class="loading--spinner">
+          <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+          <p>Loading...</p>
+        </div>
+      </div>
       <form
         class="form--class"
         ngForm="formValidation"
         (submit)="onSubmitClick()"
         ngFormModel="formValidator"
+        *ngIf="dataFetched"
       >
         <div class="input--container">
           <mat-form-field class="full-width-input" appearance="fill">
@@ -121,9 +128,8 @@
     <div *ngIf="passwordChange" class="form--class" style="margin-top: 30px">
       <form
         class="form--class"
-        ngForm="formValidation"
+        [formGroup]="passwordGroupValidation"
         (submit)="onPasswordSubmitClick()"
-        ngFormModel="formValidator"
       >
         <mat-form-field class="full-width-input" appearance="fill">
           <mat-label>New password</mat-label>
@@ -131,7 +137,7 @@
             matInput
             type="password"
             placeholder="Your new password"
-            [formControl]="newPasswordValidation"
+            formControlName="newPassword"
             [errorStateMatcher]="matcher"
           />
           <mat-error *ngIf="newPasswordValidation.hasError('required')">
@@ -141,40 +147,35 @@
             Passwrod must be at least <strong>6 letters long</strong>
           </mat-error>
         </mat-form-field>
+        <div style="position: relative; display: inline-block">
+          <mat-form-field
+            class="full-width-input"
+            appearance="fill"
+            style="position: unset"
+          >
+            <mat-label>Confirm new password</mat-label>
+            <input
+              matInput
+              type="password"
+              placeholder="Confirm your new password"
+              formControlName="newConfirm"
+              [errorStateMatcher]="matcher"
+            />
+            <mat-error *ngIf="newConfirmValidation.hasError('required')">
+              This field is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="newConfirmValidation.hasError('minlength')">
+              Passwrod must be at least <strong>6 letters long</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
         <mat-form-field class="full-width-input" appearance="fill">
-          <mat-label>Confirm new password</mat-label>
+          <mat-label>Current password</mat-label>
           <input
             matInput
             type="password"
-            placeholder="Confirm your new password"
-            [formControl]="newConfirmValidation"
-            [errorStateMatcher]="matcher"
-          />
-          <mat-error *ngIf="newConfirmValidation.hasError('required')">
-            This field is <strong>required</strong>
-          </mat-error>
-          <mat-error *ngIf="newConfirmValidation.hasError('minlength')">
-            Passwrod must be at least <strong>6 letters long</strong>
-          </mat-error>
-          <mat-error *ngIf="formValidation.hasError('noMatch')">
-            Passwords don't match
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field
-          class="full-width-input"
-          appearance="fill"
-          [ngClass]="{
-            'error-margin':
-              formValidation.hasError('noMatch') &&
-              (newConfirmValidation.touched || newConfirmValidation.dirty)
-          }"
-        >
-          <mat-label>New password</mat-label>
-          <input
-            matInput
-            type="password"
-            placeholder="Your new password"
-            [formControl]="passwordValidation"
+            placeholder="Current password"
+            formControlName="password"
             [errorStateMatcher]="matcher"
           />
           <mat-error *ngIf=""></mat-error>
@@ -183,8 +184,13 @@
           </mat-error>
           <mat-error *ngIf="passwordValidation.hasError('minlength')">
             Passwrod must be at least <strong>6 letters long</strong>
-          </mat-error>
-        </mat-form-field>
+          </mat-error> </mat-form-field
+        ><mat-error
+          style="font-size: 75%; padding: 0 1em"
+          *ngIf="passwordGroupValidation.hasError('noMatch')"
+        >
+          Passwords don't match
+        </mat-error>
         <div class="button--container">
           <button mat-raised-button color="primary" type="submit">
             Confirm

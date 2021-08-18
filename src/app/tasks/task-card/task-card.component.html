@@ -1,88 +1,3 @@
-<!-- <div class="card" *ngIf="managerCard">
-  <p class="bucket">{{ managerTask.bucketName }}</p>
-  <p class="taskName">{{ managerTask.taskName }}</p>
-  <div class="card--inner">
-    <div class="priority" [style.background]="color"></div>
-    <div class="inner--element">
-      <p class="label deadline--label">Deadline:</p>
-      <p class="value deadline--value">{{ managerTask.taskDeadline }}</p>
-    </div>
-    <div class="inner--element">
-      <p class="label state--label">Task state:</p>
-      <p class="value state--value">{{ managerTask.taskState }}</p>
-    </div>
-    <div class="inner--element">
-      <p class="label timeleft--label">Time left:</p>
-      <p class="value timeleft--value">{{ timeleft }}</p>
-    </div>
-    <div class="inner--element">
-      <p class="label editors--label">Editors:</p>
-      <p class="value editors--value">{{ managerTask.taskEditorsCount }}</p>
-    </div>
-    <div class="inner--element">
-      <p class="label author--label">Author:</p>
-      <p class="value author--value">{{ managerTask.taskOwner }}</p>
-    </div>
-    <div class="inner--element buttons--element">
-      <div class="task--options--button">
-        <img src="../../assets/_play_button.png" />
-      </div>
-      <div class="task--options--button">
-        <img src="../../assets/_stop_button.png" />
-      </div>
-      <div class="dropdown--manager">
-        <button
-          class="task--options--button details--toggle"
-          (click)="onDetailsClicked()"
-        >
-          <img
-            class="details--toggle--img"
-            src="../../assets/_more_button.png"
-          />
-        </button>
-        <div class="options--menu" *ngIf="showDetails">
-          <ul>
-            <li><a href="#">Task's users</a></li>
-            <li><a href="#">Task's details</a></li>
-            <li><a href="#">Edit task</a></li>
-            <li><a href="#">Delete task</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="card" *ngIf="normalCard">
-  <p class="bucket">{{ task.bucketName }}</p>
-  <p class="taskName">{{ task.taskName }}</p>
-  <div class="card--inner">
-    <div class="priority" [style.background]="color"></div>
-    <div class="inner--element">
-      <p class="label deadline--label">Deadline:</p>
-      <p class="value deadline--value">{{ task.taskDeadline }}</p>
-    </div>
-    <div class="inner--element">
-      <p class="label state--label">Start time:</p>
-      <p class="value state--value">{{ task.creationTime }}</p>
-    </div>
-    <div class="inner--element">
-      <p class="label timeleft--label">Est. duration:</p>
-      <p class="value timeleft--value">{{ task.estDuration }}</p>
-    </div>
-    <div class="inner--element">
-      <p class="label editors--label">Time left:</p>
-      <p class="value editors--value">{{ timeleft }}</p>
-    </div>
-    <div class="inner--element">
-      <p class="label author--label">Author:</p>
-      <p class="value author--value">{{ task.taskOwner }}</p>
-    </div>
-    <div class="inner--element buttons--element">
-      <img src="../../assets/_play_button.png" />
-      <img src="../../assets/_stop_button.png" />
-    </div>
-  </div>
-</div> -->
 <mat-card *ngIf="normalCard" class="card"
   ><div class="priority" [style.background]="color"></div>
   <mat-card-header>
@@ -261,6 +176,10 @@ MANAGER CARD
       <button mat-menu-item (click)="onShowLogsClick()" *ngIf="isAdmin">
         <mat-icon>app_registration</mat-icon>
         <span>Show logs</span>
+      </button>
+      <button mat-menu-item (click)="onStartOverClick()" *ngIf="isFinished">
+        <mat-icon>restart_alt</mat-icon>
+        <span>Start over</span>
       </button>
     </mat-menu>
   </mat-card-actions>

@@ -72,3 +72,15 @@ a {
 .change--password {
   margin-top: 16px;
 }
+.center--on--page--edit--profile {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.loading--spinner {
+  display: flex;
+  align-items: center;
+}
+.loading--spinner p {
+  align-self: center;
+}

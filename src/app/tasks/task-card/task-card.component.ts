@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { MyErrorHandler } from 'src/app/utility/error-handler';
 import * as GlobalVariables from '../../globals';
 import { MatDialog } from '@angular/material/dialog';
+import { SureDialogComponentComponent } from 'src/app/ui/sure-dialog-component/sure-dialog-component.component';
 
 @Component({
   selector: 'app-task-card',
@@ -36,6 +37,9 @@ export class TaskCardComponent implements OnInit {
 
   changeStateResponse$ = new Observable<any>();
   changeStateSubscription = new Subscription();
+
+  startOverResponse$ = new Observable<any>();
+  startOverSubscription = new Subscription();
 
   showEditTask = false;
   showDetails = false;
@@ -276,7 +280,7 @@ export class TaskCardComponent implements OnInit {
       null,
     );
     this.timerSubscription = this.timerResponse$.subscribe(
-      (res) => {
+      () => {
         this.task.timerState = null;
         this.task.totalTimeOfTimer = 0;
         this.updateTaskInfo();
@@ -301,20 +305,28 @@ export class TaskCardComponent implements OnInit {
     this.showEditTask = false;
   }
   onDeleteTaskClick() {
-    console.log('delete');
     this.deleteTaskResponse$ = this.http.delete(
       GlobalVariables.GlobalServerPath +
         GlobalVariables.TasksPath +
         this.task.taskId,
     );
-    this.deleteTaskSubscription = this.deleteTaskResponse$.subscribe(
-      (res) => {
-        console.log(res);
-        this.deleteTaskSubscription.unsubscribe();
-        this.delete.emit(this.task.taskId);
+    const dialogAnchor = this.dialog.open(SureDialogComponentComponent, {
+      data: {
+        title: 'You are deleting task',
+        message: 'Are ou sure you want to delete this task?',
       },
-      (err) => this.errorHandler.handleError(err),
-    );
+    });
+    dialogAnchor.afterClosed().subscribe((e) => {
+      if (!e) return;
+      this.deleteTaskSubscription = this.deleteTaskResponse$.subscribe(
+        (res) => {
+          console.log(res);
+          this.deleteTaskSubscription.unsubscribe();
+          this.delete.emit(this.task.taskId);
+        },
+        (err) => this.errorHandler.handleError(err),
+      );
+    });
   }
   onShowMembersClick() {
     this.onEditUsersClick();
@@ -417,6 +429,23 @@ export class TaskCardComponent implements OnInit {
         this.task = { ...res };
         this.updateTaskInfo();
         this.changeStateSubscription.unsubscribe();
+      },
+      (err) => this.errorHandler.handleError(err),
+    );
+  }
+  onStartOverClick() {
+    this.startOverResponse$ = this.http.patch(
+      GlobalVariables.GlobalServerPath +
+        GlobalVariables.TasksPath +
+        this.task.taskId +
+        '/state',
+      null,
+    );
+    this.startOverSubscription = this.startOverResponse$.subscribe(
+      (res) => {
+        this.task.taskState = res.taskState;
+        this.updateTaskInfo();
+        this.startOverSubscription.unsubscribe();
       },
       (err) => this.errorHandler.handleError(err),
     );

@@ -11,7 +11,7 @@ export class MyErrorHandler {
 
     const dialogAnchor = this.dialog.open(DialogBoxMessageComponent, {
       data: {
-        title: 'Error while connecting with server',
+        title: 'Something went wrong!',
         message: message,
       },
     });

@@ -32,7 +32,7 @@ import { UserCardComponent } from './users/user-card/user-card.component';
 import { AllBucketsComponent } from './buckets/all-buckets/all-buckets.component';
 import { AllTasksComponent } from './tasks/all-tasks/all-tasks.component';
 import { RegistrationPanelComponent } from './ui/registration-panel/registration-panel.component';
-import { MatCard, MatCardModule } from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
@@ -83,7 +83,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     keycloak.init({
       config: {
         url: 'http://10.1.17.45:8080/auth',
-        realm: 'test-realm',
+        realm: 'Time-Manager',
         clientId: 'front-end-client',
       },
       initOptions: {
