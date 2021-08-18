@@ -153,3 +153,15 @@ button {
   color: black;
   text-decoration: none;
 }
+.mat-card-header-text {
+  margin: 0 0;
+  position: relative;
+  width: 100%;
+}
+.mat-card-header {
+  position: relative;
+}
+::ng-deep .mat-card-header-text {
+  margin: 0 !important;
+  width: 100% !important;
+}

@@ -133,6 +133,9 @@ export class UserCardComponent implements OnInit {
     );
     this.editSubscription = this.editResponse$.subscribe(
       (res) => {
+        this.showEditProfile = false;
+        this.editSubscription.unsubscribe();
+        window.location.reload();
         console.log(res);
       },
       (err) => this.errorHandler.handleError(err),

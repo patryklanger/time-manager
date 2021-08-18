@@ -99,11 +99,11 @@ export class RegistrationPanelComponent implements OnInit {
         this.registrated = true;
       },
       (err) => {
-        if (err.error.userNameExist === 'exists') {
+        if (err.error.userName === 'exists') {
           this.loginExists = true;
           this.formValidator.get('userName')?.markAsDirty();
         }
-        if (err.error.emailExist === 'exists') {
+        if (err.error.email === 'exists') {
           this.emailExists = true;
           this.formValidator.get('email')?.markAsDirty();
         }

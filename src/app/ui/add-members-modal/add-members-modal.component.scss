@@ -10,3 +10,6 @@
   font-size: 12px;
   margin-bottom: 20px;
 }
+::ng-deep .mat-chip-list-wrapper {
+  overflow-x: auto !important;
+}

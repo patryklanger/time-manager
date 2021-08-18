@@ -30,6 +30,8 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class EditProfileComponent implements OnInit {
   errorHandler = new MyErrorHandler(this.dialog);
+  loginExists = false;
+  emailExists = false;
   @Input() userId = -1;
   @Input() title = 'Edit profile';
   @Input() subTitle =
@@ -159,8 +161,15 @@ export class EditProfileComponent implements OnInit {
       (res) => {
         console.log(res);
         this.editProfileSubscription.unsubscribe();
+        window.location.reload();
+        this.close.emit();
       },
-      (err) => this.errorHandler.handleError(err),
+      (err) => {
+        if (err.error.userName || err.error.email) {
+          if (err.error.userName) this.loginExists = true;
+          else this.emailExists = true;
+        } else this.errorHandler.handleError(err);
+      },
     );
   }
   onCancelClick() {

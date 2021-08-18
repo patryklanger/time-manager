@@ -204,3 +204,7 @@ a {
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 16px;
 }
+.email--container {
+  width: 100%;
+  overflow-x: auto;
+}

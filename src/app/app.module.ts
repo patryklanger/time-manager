@@ -69,6 +69,7 @@ import { SubscriptionsForGuestComponent } from './subscriptions/subscriptions-fo
 import { TimersForTaskComponent } from './timers/timers-for-task/timers-for-task.component';
 import { TimersForAdminComponent } from './timers/timers-for-admin/timers-for-admin.component';
 import { EditTotalTimeComponent } from './timers/edit-total-time/edit-total-time.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   NgxMatDatetimePickerModule,
   NgxMatTimepickerModule,
@@ -81,7 +82,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        url: 'http://localhost:8080/auth',
+        url: 'http://10.1.17.45:8080/auth',
         realm: 'test-realm',
         clientId: 'front-end-client',
       },
@@ -148,6 +149,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     LogsOfTaskComponent,
   ],
   imports: [
+    MatTooltipModule,
     MatListModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,

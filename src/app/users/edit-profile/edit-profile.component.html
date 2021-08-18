@@ -97,6 +97,10 @@
             </mat-error>
           </mat-form-field>
         </div>
+        <mat-error *ngIf="loginExists"> This login is already taken </mat-error>
+        <mat-error *ngIf="emailExists">
+          This email address is already taken
+        </mat-error>
         <div class="change--password">
           <a
             style="font-size: 15px; margin-top: 10px"

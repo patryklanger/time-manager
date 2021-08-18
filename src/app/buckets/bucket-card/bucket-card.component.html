@@ -23,6 +23,7 @@
   <mat-card-actions class="buttons" *ngIf="isOwner || isAdmin">
     <button
       mat-icon-button
+      matTooltip="Edit bucket"
       color="basic"
       (click)="onEditBucketClick()"
       *ngIf="isOwner || isAdmin"
@@ -31,17 +32,24 @@
     </button>
     <button
       mat-icon-button
+      matTooltip="Add task to bucket"
       color="basic"
       (click)="onAddTaskClick()"
       *ngIf="isOwner || isAdmin"
     >
       <mat-icon>note_add</mat-icon>
     </button>
-    <button mat-icon-button color="basic" (click)="onShowTasksClick()">
+    <button
+      mat-icon-button
+      matTooltip="Show bucket's tasks"
+      color="basic"
+      (click)="onShowTasksClick()"
+    >
       <mat-icon>task</mat-icon>
     </button>
     <button
       mat-icon-button
+      matTooltip="Show logs"
       color="basic"
       (click)="onShowLogsClick()"
       *ngIf="isAdmin"
@@ -50,6 +58,7 @@
     </button>
     <button
       mat-icon-button
+      matTooltip="Delete bucket"
       color="warn"
       (click)="onDeleteBucketClicked()"
       *ngIf="isOwner || isAdmin"

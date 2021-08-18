@@ -22,12 +22,14 @@
     <mat-divider></mat-divider>
     <div class="inner--element">
       <p class="label timeleft--label">Position:</p>
-      <p class="value timeleft--value">{{ user.position }}</p>
+      <p class="value timeleft--value email--address">{{ user.position }}</p>
     </div>
     <mat-divider></mat-divider>
     <div class="inner--element">
       <p class="label editors--label">E-mail:</p>
-      <p class="value editors--value">{{ user.email }}</p>
+      <div class="email--container">
+        <p class="value editors--value">{{ user.email }}</p>
+      </div>
     </div>
     <mat-divider></mat-divider>
     <div class="inner--element">
