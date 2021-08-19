@@ -24,7 +24,7 @@ import { LogsOfTaskComponent } from './logs/logs-of-task/logs-of-task.component'
 import { WelcomePageComponent } from './ui/welcome-page/welcome-page.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'user-panel', pathMatch: 'full' },
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   {
     path: 'user-panel',
     component: UserPanelMainComponent,
@@ -155,6 +155,7 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegistrationPanelComponent,
+    pathMatch: 'full',
   },
   {
     path: 'timers/tasks/:id',
@@ -162,6 +163,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     pathMatch: 'full',
   },
+  { path: '', redirectTo: 'user-panel', pathMatch: 'full' },
+  { path: '**', redirectTo: 'welcome', pathMatch: 'full' },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

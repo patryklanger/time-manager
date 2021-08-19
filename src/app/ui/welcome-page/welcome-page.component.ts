@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-welcome-page',
@@ -11,13 +11,16 @@ export class WelcomePageComponent implements OnInit {
   constructor(
     protected readonly keycloak: KeycloakService,
     private router: Router,
-    private route: ActivatedRoute,
   ) {}
   onLoginClick() {
     this.keycloak.login();
   }
   onRegisterClick() {
-    this.router.navigate(['register'], { relativeTo: this.route });
+    this.router.navigateByUrl('register');
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.keycloak.isLoggedIn().then((res) => {
+      if (res) this.router.navigateByUrl('user-panel');
+    });
+  }
 }

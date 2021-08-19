@@ -10,6 +10,7 @@ import { AuthGuard } from 'src/app/guard/auth.guard';
 })
 export class HeaderComponent implements OnInit {
   showEditProfile = false;
+  login = 'login';
   constructor(
     private router: Router,
     private readonly keycloak: KeycloakService,
@@ -40,9 +41,17 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/tasks/all');
   }
   onLogoutClick() {
-    console.log('loged out');
+    this.keycloak.isLoggedIn().then((res) => {
+      if (!res) this.keycloak.login();
+      else this.keycloak.logout();
+    });
     this.keycloak.logout();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.keycloak.isLoggedIn().then((res) => {
+      if (!res) this.login = 'Login';
+      else this.login = 'Logout';
+    });
+  }
 }
