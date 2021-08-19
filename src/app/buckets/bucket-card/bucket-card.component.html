@@ -20,13 +20,12 @@
     </p>
   </mat-card-content>
   <mat-divider></mat-divider>
-  <mat-card-actions class="buttons" *ngIf="isOwner || isAdmin">
+  <mat-card-actions class="buttons" *ngIf="!isUnassigned">
     <button
       mat-icon-button
       matTooltip="Edit bucket"
       color="basic"
       (click)="onEditBucketClick()"
-      *ngIf="isOwner || isAdmin"
     >
       <mat-icon>edit</mat-icon>
     </button>
@@ -35,7 +34,6 @@
       matTooltip="Add task to bucket"
       color="basic"
       (click)="onAddTaskClick()"
-      *ngIf="isOwner || isAdmin"
     >
       <mat-icon>note_add</mat-icon>
     </button>
@@ -64,19 +62,6 @@
       *ngIf="isOwner || isAdmin"
     >
       <mat-icon>delete</mat-icon>
-    </button>
-  </mat-card-actions>
-  <mat-card-actions
-    class="buttons"
-    *ngIf="!isOwner && !isAdmin && !isUnassigned"
-  >
-    <button mat-button (click)="onShowTasksClick()">
-      <mat-icon>tasks</mat-icon>
-      <span> Show tasks</span>
-    </button>
-    <button mat-button (click)="onAddTaskClick()">
-      <mat-icon>note_add</mat-icon>
-      <span> Add task</span>
     </button>
   </mat-card-actions>
   <mat-card-actions class="buttons" *ngIf="isUnassigned">
