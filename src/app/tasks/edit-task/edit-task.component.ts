@@ -88,7 +88,7 @@ export class EditTaskComponent implements OnInit {
   priorityValidation = new FormControl('1');
 
   expectedTimeValidation = new FormControl('', [Validators.min(1)]);
-  totalTimeValidation = new FormControl('', [Validators.min(1)]);
+  totalTimeValidation = new FormControl('', [Validators.min(0)]);
 
   constructor(private http: HttpClient, private dialog: MatDialog) {}
   onSubmitEditing() {
