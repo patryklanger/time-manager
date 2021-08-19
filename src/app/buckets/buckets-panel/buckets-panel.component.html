@@ -10,6 +10,7 @@
     class="add--bucket--button"
     color="Primary"
     (click)="addBucket()"
+    *ngIf="!isUnassigned"
   >
     Add new bucket
   </button>

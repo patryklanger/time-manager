@@ -13,7 +13,6 @@ export class UnassignedBucketsComponent implements OnInit {
   errorHandler = new MyErrorHandler(this.dialog);
   title = 'Unassigned buckets';
   subtitle = "Here you can find all buckets, that aren't assigned to any user";
-
   unassigned = true;
 
   fetchedBuckets: {
