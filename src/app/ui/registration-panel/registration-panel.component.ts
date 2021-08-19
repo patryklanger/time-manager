@@ -12,6 +12,8 @@ import {
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MyErrorHandler } from 'src/app/utility/error-handler';
+import { KeycloakService } from 'keycloak-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration-panel',
@@ -53,7 +55,12 @@ export class RegistrationPanelComponent implements OnInit {
   ]);
 
   textareaContent = '';
-  constructor(private http: HttpClient, private dialog: MatDialog) {
+  constructor(
+    private http: HttpClient,
+    private dialog: MatDialog,
+    private router: Router,
+    protected readonly keycloak: KeycloakService,
+  ) {
     this.formValidator = new FormGroup({
       position: this.positionValidation,
       firstname: this.firstNameValidation,
@@ -120,5 +127,9 @@ export class RegistrationPanelComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.keycloak.isLoggedIn().then((res) => {
+      if (res) this.router.navigateByUrl('user-panel');
+    });
+  }
 }
