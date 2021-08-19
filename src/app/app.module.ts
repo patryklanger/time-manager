@@ -78,12 +78,13 @@ import { LogCardComponent } from './logs/log-card/log-card.component';
 import { LogsPanelComponent } from './logs/logs-panel/logs-panel.component';
 import { LogsOfTaskComponent } from './logs/logs-of-task/logs-of-task.component';
 import { MatListModule } from '@angular/material/list';
+import { WelcomePageComponent } from './ui/welcome-page/welcome-page.component';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        url: 'http://10.1.17.45:8080/auth',
-        realm: 'Time-Manager',
+        url: 'http://localhost:8080/auth',
+        realm: 'test-realm',
         clientId: 'front-end-client',
       },
       initOptions: {
@@ -147,6 +148,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     LogCardComponent,
     LogsPanelComponent,
     LogsOfTaskComponent,
+    WelcomePageComponent,
   ],
   imports: [
     MatTooltipModule,

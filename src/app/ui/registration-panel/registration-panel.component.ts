@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import * as GlobalVariables from '../../globals';
 import { MyErrorStateMatcher } from '../../utility/MyErrorStateMatcher';
@@ -7,9 +7,11 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  NgForm,
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MyErrorHandler } from 'src/app/utility/error-handler';
 
 @Component({
   selector: 'app-registration-panel',
@@ -20,6 +22,8 @@ export class RegistrationPanelComponent implements OnInit {
   emailExists = false;
   loginExists = false;
 
+  errorHandler = new MyErrorHandler(this.dialog);
+  @ViewChild('formDirective') private formDirective: NgForm;
   title = 'Registration';
   submittedCheck = false;
   registrated = false;
@@ -49,7 +53,7 @@ export class RegistrationPanelComponent implements OnInit {
   ]);
 
   textareaContent = '';
-  constructor(private http: HttpClient, private fb: FormBuilder) {
+  constructor(private http: HttpClient, private dialog: MatDialog) {
     this.formValidator = new FormGroup({
       position: this.positionValidation,
       firstname: this.firstNameValidation,
@@ -69,6 +73,7 @@ export class RegistrationPanelComponent implements OnInit {
     this.formValidator.reset();
     this.formValidator.get('position')?.setValue('INTERN');
     this.formValidator.get('role')?.setValue('TEAM_MANAGER');
+    this.formDirective.resetForm();
   }
   onModalClose() {
     this.registrated = false;
@@ -99,14 +104,17 @@ export class RegistrationPanelComponent implements OnInit {
         this.registrated = true;
       },
       (err) => {
-        if (err.error.userName === 'exists') {
-          this.loginExists = true;
-          this.formValidator.get('userName')?.markAsDirty();
-        }
-        if (err.error.email === 'exists') {
-          this.emailExists = true;
-          this.formValidator.get('email')?.markAsDirty();
-        }
+        if (err.error.userName || err.error.email) {
+          if (err.error.userName === 'exists') {
+            this.loginExists = true;
+            this.formValidator.get('userName')?.markAsDirty();
+          }
+          if (err.error.email === 'exists') {
+            this.emailExists = true;
+            this.formValidator.get('email')?.markAsDirty();
+          }
+        } else this.errorHandler.handleError(err);
+
         console.log(this.emailExists, this.loginExists);
       },
     );

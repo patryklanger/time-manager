@@ -74,6 +74,10 @@
       <mat-icon>tasks</mat-icon>
       <span> Show tasks</span>
     </button>
+    <button mat-button (click)="onAddTaskClick()">
+      <mat-icon>note_add</mat-icon>
+      <span> Add task</span>
+    </button>
   </mat-card-actions>
   <mat-card-actions class="buttons" *ngIf="isUnassigned">
     <button mat-raised-button color="basic" (click)="onAssignBucketClick()">

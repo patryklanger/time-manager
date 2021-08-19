@@ -44,7 +44,7 @@ $time-manager-theme: mat.define-light-theme(
 body {
   background: rgb(250, 250, 250);
   width: 100vw;
-  overflow-x: hidden;
+  overflow: auto;
 }
 h1 {
   font-family: Poppins;

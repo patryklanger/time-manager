@@ -1,0 +1,10 @@
+.center-on-page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.center-on-page button:last-of-type {
+  margin-left: 20px;
+}

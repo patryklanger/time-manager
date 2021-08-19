@@ -1,6 +1,7 @@
 <app-custom-modal>
+  <strong><h3>Edit task</h3></strong>
   <form (ngSubmit)="onSubmitEditing()">
-    <div class="fields-container">
+    <div class="modal--flex">
       <mat-form-field class="full-width-input" appearance="fill">
         <mat-label>Task name</mat-label>
         <input
@@ -20,8 +21,8 @@
       <mat-form-field class="full-width-input" appearance="fill">
         <mat-label>Description</mat-label>
         <textarea
-          style="resize: none; height: 200px"
           matInput
+          class="textarea--input"
           placeholder="Editing task's description"
           [formControl]="descriptionValidation"
           [errorStateMatcher]="matcher"
@@ -75,7 +76,7 @@
         <mat-label>Choose a deadline date</mat-label>
         <input
           matInput
-          class="mat-input-class"
+          class="full-width-input"
           [min]="minDeadlineDate"
           [ngxMatDatetimePicker]="picker"
           [formControl]="taskDeadlineValidation"
@@ -95,7 +96,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field class="full-width-input" appearance="fill">
         <mat-label>Priority</mat-label>
         <mat-select
           matNativeControl
@@ -108,7 +109,7 @@
           <mat-option value="3">High</mat-option>
         </mat-select>
       </mat-form-field>
-      <div class="button--container">
+      <div class="buttons-container">
         <button mat-raised-button type="submit">Accept</button>
         <button mat-raised-button color="warn" (click)="onCancelClick()">
           Cancel

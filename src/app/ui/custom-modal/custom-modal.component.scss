@@ -116,6 +116,10 @@
 }
 
 /* Firefox */
-.modal--window input[type="number"] {
+.modal--window input[type='number'] {
   -moz-appearance: textfield;
+}
+mat-card {
+  max-height: 100vh;
+  overflow-y: auto;
 }

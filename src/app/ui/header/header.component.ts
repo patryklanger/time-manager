@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
+import { AuthGuard } from 'src/app/guard/auth.guard';
 
 @Component({
   selector: 'app-header',
@@ -9,8 +10,10 @@ import { KeycloakService } from 'keycloak-angular';
 })
 export class HeaderComponent implements OnInit {
   showEditProfile = false;
-  constructor(private router: Router,
-    private readonly keycloak: KeycloakService) {}
+  constructor(
+    private router: Router,
+    private readonly keycloak: KeycloakService,
+  ) {}
 
   onLogoClick = () => {
     this.router.navigateByUrl('/user-panel');
@@ -25,7 +28,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/buckets/all');
   };
   onEditProfileClick() {
-    this.showEditProfile = true;
+    this.keycloak.isLoggedIn().then((res) => {
+      if (!res) return;
+      this.showEditProfile = true;
+    });
   }
   onEditProfileClose() {
     this.showEditProfile = false;
@@ -33,8 +39,8 @@ export class HeaderComponent implements OnInit {
   onAllTasksClick() {
     this.router.navigateByUrl('/tasks/all');
   }
-  onLogoutClick(){
-    console.log('loged out')
+  onLogoutClick() {
+    console.log('loged out');
     this.keycloak.logout();
   }
 

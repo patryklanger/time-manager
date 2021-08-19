@@ -3,6 +3,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import * as GlobalVariables from '../../globals';
+import { MatDialog } from '@angular/material/dialog';
+import { SureDialogComponentComponent } from 'src/app/ui/sure-dialog-component/sure-dialog-component.component';
 
 @Component({
   selector: 'app-guest-card',
@@ -25,7 +27,11 @@ export class GuestCardComponent implements OnInit {
     guestEmail: '',
   };
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private dialog: MatDialog,
+  ) {}
   onLogsClick() {
     this.router.navigateByUrl('admin-panel/logs/guests/' + this.guest.guestId);
   }
@@ -38,9 +44,18 @@ export class GuestCardComponent implements OnInit {
     this.response$ = this.http.delete(
       GlobalVariables.GlobalServerPath + '/guests/' + this.guest.guestId,
     );
-    this.subscription = this.response$.subscribe((res) => {
-      this.delete.emit(this.guest.guestId);
-      this.subscription.unsubscribe();
+    const dialogAnchor = this.dialog.open(SureDialogComponentComponent, {
+      data: {
+        title: 'Deleting guest',
+        message: 'Are you sure you want to delete this guest?',
+      },
+    });
+    dialogAnchor.afterClosed().subscribe((e) => {
+      if (!e) return;
+      this.subscription = this.response$.subscribe((res) => {
+        this.delete.emit(this.guest.guestId);
+        this.subscription.unsubscribe();
+      });
     });
   }
 

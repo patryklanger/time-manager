@@ -150,7 +150,17 @@ export class EditProfileComponent implements OnInit {
     this.currentUser.email = this.formValidation.get('email')?.value;
     this.currentUser.position = this.formValidation.get('position')?.value;
     this.currentUser.role = this.formValidation.get('role')?.value;
-    let user = this.currentUser;
+    let user: {
+      firstName: string;
+      lastName: string;
+      email: string;
+      role: string;
+      position: string;
+      userName: string;
+      userId?: number;
+      password?: string;
+    } = this.currentUser;
+    user['password'] = '';
     delete user['userId'];
     console.log(user);
     this.editProfileResponse$ = this.http.put(

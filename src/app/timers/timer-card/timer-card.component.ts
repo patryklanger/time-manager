@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { MyErrorHandler } from 'src/app/utility/error-handler';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { SureDialogComponentComponent } from 'src/app/ui/sure-dialog-component/sure-dialog-component.component';
 
 @Component({
   selector: 'app-timer-card',
@@ -157,14 +158,23 @@ export class TimerCardComponent implements OnInit {
         GlobalVariables.TimerPath +
         this.timer.timerId,
     );
-    this.deleteSubscription = this.deleteResponse$.subscribe(
-      (res) => {
-        console.log(res);
-        this.delete.emit(this.timer.timerId);
-        this.deleteSubscription.unsubscribe();
+    const dialogAnchor = this.dialog.open(SureDialogComponentComponent, {
+      data: {
+        title: 'Delete timer',
+        message: 'Are you sure you want to delete this timer?',
       },
-      (err) => this.errorHandler.handleError(err),
-    );
+    });
+    dialogAnchor.afterClosed().subscribe((e) => {
+      if (!e) return;
+      this.deleteSubscription = this.deleteResponse$.subscribe(
+        (res) => {
+          console.log(res);
+          this.delete.emit(this.timer.timerId);
+          this.deleteSubscription.unsubscribe();
+        },
+        (err) => this.errorHandler.handleError(err),
+      );
+    });
   }
   onPlayPauseClicked() {
     this.playPauseResponse$ = this.http.patch(

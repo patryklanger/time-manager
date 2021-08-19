@@ -21,6 +21,7 @@ import { SubscriptionsForGuestComponent } from './subscriptions/subscriptions-fo
 import { TimersForTaskComponent } from './timers/timers-for-task/timers-for-task.component';
 import { TimersForAdminComponent } from './timers/timers-for-admin/timers-for-admin.component';
 import { LogsOfTaskComponent } from './logs/logs-of-task/logs-of-task.component';
+import { WelcomePageComponent } from './ui/welcome-page/welcome-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'user-panel', pathMatch: 'full' },
@@ -28,6 +29,10 @@ const routes: Routes = [
     path: 'user-panel',
     component: UserPanelMainComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'welcome',
+    component: WelcomePageComponent,
   },
   {
     path: 'buckets/my',
