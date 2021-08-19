@@ -88,6 +88,7 @@ export class EditTaskComponent implements OnInit {
   priorityValidation = new FormControl('1');
 
   expectedTimeValidation = new FormControl('', [Validators.min(1)]);
+  totalTimeValidation = new FormControl('', [Validators.min(1)]);
 
   constructor(private http: HttpClient, private dialog: MatDialog) {}
   onSubmitEditing() {
@@ -100,12 +101,14 @@ export class EditTaskComponent implements OnInit {
     this.task.taskExpectedTime = Number(
       this.expectedTimeValidation.value * 3600,
     );
+    this.task.taskTotalTime = Number(this.totalTimeValidation.value)
     const editBucket = {
       taskName: this.task.taskName,
       taskDescription: this.task.taskDescription,
       taskPriority: this.task.taskPriority,
       taskExpectedTime: this.task.taskExpectedTime,
       taskDeadline: this.task.taskDeadline,
+      taskTotalTime: this.task.taskExpectedTime
     };
     this.editResponse$ = this.http.put(
       GlobalVariables.GlobalServerPath +
@@ -136,6 +139,7 @@ export class EditTaskComponent implements OnInit {
     this.expectedTimeValidation.setValue(
       Number(this.task.taskExpectedTime) / 3600,
     );
+    this.totalTimeValidation.setValue(this.task.taskTotalTime);
   }
 
   ngOnInit(): void {
