@@ -101,14 +101,14 @@ export class EditTaskComponent implements OnInit {
     this.task.taskExpectedTime = Number(
       this.expectedTimeValidation.value * 3600,
     );
-    this.task.taskTotalTime = Number(this.totalTimeValidation.value)
+    this.task.taskTotalTime = Number(this.totalTimeValidation.value);
     const editBucket = {
       taskName: this.task.taskName,
       taskDescription: this.task.taskDescription,
       taskPriority: this.task.taskPriority,
       taskExpectedTime: this.task.taskExpectedTime,
       taskDeadline: this.task.taskDeadline,
-      taskTotalTime: this.task.taskExpectedTime
+      taskTotalTime: this.task.taskTotalTime,
     };
     this.editResponse$ = this.http.put(
       GlobalVariables.GlobalServerPath +
