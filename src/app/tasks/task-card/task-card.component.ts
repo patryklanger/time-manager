@@ -46,6 +46,7 @@ export class TaskCardComponent implements OnInit {
   showAddMembers = false;
   isSuspended = false;
   isFinished = false;
+  totalTimeTimer = -1;
 
   @Input() task: {
     taskId: number;
@@ -62,6 +63,7 @@ export class TaskCardComponent implements OnInit {
     editorsCount: number;
     totalTimeOfTimer: number;
     timerState?: string | undefined | null;
+    activeTimersCount: number;
   } = {
     taskId: 0,
     bucketName: '',
@@ -77,6 +79,7 @@ export class TaskCardComponent implements OnInit {
     editorsCount: -1,
     totalTimeOfTimer: -1,
     timerState: '',
+    activeTimersCount: -1,
   };
   taskStateToDisplay = '';
   deadline = new Date();
@@ -154,9 +157,6 @@ export class TaskCardComponent implements OnInit {
     if (!this.managerCard) this.time = new Date(this.task.taskCreationTime);
     else this.time = new Date(this.task.taskCreationTime);
   }
-  increamentTimer() {
-    this.task.totalTimeOfTimer++;
-  }
   onTaskEditted(task: any) {
     this.task = task;
     this.getTaskState();
@@ -169,6 +169,8 @@ export class TaskCardComponent implements OnInit {
     this.showEditTask = true;
   }
   startTimer() {
+    clearInterval(this.intervalId);
+    this.intervalId = -1;
     if (this.task.timerState !== null) {
       this.startTimerResponse$ = this.http.patch(
         GlobalVariables.GlobalServerPath +
@@ -198,6 +200,7 @@ export class TaskCardComponent implements OnInit {
       );
       this.startTimerSubscription = this.startTimerResponse$.subscribe(
         (res) => {
+          this.task.activeTimersCount++;
           this.task.taskState = 'IN_PROGRESS';
           this.task.timerState = res.state;
           this.task.totalTimeOfTimer = res.totalTime;
@@ -250,7 +253,6 @@ export class TaskCardComponent implements OnInit {
       this.playPauseState = 'PAUSE';
       this.intervalId = window.setInterval(() => {
         this.task.totalTimeOfTimer++;
-        this.task.taskTotalTime++;
       }, 1000);
     } else if (this.task.timerState == 'FINISHED') {
       this.playPauseState = 'PLAY';
@@ -271,6 +273,8 @@ export class TaskCardComponent implements OnInit {
     this.stopAvaiable = true;
   }
   stopTimer() {
+    clearInterval(this.intervalId);
+    this.intervalId = -1;
     this.timerResponse$ = this.http.patch(
       GlobalVariables.GlobalServerPath +
         GlobalVariables.TasksPath +
@@ -451,12 +455,18 @@ export class TaskCardComponent implements OnInit {
     );
   }
   updateTaskInfo() {
+    clearInterval(this.totalTimeTimer);
+    this.totalTimeTimer = -1;
     this.normalCard = !this.managerCard;
     this.creationTimeDate = new Date(this.task.taskCreationTime);
     this.getTaskState();
     this.getTimerState();
     this.timeConversion();
     this.getColor();
+    if (this.task.activeTimersCount == 0) return;
+    this.totalTimeTimer = window.setInterval(() => {
+      this.task.taskTotalTime++;
+    }, 1000 / this.task.activeTimersCount);
   }
   ngOnInit(): void {
     this.updateTaskInfo();

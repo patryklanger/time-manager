@@ -27,6 +27,7 @@ export class TasksPanelComponent implements OnInit {
     editorsCount: number;
     totalTimeOfTimer: number;
     timerState: string;
+    activeTimersCount: number;
   }[] = [];
   @Input() tasks: {
     taskId: number;
@@ -44,6 +45,7 @@ export class TasksPanelComponent implements OnInit {
     editorsCount: number;
     totalTimeOfTimer: number;
     timerState: string;
+    activeTimersCount: number;
   }[] = [];
 
   isEmpty = false;

@@ -31,6 +31,7 @@ export class AllTasksForUserComponent implements OnInit {
     editorsCount: number;
     totalTimeOfTimer: number;
     timerState: string;
+    activeTimersCount: number;
   }[] = [];
   headers = new HttpHeaders();
   path = GlobalVariables.GlobalServerPath;
